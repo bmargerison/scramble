@@ -7,3 +7,7 @@ This is inspired by the desire to escape the calamity of the sometimes unavoidab
 #### Tech
 
 The app will be built using Express and React Native, using REST APIs. The rationale for the tech stack was to use backend tech I haven't used before, while keeping the frontend familiar. 
+
+#### Aproach
+
+![](./scramble crc diagram.png)
