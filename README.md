@@ -10,5 +10,5 @@ The app will be built using Express and React Native, using REST APIs. The ratio
 
 #### Aproach
 
-![](images/scramble crc diagram.png)
-![](images/user journey.png)
+![](images/scramble_crc_diagram.png)
+![](images/user_journey.png)
