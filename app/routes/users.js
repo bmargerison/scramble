@@ -35,14 +35,14 @@ router.post('/', async (req, res) => {
   }
 });
 
-/* Update user. */
-router.patch('/:id', function(req, res, next) {
-  
-});
-
 /* Delete user. */
-router.delete('/:id', function(req, res, next) {
-  
+router.delete('/:id', getUser, async (req, res) => {
+  try {
+    await res.user.remove()
+    res.json({ message: "Deleted subscriber" })
+  } catch(err) {
+    res.status(500).json({ message: err.message })
+  }
 });
 
 async function getUser(req, res, next) {
