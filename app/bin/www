@@ -1,15 +1,39 @@
 #!/usr/bin/env node
 require('dotenv').config()
+const {MongoClient} = require('mongodb');
 
 /**
- * Database
+ * MongoDB Atlas
  */
 
- var mongoose = require("mongoose");
- mongoose.connect(process.env.DATABASE_URL)
- const db = mongoose.connection
- db.on('error', (error) => console.error(error))
- db.once('open', () => console.log('Connected to Database'))
+ async function main(){
+
+  const uri = `mongodb+srv://bmargerison:${process.env.PASSWORD}@scramble.5c4r3.mongodb.net/test?retryWrites=true&w=majority`;
+
+  const client = new MongoClient(uri);
+
+  try {
+      // Connect to the MongoDB cluster
+      await client.connect();
+
+      // Make the appropriate DB calls
+      await  listDatabases(client);
+
+  } catch (e) {
+      console.error(e);
+  } finally {
+      await client.close();
+  }
+}
+
+main().catch(console.error);
+
+async function listDatabases(client){
+  databasesList = await client.db().admin().listDatabases();
+
+  console.log("Databases:");
+  databasesList.databases.forEach(db => console.log(` - ${db.name}`));
+};
 
 /**
  * Module dependencies.
@@ -23,7 +47,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '8000');
 app.set('port', port);
 
 /**
