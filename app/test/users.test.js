@@ -1,6 +1,7 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { db } = require('../models/user');
+const User = require('../models/user')
 
 beforeEach(() => {
   server = require('../bin/www');
@@ -13,7 +14,7 @@ afterEach(async () => {
 
 describe("/users", () => {
 
-  describe("GET", () => {
+  describe("/ GET", () => {
     console.log('')
     test("should respond with a 200 status code", async () => {
       const response = await request(server).get("/users")
@@ -21,7 +22,7 @@ describe("/users", () => {
     })
   })
 
-  describe("POST", () => {
+  describe("/ POST", () => {
     test("should respond with a 201 status code", async () => {
       const response = await request(server).post("/users").send({ 
         username: "username", 
@@ -37,6 +38,20 @@ describe("/users", () => {
       })
       expect(response.statusCode).toBe(400)
     })
+  })
+
+  describe("/:id DELETE", () => {
+    test("should respond with a 202 status code", async () => {
+      await request(server).post("/users").send({ 
+        username: "username", 
+        email: "email",
+        password: "password" 
+      })
+      const user = await User.find({ "username" : "username" })
+      const response = await  request(server).delete(`/users/${user[0]._id}`)
+      expect(response.statusCode).toBe(202)
+    })
+
   })
 
 })

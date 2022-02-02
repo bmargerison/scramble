@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 router.delete('/:id', getUser, async (req, res) => {
   try {
     await res.user.remove()
-    res.json({ message: "Deleted subscriber" })
+    res.status(202).json({ message: "Deleted subscriber" })
   } catch(err) {
     res.status(500).json({ message: err.message })
   }
