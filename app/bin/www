@@ -11,7 +11,7 @@ const mongoose = require('mongoose');
 
  async function main(){
 
-  const uri = `mongodb+srv://bmargerison:${process.env.PASSWORD}@cluster0.5c4r3.mongodb.net/users?retryWrites=true&w=majority`;
+  const uri = `mongodb://localhost:27017/scramble`;
 
   try {
       // Connect to the MongoDB cluster
@@ -106,3 +106,5 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+module.exports = server
