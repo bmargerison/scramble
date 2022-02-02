@@ -4,19 +4,20 @@ var debug = require('debug')('app:server');
 var http = require('http');
 const mongoose = require('mongoose');
 
+
+
 /**
- * MongoDB Atlas
+ * Connect to database.
  */
 
- async function main(){
+const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
+
+async function main(){
 
   const uri = `mongodb://localhost:27017/scramble`;
 
   try {
-      // Connect to the MongoDB cluster
       await mongoose.connect(uri)
-
-      // Make the appropriate DB calls
 
   } catch (e) {
       console.error(e);
@@ -24,13 +25,6 @@ const mongoose = require('mongoose');
 }
 
 main().catch(console.error);
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
 
 /**
  * Create HTTP server.
