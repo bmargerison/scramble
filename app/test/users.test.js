@@ -1,18 +1,17 @@
 const request = require('supertest');
-const mongoose = require('mongoose');
 const { db } = require('../models/user');
 const User = require('../models/user')
 
-beforeEach(() => {
-  server = require('../bin/www');
-  jest.setTimeout(30000);
-});
-
-afterEach(async () => {
-  await db.dropDatabase()
-});
-
 describe("/users", () => {
+
+  beforeEach(() => {
+    server = require('../bin/www');
+    jest.setTimeout(30000);
+  });
+  
+  afterEach(async () => {
+    await db.dropDatabase()
+  });
 
   describe("/ GET", () => {
     test("should respond with a 200 status code", async () => {
@@ -31,6 +30,10 @@ describe("/users", () => {
       const user = await User.find({ "username" : "username" })
       const response = await  request(server).get(`/users/${user[0]._id}`)
       expect(response.statusCode).toBe(200)
+    })
+    test("should respond with a 500 status code", async () => {
+      const response = await request(server).get("/users/1")
+      expect(response.statusCode).toBe(500)
     })
   })
 
@@ -63,7 +66,6 @@ describe("/users", () => {
       const response = await  request(server).delete(`/users/${user[0]._id}`)
       expect(response.statusCode).toBe(202)
     })
-
   })
 
 })

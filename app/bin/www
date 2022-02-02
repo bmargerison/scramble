@@ -4,8 +4,6 @@ var debug = require('debug')('app:server');
 var http = require('http');
 const mongoose = require('mongoose');
 
-
-
 /**
  * Connect to database.
  */
