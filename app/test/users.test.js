@@ -15,9 +15,21 @@ afterEach(async () => {
 describe("/users", () => {
 
   describe("/ GET", () => {
-    console.log('')
     test("should respond with a 200 status code", async () => {
       const response = await request(server).get("/users")
+      expect(response.statusCode).toBe(200)
+    })
+  })
+
+  describe("/:id GET", () => {
+    test("should respond with a 200 status code", async () => {
+      await request(server).post("/users").send({ 
+        username: "username", 
+        email: "email",
+        password: "password" 
+      })
+      const user = await User.find({ "username" : "username" })
+      const response = await  request(server).get(`/users/${user[0]._id}`)
       expect(response.statusCode).toBe(200)
     })
   })
