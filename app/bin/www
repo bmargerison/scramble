@@ -14,7 +14,7 @@ const port = process.env.NODE_ENV === 'test' ? 3001 : 3000;
 
 async function main(){
 
-  const uri = `mongodb://localhost:27017/scramble`;
+  const uri = process.env.NODE_ENV === 'test' ? `mongodb://localhost:27017/scramble-test` : `mongodb://localhost:27017/scramble`;
 
   try {
       await mongoose.connect(uri)

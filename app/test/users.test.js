@@ -1,13 +1,14 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
-
-afterEach(async () => {
-  await server.close();
-});
+const { db } = require('../models/user');
 
 beforeEach(() => {
   server = require('../bin/www');
   jest.setTimeout(30000);
+});
+
+afterEach(async () => {
+  await db.dropDatabase()
 });
 
 describe("/users", () => {
@@ -39,4 +40,3 @@ describe("/users", () => {
   })
 
 })
-
