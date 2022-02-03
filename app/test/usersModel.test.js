@@ -1,7 +1,14 @@
 const expect = require('chai').expect;
+const { db } = require('../models/user')
 const User = require('../models/user')
+process.env.NODE_ENV = 'test'
+server = require('../bin/www');
 
 describe("user", function() {
+
+  afterEach(async () => {
+    await db.dropDatabase()
+  });
 
   test("should be invalid if details are empty", function(done) {
     const user = new User();
@@ -23,7 +30,7 @@ describe("user", function() {
     expect(user.username).to.equal("username")
     expect(user.email).to.equal("email")
     expect(user.password).to.equal("password")
-    done()
+    done();
   });
 
 });

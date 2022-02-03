@@ -1,13 +1,10 @@
 const request = require('supertest');
-const { db } = require('../models/user');
+const { db } = require('../models/user')
 const User = require('../models/user')
+process.env.NODE_ENV = 'test'
+server = require('../bin/www');
 
 describe("/users", () => {
-
-  beforeEach(() => {
-    server = require('../bin/www');
-    jest.setTimeout(30000);
-  });
   
   afterEach(async () => {
     await db.dropDatabase()
@@ -19,6 +16,34 @@ describe("/users", () => {
       expect(response.statusCode).toBe(200)
     })
   })
+
+  describe("/login POST", () => {
+    test("should respond with a 200 status code", async () => {
+      await request(server).post("/users").send({ 
+        username: "username", 
+        email: "email",
+        password: "password" 
+      })
+      const response = await request(server).post("/users/login").send({ 
+        email: "email",
+        password: "password" 
+      })
+      expect(response.statusCode).toBe(200)
+    })
+    test("should respond with a 404 status code", async () => {
+      await request(server).post("/users").send({ 
+        username: "username", 
+        email: "email",
+        password: "password" 
+      })
+      const response = await request(server).post("/users/login").send({ 
+        email: "different email",
+        password: "password" 
+      })
+      expect(response.statusCode).toBe(404)
+    })
+  })
+
 
   describe("/:id GET", () => {
     test("should respond with a 200 status code", async () => {
