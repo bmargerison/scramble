@@ -3,6 +3,7 @@ import { StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import SignupScreen from './src/pages/SignupScreen'
 import LoginScreen from './src/pages/LoginScreen'
+import HomeScreen from './src/pages/HomeScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const Tab = createBottomTabNavigator();
@@ -15,6 +16,14 @@ export default function App() {
         tabBarOptions={{
           activeTintColor: '#42f44b',
         }}>
+        <Tab.Screen
+            name="Home"
+            component={HomeScreen}
+            options={{ 
+              title: "Home",
+              tabBarLabel: "Home"
+             }}
+          />
         <Tab.Screen
             name="Signup"
             component={SignupScreen}
