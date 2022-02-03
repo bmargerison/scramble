@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Button, StyleSheet, Text, Image, ScrollView, TextInput } from 'react-native';
 import axios from "axios";
 
-const Login = () => {
+const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Login;
+export default LoginScreen;

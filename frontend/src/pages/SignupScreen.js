@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { View, Button, StyleSheet, Text, Image, ScrollView, TextInput } from 'react-native';
 import axios from "axios";
 
-const Signup = () => {
+
+const SignupScreen = ({ navigation }) => {
   const [username, setUsername] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
@@ -49,14 +50,7 @@ const Signup = () => {
       title='Sign Up'
       onPress={() => createUser()}
     />
-  </View>,
-
-  <Button
-  title="Go to Jane's profile"
-  onPress={() =>
-    navigation.navigate('Profile', { name: 'Jane' })
-  }
-  />
+  </View>
   );
 }
 
@@ -79,4 +73,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Signup;
+export default SignupScreen;

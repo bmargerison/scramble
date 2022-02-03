@@ -1,27 +1,37 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from 'react';
+import { StyleSheet} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Signup from './src/components/Signup'
-import Login from './src/components/Login'
+import SignupScreen from './src/pages/SignupScreen'
+import LoginScreen from './src/pages/LoginScreen'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
+      <Tab.Navigator
+        initialRouteName="Feed"
+        tabBarOptions={{
+          activeTintColor: '#42f44b',
+        }}>
+        <Tab.Screen
             name="Signup"
-            component={Signup}
-            options={{ title: "Please sign up" }}
+            component={SignupScreen}
+            options={{ 
+              title: "Sign up here",
+              tabBarLabel: "Signup"
+             }}
           />
-        <Stack.Screen
+        <Tab.Screen
             name="Login"
-            component={Login}
-            options={{ title: "Please login" }}
+            component={LoginScreen}
+            options={{ 
+              title: "Please login",
+              tabBarLabel: "Login"
+             }}
           />
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
