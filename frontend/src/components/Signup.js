@@ -49,7 +49,14 @@ const Signup = () => {
       title='Sign Up'
       onPress={() => createUser()}
     />
-  </View>
+  </View>,
+
+  <Button
+  title="Go to Jane's profile"
+  onPress={() =>
+    navigation.navigate('Profile', { name: 'Jane' })
+  }
+  />
   );
 }
 
