@@ -6,15 +6,18 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const createUser = () => {
-    console.log('hello')
+  const login = () => {
     axios
-      .get("http://localhost:3000/users", {
+      .post("http://localhost:3000/users/login", {
         email: email,
         password: password
       })
       .then((res) => {
-        console.log(res.data);
+        res.data.forEach((user, index) => {
+          if (user.email == email && user.password == password) {
+            console.log(res.data[index])
+          }
+        })
       })
       .catch((err) => console.log(err));
   };
@@ -38,7 +41,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <Button
         title='Sign Up'
-        onPress={() => createUser()}
+        onPress={() => login()}
       />
   </View>
   );

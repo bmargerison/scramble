@@ -18,6 +18,19 @@ router.get('/:id', getUser, (req, res) => {
   res.json(res.user)
 });
 
+/* User login. */
+router.post('/login', async (req, res) => {
+  try {
+    let user = await User.find({ email: req.body.email, password: req.body.password })
+    if (user.length == 0) {
+      return res.status(404).json({ message: "Cannot find user" })
+    }
+    res.status(200).json(user[0])
+  } catch (err) {
+    return res.status(500).json({ message: "Cannot find user" })
+  }
+});
+
 /* Create user. */
 router.post('/', async (req, res) => {
   const user = new User({
