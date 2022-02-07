@@ -10,14 +10,14 @@ describe("/users", () => {
     await db.dropDatabase()
   });
 
-  describe("/ GET", () => {
+  describe("GET /", () => {
     test("should respond with a 200 status code", async () => {
       const response = await request(server).get("/users")
       expect(response.statusCode).toBe(200)
     })
   })
 
-  describe("/login POST", () => {
+  describe("POST /login", () => {
     test("should respond with a 200 status code", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
@@ -30,7 +30,7 @@ describe("/users", () => {
       })
       expect(response.statusCode).toBe(200)
     })
-    test("should respond with a 404 status code", async () => {
+    test("404 status code if user does not exist", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
         email: "email",
@@ -42,11 +42,47 @@ describe("/users", () => {
       })
       expect(response.statusCode).toBe(404)
     })
+    test("403 status code if password incorrect", async () => {
+      await request(server).post("/users").send({ 
+        username: "username", 
+        email: "email",
+        password: "password" 
+      })
+      const response = await request(server).post("/users/login").send({ 
+        email: "email",
+        password: "password2" 
+      })
+      expect(response.statusCode).toBe(403)
+    })
   })
 
-
-  describe("/:id GET", () => {
-    test("should respond with a 200 status code", async () => {
+  describe("GET /:id", () => {
+    test("200 status code", async () => {
+      await request(server).post("/users").send({ 
+        username: "username", 
+        email: "email",
+        password: "password" 
+      })
+      const savedResponse = await request(server).post("/users/login").send({ 
+        email: "email",
+        password: "password" 
+      })
+      const token = savedResponse.body.token
+      const user = await User.find({ "username" : "username" })
+      const response = await  request(server).get(`/users/${user[0]._id}`).set('x-access-token', token)
+      expect(response.statusCode).toBe(200)
+    })
+    test("403 status code if incorrect token", async () => {
+      await request(server).post("/users").send({ 
+        username: "username", 
+        email: "email",
+        password: "password" 
+      })
+      const user = await User.find({ "username" : "username" })
+      const response = await  request(server).get(`/users/${user[0]._id}`).set('x-access-token', 'xyz')
+      expect(response.statusCode).toBe(403)
+    })
+    test("403 status code if no token", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
         email: "email",
@@ -54,15 +90,11 @@ describe("/users", () => {
       })
       const user = await User.find({ "username" : "username" })
       const response = await  request(server).get(`/users/${user[0]._id}`)
-      expect(response.statusCode).toBe(200)
-    })
-    test("should respond with a 500 status code", async () => {
-      const response = await request(server).get("/users/1")
-      expect(response.statusCode).toBe(500)
+      expect(response.statusCode).toBe(403)
     })
   })
 
-  describe("/ POST", () => {
+  describe("POST /", () => {
     test("should respond with a 201 status code", async () => {
       const response = await request(server).post("/users").send({ 
         username: "username", 
@@ -74,21 +106,27 @@ describe("/users", () => {
     test("should respond with a 400 status code if no password", async () => {
       const response = await request(server).post("/users").send({ 
         username: "username", 
-        email: "email"
+        email: "email",
+        password: "" 
       })
       expect(response.statusCode).toBe(400)
     })
   })
 
-  describe("/:id DELETE", () => {
+  describe("DELETE /:id", () => {
     test("should respond with a 202 status code", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
         email: "email",
         password: "password" 
       })
+      const savedResponse = await request(server).post("/users/login").send({ 
+        email: "email",
+        password: "password" 
+      })
+      const token = savedResponse.body.token
       const user = await User.find({ "username" : "username" })
-      const response = await  request(server).delete(`/users/${user[0]._id}`)
+      const response = await  request(server).delete(`/users/${user[0]._id}`).set('x-access-token', token)
       expect(response.statusCode).toBe(202)
     })
   })

@@ -42,7 +42,10 @@ router.post('/login', async (req, res) => {
 
 /* Create user. */
 router.post('/', async (req, res) => {
-  const hashedPassword = await bycrypt.hash(req.body.password, saltRounds)
+  let hashedPassword
+  if (req.body.password) {
+    hashedPassword = await bycrypt.hash(req.body.password, saltRounds)
+  }
   const user = new User({
     username: req.body.username,
     email: req.body.email,
