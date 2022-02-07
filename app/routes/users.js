@@ -30,7 +30,11 @@ router.post('/login', async (req, res) => {
     if (!bycrypt.compareSync(req.body.password, user.password)) {
       res.status(403).json({ message: "Incorrect password" })
     }
-    res.status(200).json(user)
+    const id = user.id
+    const token = jwt.sign({id}, "jwtSecret", {
+      expiresIn: 300
+    })
+    res.status(200).json({ auth: true, token: token, user: user })
   } catch (err) {
     return res.status(500).json({ message: err.message })
   }
