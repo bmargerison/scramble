@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { View, Button, StyleSheet, Text, Image, ScrollView, TextInput } from 'react-native';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import {Context as AuthContext} from '../context/AuthContext';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [loginStatus, setLoginStatus] = useState(false);
+  const {state, signin} = useContext(AuthContext);
 
   const login = () => {
     axios
@@ -39,6 +39,8 @@ const LoginScreen = ({ navigation }) => {
       })
   }
 
+  console.log(state)
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -58,7 +60,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <Button
         title='Sign Up'
-        onPress={() => login()}
+        onPress={() => signin({email, password})}
       />
       <Button
         title='Sign Up'
