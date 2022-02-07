@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/user')
 const bycrypt = require('bcrypt');
+const jwt = require('jsonwebtoken')
 const saltRounds = 10;
 
 /* GET users listing. */
@@ -69,6 +70,15 @@ router.delete('/:id', getUser, async (req, res) => {
 
 async function getUser(req, res, next) {
   let user
+  const token = await req.get("x-access-token")
+  console.log(token)
+  if (!token) {
+    res.status(403).json({ message: "No authentication token provided" })
+  } else {
+    jwt.verify(token, "jwtSecret", (err, decoded) => {
+      if (err) { res.status(403).json({ message: "Authentication failed" })}
+    }) 
+  }
   try {
     user = await User.findById(req.params.id)
     if (user == null) {
