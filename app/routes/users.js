@@ -1,7 +1,8 @@
 const express = require('express');
-const user = require('../models/user');
 const router = express.Router();
 const User = require('../models/user')
+const bycrypt = require('bcrypt');
+const saltRounds = 10;
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
@@ -21,22 +22,27 @@ router.get('/:id', getUser, (req, res) => {
 /* User login. */
 router.post('/login', async (req, res) => {
   try {
-    let user = await User.find({ email: req.body.email, password: req.body.password })
-    if (user.length == 0) {
+    let user = await User.find({ email: req.body.email })
+    user = user.shift()
+    if (!user) {
       return res.status(404).json({ message: "Cannot find user" })
     }
-    res.status(200).json(user[0])
+    if (!bycrypt.compareSync(req.body.password, user.password)) {
+      res.status(403).json({ message: "Incorrect password" })
+    }
+    res.status(200).json(user)
   } catch (err) {
-    return res.status(500).json({ message: "Cannot find user" })
+    return res.status(500).json({ message: err.message })
   }
 });
 
 /* Create user. */
 router.post('/', async (req, res) => {
+  const hashedPassword = await bycrypt.hash(req.body.password, saltRounds)
   const user = new User({
     username: req.body.username,
     email: req.body.email,
-    password: req.body.password
+    password: hashedPassword
   })
 
   try {
