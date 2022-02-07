@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 });
 
 /* GET individual user. */
-router.get('/:id', getUser, (req, res) => {
+router.get('/:id', authenticateUser, (req, res) => {
   res.json(res.user)
 });
 
@@ -27,9 +27,8 @@ router.post('/login', async (req, res) => {
     user = user.shift()
     if (!user) {
       return res.status(404).json({ message: "Cannot find user" })
-    }
-    if (!bycrypt.compareSync(req.body.password, user.password)) {
-      res.status(403).json({ message: "Incorrect password" })
+    } else if (!bycrypt.compareSync(req.body.password, user.password)) {
+      return res.status(403).json({ message: "Incorrect password" })
     }
     const id = user.id
     const token = jwt.sign({id}, "jwtSecret", {
@@ -49,7 +48,6 @@ router.post('/', async (req, res) => {
     email: req.body.email,
     password: hashedPassword
   })
-
   try {
     const newUser = await user.save()
     res.status(201).json(newUser)
@@ -59,7 +57,7 @@ router.post('/', async (req, res) => {
 });
 
 /* Delete user. */
-router.delete('/:id', getUser, async (req, res) => {
+router.delete('/:id', authenticateUser, async (req, res) => {
   try {
     await res.user.remove()
     res.status(202).json({ message: "Deleted subscriber" })
@@ -68,10 +66,10 @@ router.delete('/:id', getUser, async (req, res) => {
   }
 });
 
-async function getUser(req, res, next) {
+/* Authenticate user. */
+async function authenticateUser(req, res, next) {
   let user
   const token = await req.get("x-access-token")
-  console.log(token)
   if (!token) {
     res.status(403).json({ message: "No authentication token provided" })
   } else {
