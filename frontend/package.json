@@ -10,6 +10,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@babel/plugin-proposal-private-methods": "^7.16.11",
     "@react-native-async-storage/async-storage": "^1.15.17",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-navigation/bottom-tabs": "^6.2.0",
@@ -20,6 +21,7 @@
     "expo": "~44.0.0",
     "expo-status-bar": "~1.2.0",
     "i": "^0.3.7",
+    "jest-fetch-mock": "^3.0.3",
     "jsonwebtoken": "^8.5.1",
     "npm": "^8.4.1",
     "react": "17.0.1",
@@ -29,10 +31,21 @@
     "react-native-reanimated": "^2.3.1",
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "~3.10.1",
-    "react-native-web": "^0.17.1"
+    "react-native-testing-library": "^6.0.0",
+    "react-native-web": "^0.17.1",
+    "react-test-renderer": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "^7.12.9",
+    "@babel/preset-react": "^7.16.7",
+    "jest": "^27.5.1",
+    "jest-expo": "^44.0.1"
   },
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "jest-expo",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|scheduler|react-test-renderer|@react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
+    ]
+  }
 }
