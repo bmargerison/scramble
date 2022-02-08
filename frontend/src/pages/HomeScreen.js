@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  Text,
-  SafeAreaView
-} from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Button } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
   return (
@@ -31,4 +25,5 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
+
 export default HomeScreen;

@@ -29,8 +29,8 @@ const LoginScreen = ({ navigation }) => {
         onPress={() => signin({email, password})}
       />
       <Text style={{color: 'blue'}}
-            onPress={() => navigation.navigate('Signup')}>
-        Don't have an account? Sign up here
+          onPress={() => navigation.navigate('Signup')}>
+          Don't have an account? Sign up here
       </Text>
   </View>
   );

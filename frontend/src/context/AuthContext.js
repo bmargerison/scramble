@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const authReducer = (state, action) => {
   switch (action.type) {
     case 'signout':
-      return {token: null, userId: ''};
+      return {token: null, userId: '', email: ''};
     case 'signin':
     case 'signup':
       return {
@@ -40,7 +40,6 @@ const signup = dispatch => {
         AsyncStorage.setItem("userId", res.data.user._id) 
       })
       .catch((err) => console.log(err));
-      console.log('Signin');
       dispatch({
         type: 'signin',
         payload: {
@@ -53,7 +52,6 @@ const signup = dispatch => {
 
 const signin = dispatch => {
   return ({email, password}) => {
-    console.log('email');
     axios
     .post("http://localhost:3000/users/login", {
       email: email,
@@ -66,7 +64,6 @@ const signin = dispatch => {
       AsyncStorage.setItem("userId", res.data.user._id) 
     })
     .catch((err) => console.log(err));
-    console.log('Signin');
     dispatch({
       type: 'signin',
       payload: {

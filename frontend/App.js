@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { StyleSheet} from 'react-native';
+import React, { useState, useContext } from "react";
+import { Stylesheet, View, Button, StyleSheet, Text, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignupScreen from './src/pages/SignupScreen'
@@ -31,6 +31,7 @@ function AuthFlow() {
 const Tab = createBottomTabNavigator();
 
 function HomeFlow() {
+  const {state, signout} = useContext(AuthContext);
   return (
     <Tab.Navigator
     initialRouteName="Feed"
@@ -42,7 +43,8 @@ function HomeFlow() {
         component={HomeScreen}
         options={{ 
           title: "Home",
-          tabBarLabel: "Home"
+          tabBarLabel: "Home",
+          headerRight: () => <Button title="Test" onPress={() => signout({})} />,
         }}
       />
     </Tab.Navigator>
@@ -52,12 +54,12 @@ function HomeFlow() {
 const Stack = createStackNavigator();
 
 function App() {
-  const {state} = React.useContext(AuthContext);
-  console.log(state);
+  const {state, signout} = useContext(AuthContext);
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {state.token === null ? (
+        {console.log(state.token === null),
+        state.token === null ? (
           <>
             <Stack.Screen
               options={{headerShown: false}}
