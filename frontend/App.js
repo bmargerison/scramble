@@ -11,7 +11,7 @@ import {Context as AuthContext} from './src/context/AuthContext';
 
 const AuthStack = createStackNavigator();
 
-function authFlow() {
+function AuthFlow() {
   return (
     <AuthStack.Navigator>
       <AuthStack.Screen
@@ -30,7 +30,7 @@ function authFlow() {
 
 const Tab = createBottomTabNavigator();
 
-function homeFlow() {
+function HomeFlow() {
   return (
     <Tab.Navigator
     initialRouteName="Feed"
@@ -62,14 +62,14 @@ function App() {
             <Stack.Screen
               options={{headerShown: false}}
               name="Auth"
-              component={authFlow}
+              component={AuthFlow}
             />
           </>
         ) : (
           <Stack.Screen
             options={{headerShown: false}}
             name="Home"
-            component={homeFlow}
+            component={HomeFlow}
           />
         )}
       </Stack.Navigator>

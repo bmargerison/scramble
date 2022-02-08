@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { View, Button, StyleSheet, Text, Image, ScrollView, TextInput } from 'react-native';
+import React, { useState } from "react";
+import { View, Button, StyleSheet, Text, TextInput } from 'react-native';
 import axios from "axios";
 
 
@@ -50,6 +50,10 @@ const SignupScreen = ({ navigation }) => {
       title='Sign Up'
       onPress={() => createUser()}
     />
+    <Text style={{color: 'blue'}}
+      onPress={() => navigation.navigate('Signin')}>
+      Already have an account? Login here
+    </Text>
   </View>
   );
 }

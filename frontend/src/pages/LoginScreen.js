@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useContext } from "react";
-import { View, Button, StyleSheet, Text, Image, ScrollView, TextInput } from 'react-native';
+import React, { useState, useContext } from "react";
+import { View, Button, StyleSheet, Text, TextInput } from 'react-native';
 import axios from "axios";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Context as AuthContext} from '../context/AuthContext';
@@ -24,21 +24,6 @@ const LoginScreen = ({ navigation }) => {
       .catch((err) => console.log(err));
   };
 
-  const userAuthenticated = async () => {
-    console.log(AsyncStorage.getItem('userId'))
-    const userId = await AsyncStorage.getItem('userId')
-    const token = await AsyncStorage.getItem('token')
-    console.log(userId)
-    axios
-      .get(`http://localhost:3000/users/${userId}`, {
-        headers: {
-          "x-access-token": token
-        }
-      }).then((response) => {
-        console.log(response)
-      })
-  }
-
   console.log(state)
 
   return (
@@ -59,13 +44,13 @@ const LoginScreen = ({ navigation }) => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <Button
-        title='Sign Up'
+        title='Login'
         onPress={() => signin({email, password})}
       />
-      <Button
-        title='Sign Up'
-        onPress={() => userAuthenticated()}
-      />
+      <Text style={{color: 'blue'}}
+            onPress={() => navigation.navigate('Signup')}>
+        Don't have an account? Sign up here
+      </Text>
   </View>
   );
 }
