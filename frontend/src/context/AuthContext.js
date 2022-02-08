@@ -18,13 +18,42 @@ const authReducer = (state, action) => {
 };
 
 const signup = dispatch => {
-  return ({email, password}) => {
-    console.log('Signup');
+  return ({username, email, password}) => {
+    axios
+      .post("http://localhost:3000/users", {
+        username: username,
+        email: email,
+        password: password
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+    axios
+      .post("http://localhost:3000/users/login", {
+        email: email,
+        password: password
+      })
+      .then(async (res) => {
+        console.log(res.data.token)
+        setLoginStatus(true)
+        AsyncStorage.setItem("token", res.data.token)
+        AsyncStorage.setItem("userId", res.data.user._id) 
+      })
+      .catch((err) => console.log(err));
+      console.log('Signin');
+      dispatch({
+        type: 'signin',
+        payload: {
+          token: AsyncStorage.getItem("token"),
+          userId: AsyncStorage.getItem("userId")
+        },
+      });
   };
 };
 
 const signin = dispatch => {
   return ({email, password}) => {
+    console.log('email');
     axios
     .post("http://localhost:3000/users/login", {
       email: email,
