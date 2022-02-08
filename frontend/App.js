@@ -44,7 +44,7 @@ function HomeFlow() {
         options={{ 
           title: "Home",
           tabBarLabel: "Home",
-          headerRight: () => <Button title="Test" onPress={() => signout({})} />,
+          headerRight: () => <Button title="Sign out" onPress={() => signout({})} />,
         }}
       />
     </Tab.Navigator>

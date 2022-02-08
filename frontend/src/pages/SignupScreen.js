@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import { View, Button, StyleSheet, Text, TextInput } from 'react-native';
-import axios from "axios";
 import {Context as AuthContext} from '../context/AuthContext';
 
 const SignupScreen = ({ navigation }) => {
