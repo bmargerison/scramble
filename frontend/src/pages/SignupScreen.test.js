@@ -1,12 +1,15 @@
+/**
+ * @jest-environment jsdom
+ */
 
 import React from 'react';
 import renderer from 'react-test-renderer';
 import SignupScreen from './SignupScreen';
 import {Provider as AuthProvider} from '../context/AuthContext.js';
-import {Context as AuthContext} from '../context/AuthContext';
-import {cleanup, fireEvent, render} from '@testing-library/react';
+import {cleanup, render, waitFor} from '@testing-library/react';
+import '@testing-library/jest-dom'
+import '@testing-library/jest-dom/extend-expect'
 
-import ReactDOM from 'react-dom';
 afterEach(cleanup);
 
 test('renders correctly', () => {
@@ -19,11 +22,22 @@ test('renders correctly', () => {
   expect(tree).toMatchSnapshot();
 });
 
-test('renders individual elements', () => {
-  const {queryByLabelText} = render(
+test('renders individual elements', async () => {
+  const { findAllByText, findAllByPlaceholderText } = render(
     <AuthProvider>
       <SignupScreen />
     </AuthProvider>
   )
-  console.log(queryByLabelText('Sign up'))
+
+  const signup = await findAllByText('Sign Up')
+  expect(signup.length).toBe(1)
+
+  const username = await findAllByPlaceholderText('Username')
+  expect(username.length).toBe(1)
+
+  const email = await findAllByPlaceholderText('Email')
+  expect(email.length).toBe(1)
+
+  const password = await findAllByPlaceholderText('Password')
+  expect(password.length).toBe(1)
 });
