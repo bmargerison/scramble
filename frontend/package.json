@@ -7,7 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "test": "jest --silent --coverage"
   },
   "dependencies": {
     "@babel/plugin-proposal-private-methods": "^7.16.11",
@@ -38,14 +39,26 @@
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-react": "^7.16.7",
-    "jest": "^27.5.1",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "jest": "^26",
+    "jest-environment-enzyme": "^7.1.2",
+    "jest-enzyme": "^7.1.2",
     "jest-expo": "^44.0.1"
   },
   "private": true,
   "jest": {
-    "preset": "jest-expo",
+    "preset": "react-native",
+    "collectCoverage": true,
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+    },
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|scheduler|react-test-renderer|@react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
+      "node_modules/(?!(jest-)?react-native|@babel|scheduler|react-test-renderer|@react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base)"
     ]
   }
 }
