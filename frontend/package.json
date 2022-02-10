@@ -33,18 +33,19 @@
     "react-native-safe-area-context": "^3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-testing-library": "^6.0.0",
-    "react-native-web": "^0.17.1",
-    "react-test-renderer": "^17.0.2"
+    "react-native-web": "^0.17.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/preset-react": "^7.16.7",
+    "@testing-library/react": "^12.1.2",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.6",
     "enzyme-adapter-react-16": "^1.15.6",
     "jest": "^26",
     "jest-environment-enzyme": "^7.1.2",
     "jest-enzyme": "^7.1.2",
-    "jest-expo": "^44.0.1"
+    "jest-expo": "^44.0.1",
+    "react-test-renderer": "^17.0.2"
   },
   "private": true,
   "jest": {

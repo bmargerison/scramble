@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for pages/SignupScreen.js</title>
+    <title>Code coverage report for pages/LoginScreen.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,13 +19,13 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">pages</a> SignupScreen.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">pages</a> LoginScreen.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">83.6% </span>
+                <span class="strong">83.92% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>51/61</span>
+                <span class='fraction'>47/56</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">44.44% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>4/9</span>
+                <span class='fraction'>4/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">68.75% </span>
+                <span class="strong">71.42% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/16</span>
+                <span class='fraction'>10/14</span>
             </div>
         
             
@@ -120,15 +120,7 @@
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a>
-<a name='L66'></a><a href='#L66'>66</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">28x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -136,16 +128,8 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -197,44 +181,36 @@
 import { View, Button, StyleSheet, Text, TextInput } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';<span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="cstat-no" title="statement not covered" ><span class="missing-if-branch" title="else path not taken" >E</span><span class="missing-if-branch" title="if path not taken" >I</span><span class="branch-1 cbranch-no" title="branch not covered" ><span class="missing-if-branch" title="else path not taken" >E</span><span class="missing-if-branch" title="if path not taken" >I</span><span class="branch-2 cbranch-no" title="branch not covered" ><span class="missing-if-branch" title="if path not taken" >I</span><span class="missing-if-branch" title="if path not taken" >I</span><span class="branch-0 cbranch-no" title="branch not covered" ><span class="missing-if-branch" title="if path not taken" >I</span></span></span></span></span></span></span></span></span>
 &nbsp;
-const SignupScreen = ({ navigation }) =&gt; {
-  const [username, setUsername] = useState();
+const LoginScreen = ({ navigation }) =&gt; {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const {state, signup} = useContext(AuthContext);
+  const {state, signin} = useContext(AuthContext);
 &nbsp;
   return (
     &lt;View style={styles.container}&gt;
-    &lt;TextInput
-      style={styles.input}
-      placeholder='Username'
-      autoCapitalize="none"
-      placeholderTextColor='white'
-      onChange={(e) =&gt; se<span class="fstat-no" title="function not covered" >tUsername</span>(e.t<span class="cstat-no" title="statement not covered" >arget.value)}</span>
-    /&gt;
-    &lt;TextInput
-      style={styles.input}
-      placeholder='Email'
-      autoCapitalize="none"
-      placeholderTextColor='white'
-      onChange={(e) =&gt; se<span class="fstat-no" title="function not covered" >tEmail(e.</span>targ<span class="cstat-no" title="statement not covered" >et.value)}</span>
-    /&gt;
-    &lt;TextInput
-      style={styles.input}
-      placeholder='Password'
-      secureTextEntry={true}
-      autoCapitalize="none"
-      placeholderTextColor='white'
-      onChange={(e) =&gt; se<span class="fstat-no" title="function not covered" >tPassword</span>(e.t<span class="cstat-no" title="statement not covered" >arget.value)}</span>
-    /&gt;
-    &lt;Button
-      title='Sign Up'
-      onPress={() =&gt; sig<span class="fstat-no" title="function not covered" >nup({use</span>rna<span class="cstat-no" title="statement not covered" >me, email, password})}</span>
-    /&gt;
-    &lt;Text style={{color: 'blue'}}
-      onPress={() =&gt; nav<span class="fstat-no" title="function not covered" >igation.</span>nav<span class="cstat-no" title="statement not covered" >igate('Signin')}&gt;</span>
-      Already have an account? Login here
-    &lt;/Text&gt;
+      &lt;TextInput
+        style={styles.input}
+        placeholder='Email'
+        autoCapitalize="none"
+        placeholderTextColor='white'
+        onChange={(e) =&gt; <span class="fstat-no" title="function not covered" >setEmail(</span>e.ta<span class="cstat-no" title="statement not covered" >rget.value)}</span>
+      /&gt;
+      &lt;TextInput
+        style={styles.input}
+        placeholder='Password'
+        secureTextEntry={true}
+        autoCapitalize="none"
+        placeholderTextColor='white'
+        onChange={(e) =&gt; <span class="fstat-no" title="function not covered" >setPasswo</span>rd(e<span class="cstat-no" title="statement not covered" >.target.value)}</span>
+      /&gt;
+      &lt;Button
+        title='Login'
+        onPress={() =&gt; s<span class="fstat-no" title="function not covered" >ignin({e</span>mai<span class="cstat-no" title="statement not covered" >l, password})}</span>
+      /&gt;
+      &lt;Text style={{color: 'blue'}}
+          onPress={() =&gt;<span class="fstat-no" title="function not covered" > navigat</span>ion<span class="cstat-no" title="statement not covered" >.navigate('Signup')}&gt;</span>
+          Don't have an account? Sign up here
+      &lt;/Text&gt;
   &lt;/View&gt;
   );
 }
@@ -258,7 +234,7 @@ const styles = StyleSheet.create({
   }
 })
 &nbsp;
-export default SignupScreen;</pre></td></tr></table></pre>
+export default LoginScreen;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->

@@ -5,10 +5,7 @@
 import React from 'react';
 import SignupScreen from './SignupScreen';
 import {Provider as AuthProvider} from '../context/AuthContext.js';
-
-import {shallow, mount} from 'enzyme';
-
-
+import { shallow, mount } from 'enzyme';
 import Enzyme from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
@@ -28,7 +25,7 @@ describe('signup screen', () => {
   it('should have a username, email and password field', () => {
     const component = mount(    
       <AuthProvider>
-        <SignupScreen/>
+        <SignupScreen />
       </AuthProvider>
     )
     expect(component.find('TextInput').first().prop('placeholder')).toEqual('Username')
