@@ -4,6 +4,8 @@ const User = require('../models/user')
 const bycrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const saltRounds = 10;
+const { body, validationResult } = require('express-validator');
+const { json } = require('body-parser');
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
@@ -41,22 +43,31 @@ router.post('/login', async (req, res) => {
 });
 
 /* Create user. */
-router.post('/', async (req, res) => {
-  let hashedPassword
-  if (req.body.password) {
-    hashedPassword = await bycrypt.hash(req.body.password, saltRounds)
-  }
-  const user = new User({
-    username: req.body.username,
-    email: req.body.email,
-    password: hashedPassword
-  })
-  try {
-    const newUser = await user.save()
-    res.status(201).json(newUser)
-  } catch (err) {
-    res.status(400).json({ message: err.message })
-  }
+router.post('/', [
+  body('email', 'Enter a valid email').isEmail(),
+  body('password', 'Password must be strong').isStrongPassword()
+  ], 
+  async (req, res) => {
+    let hashedPassword
+    const errors = validationResult(req)
+    console.log(!errors.isEmpty())
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ message: errors.array() })
+    }
+    if (req.body.password) {
+      hashedPassword = await bycrypt.hash(req.body.password, saltRounds)
+    }
+    const user = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: hashedPassword
+    })
+    try {
+      const newUser = await user.save()
+      res.status(201).json(newUser)
+    } catch (err) {
+      res.status(400).json({ message: err.message })
+    }
 });
 
 /* Delete user. */

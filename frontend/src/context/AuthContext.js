@@ -27,7 +27,15 @@ const signup = dispatch => {
       .then((res) => {
         console.log(res.data);
       })
-      .catch((err) => window.alert(err.response.data.message));
+      .catch((err) => {
+        if (Array.isArray(err.response.data.message)) {
+          err.response.data.message.forEach(message => {
+            window.alert(message.msg)
+          })
+        } else {
+          window.alert(err.response.data.message)
+        }
+      })
     axios
       .post("http://localhost:3000/users/login", {
         email: email,
@@ -42,7 +50,7 @@ const signup = dispatch => {
           },
         })
       })
-      .catch((err) => window.alert(err.response.data.message));
+      .catch((err) => window.alert(err.response.data.message))
   };
 };
 
@@ -62,7 +70,7 @@ const signin = dispatch => {
           },
         })
       })
-      .catch((err) => window.alert(err.response.data.message));
+      .catch((err) => window.alert(err.response.data.message))
   };
 };
 
