@@ -21,36 +21,36 @@ describe("/users", () => {
     test("should respond with a 200 status code", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const response = await request(server).post("/users/login").send({ 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       expect(response.statusCode).toBe(200)
     })
     test("404 status code if user does not exist", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const response = await request(server).post("/users/login").send({ 
-        email: "different email",
-        password: "password" 
+        email: "differentemail@email.com",
+        password: "Password123?" 
       })
       expect(response.statusCode).toBe(404)
     })
     test("403 status code if password incorrect", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const response = await request(server).post("/users/login").send({ 
-        email: "email",
-        password: "password2" 
+        email: "email@email.com",
+        password: "the wrong password" 
       })
       expect(response.statusCode).toBe(403)
     })
@@ -60,12 +60,12 @@ describe("/users", () => {
     test("200 status code", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const savedResponse = await request(server).post("/users/login").send({ 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const token = savedResponse.body.token
       const user = await User.find({ "username" : "username" })
@@ -75,8 +75,8 @@ describe("/users", () => {
     test("403 status code if incorrect token", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const user = await User.find({ "username" : "username" })
       const response = await  request(server).get(`/users/${user[0]._id}`).set('x-access-token', 'xyz')
@@ -85,8 +85,8 @@ describe("/users", () => {
     test("403 status code if no token", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const user = await User.find({ "username" : "username" })
       const response = await  request(server).get(`/users/${user[0]._id}`)
@@ -98,15 +98,15 @@ describe("/users", () => {
     test("should respond with a 201 status code", async () => {
       const response = await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       expect(response.statusCode).toBe(201)
     })
     test("should respond with a 400 status code if no password", async () => {
       const response = await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
+        email: "email@email.com",
         password: "" 
       })
       expect(response.statusCode).toBe(400)
@@ -117,12 +117,12 @@ describe("/users", () => {
     test("should respond with a 202 status code", async () => {
       await request(server).post("/users").send({ 
         username: "username", 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const savedResponse = await request(server).post("/users/login").send({ 
-        email: "email",
-        password: "password" 
+        email: "email@email.com",
+        password: "Password123?" 
       })
       const token = savedResponse.body.token
       const user = await User.find({ "username" : "username" })
