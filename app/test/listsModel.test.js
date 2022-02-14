@@ -1,5 +1,6 @@
 const expect = require('chai').expect;
-const { db } = require('../models/user')
+const { db } = require('../models/list')
+const List = require('../models/list')
 const User = require('../models/user')
 process.env.NODE_ENV = 'test'
 server = require('../bin/www');
@@ -10,15 +11,28 @@ describe("list", function() {
     await db.dropDatabase()
   });
 
-  test("should be invalid if details are empty", function(done) {
-    const user = new List();
+  test("should be invalid if no user", function(done) {
+    const list = new List();
 
-    user.validate(function(err) {
-        expect(err.errors.user).to.exist;
-        expect(err.errors.date).to.exist;
-        expect(err.errors.items).to.exist;
+    list.validate(function(err) {
+        expect(err.errors._user).to.exist;
         done();
     });
+  });
+
+  test("list has user, date, password", function(done) {
+    const user = new User({
+      username: "username", 
+      email: "email",
+      password: "password"
+    })
+    const list = new List({
+      _user: user.id
+    })
+    expect(String(list._user)).to.equal(String(user.id))
+    expect(list.items.length).to.equal(0)
+    // expect(list.date).to.equal(new Date(+new Date()))
+    done();
   });
 
 });
