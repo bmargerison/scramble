@@ -11,4 +11,17 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  const list = new List({
+    _user: req.body._user
+  })
+  try {
+    const newList = await list.save()
+    res.status(201).json(newList)
+  } catch (err) {
+    return res.status(500).json({ message: err.message })
+  }
+});
+
+
 module.exports = router;

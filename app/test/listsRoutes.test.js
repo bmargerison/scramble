@@ -19,7 +19,7 @@ describe("/lists", () => {
     })
   })
 
-  describe("POST /login", () => {
+  describe("POST /", () => {
     test("should respond with a 200 status code", async () => {
       mockingoose.User.toReturn({ 
         _id: "000a000000000000000a0000",
@@ -29,9 +29,10 @@ describe("/lists", () => {
       }, 'findOne');
       const user = await User.findById({ _id: "000a000000000000000a0000" })
       const response = await request(server).post("/lists").send({ 
-        user: user._id, 
+        _user: user._id, 
       })
-      expect(response.statusCode).toBe(200)
+      console.log(response)
+      expect(response.statusCode).toBe(201)
     })
   })
 
