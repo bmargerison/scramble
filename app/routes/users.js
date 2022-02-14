@@ -5,7 +5,6 @@ const bycrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const saltRounds = 10;
 const { body, validationResult } = require('express-validator');
-const { json } = require('body-parser');
 
 /* GET users listing. */
 router.get('/', async (req, res) => {
@@ -50,7 +49,6 @@ router.post('/', [
   async (req, res) => {
     let hashedPassword
     const errors = validationResult(req)
-    console.log(!errors.isEmpty())
     if (!errors.isEmpty()) {
       return res.status(400).json({ message: errors.array() })
     }
