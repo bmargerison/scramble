@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
     const newList = await list.save()
     res.status(201).json(newList)
   } catch (err) {
-    return res.status(500).json({ message: err.message })
+    return res.status(400).json({ message: err.message })
   }
 });
 

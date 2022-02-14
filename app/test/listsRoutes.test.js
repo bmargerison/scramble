@@ -34,6 +34,14 @@ describe("/lists", () => {
       console.log(response)
       expect(response.statusCode).toBe(201)
     })
+    test("500 status code if no user", async () => {
+      const response = await request(server).post("/lists").send({ 
+      })
+      console.log(response)
+      expect(response.statusCode).toBe(400)
+    })
   })
+
+
 
 })
