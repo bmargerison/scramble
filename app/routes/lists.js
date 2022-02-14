@@ -14,8 +14,12 @@ router.get('/', async (req, res) => {
 
 /* GET individual user. */
 router.get('/:id', async (req, res) => {
-  list = await List.findById(req.params.id)
-  res.json(list)
+  try {
+    let list = await List.findById(req.params.id)
+    res.status(200).json(list)
+  } catch (err) {
+    res.status(404).json({ message: "Cannot find list" })
+  }
 });
 
 /* Create list. */

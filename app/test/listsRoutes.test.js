@@ -32,7 +32,6 @@ describe("/lists", () => {
         _user: user._id, 
       })
       const response = await request(server).get(`/lists/${list._body._id}`)
-      console.log(response)
       expect(response.statusCode).toBe(200)
     })
   })
