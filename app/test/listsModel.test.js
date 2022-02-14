@@ -4,6 +4,7 @@ const List = require('../models/list')
 const User = require('../models/user')
 process.env.NODE_ENV = 'test'
 server = require('../bin/www');
+const mockingoose = require('mockingoose');
 
 describe("list", function() {
 
@@ -19,22 +20,23 @@ describe("list", function() {
     });
   });
 
-  test("list has user, date, password", function(done) {
+  test("list has user, date, password", async function() {
     jest.useFakeTimers('modern');
     jest.setSystemTime(new Date(2021, 2, 2));
-    const user = new User({
-      username: "username", 
-      email: "email",
-      password: "password"
-    })
+    mockingoose.User.toReturn({ 
+      _id: "000a000000000000000a0000",
+      username: "username",
+      email: "email@email.com",
+      password: "Password123?" 
+    }, 'findOne');
+    const user = await User.findById({ _id: '1' })
     const list = new List({
-      _user: user.id
+      _user: user._id
     })
     expect(String(list._user)).to.equal(String(user.id))
     expect(list.items.length).to.equal(0)
     expect(String(list.date)).to.equal(String(new Date(+new Date())))
     jest.useRealTimers();
-    done();
   });
 
 });
