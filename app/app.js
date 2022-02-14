@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var listsRouter = require('./routes/lists');
 
 var app = express();
 
@@ -19,5 +20,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/lists', listsRouter);
 
 module.exports = app;
