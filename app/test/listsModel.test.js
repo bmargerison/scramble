@@ -29,7 +29,7 @@ describe("list", function() {
       email: "email@email.com",
       password: "Password123?" 
     }, 'findOne');
-    const user = await User.findById({ _id: '1' })
+    const user = await User.findById({ _id: "000a000000000000000a0000" })
     const list = new List({
       _user: user._id
     })
