@@ -12,6 +12,12 @@ router.get('/', async (req, res) => {
   }
 });
 
+/* GET individual user. */
+router.get('/:id', async (req, res) => {
+  list = await List.findById(req.params.id)
+  res.json(list)
+});
+
 /* Create list. */
 router.post('/', async (req, res) => {
   const list = new List({
