@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const List = require('../models/list')
 
+/* GET all lists. */
 router.get('/', async (req, res) => {
   try {
     let lists = await List.find()
@@ -11,6 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
+/* Create list. */
 router.post('/', async (req, res) => {
   const list = new List({
     _user: req.body._user
@@ -22,6 +24,5 @@ router.post('/', async (req, res) => {
     return res.status(400).json({ message: err.message })
   }
 });
-
 
 module.exports = router;

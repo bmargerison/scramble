@@ -19,6 +19,23 @@ describe("/lists", () => {
     })
   })
 
+  describe("GET /:id", () => {
+    test("200 status code", async () => {
+      mockingoose.User.toReturn({ 
+        _id: "000a000000000000000a0000",
+        username: "username",
+        email: "email@email.com",
+        password: "Password123?" 
+      }, 'findOne');
+      const user = await User.findById({ _id: "000a000000000000000a0000" })
+      const list = await request(server).post("/lists").send({ 
+        _user: user._id, 
+      })
+      const response = await request(server).get(`/lists/${list._body._id}`)
+      expect(response.statusCode).toBe(200)
+    })
+  })
+
   describe("POST /", () => {
     test("should respond with a 200 status code", async () => {
       mockingoose.User.toReturn({ 
@@ -31,17 +48,13 @@ describe("/lists", () => {
       const response = await request(server).post("/lists").send({ 
         _user: user._id, 
       })
-      console.log(response)
       expect(response.statusCode).toBe(201)
     })
     test("500 status code if no user", async () => {
       const response = await request(server).post("/lists").send({ 
       })
-      console.log(response)
       expect(response.statusCode).toBe(400)
     })
   })
-
-
 
 })
