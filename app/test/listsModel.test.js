@@ -13,7 +13,6 @@ describe("list", function() {
 
   test("should be invalid if no user", function(done) {
     const list = new List();
-
     list.validate(function(err) {
         expect(err.errors._user).to.exist;
         done();
@@ -21,6 +20,8 @@ describe("list", function() {
   });
 
   test("list has user, date, password", function(done) {
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(new Date(2021, 2, 2));
     const user = new User({
       username: "username", 
       email: "email",
@@ -31,7 +32,8 @@ describe("list", function() {
     })
     expect(String(list._user)).to.equal(String(user.id))
     expect(list.items.length).to.equal(0)
-    // expect(list.date).to.equal(new Date(+new Date()))
+    expect(String(list.date)).to.equal(String(new Date(+new Date())))
+    jest.useRealTimers();
     done();
   });
 
