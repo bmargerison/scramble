@@ -1,29 +1,33 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, Text, Button } from 'react-native';
 
 const HomeScreen = ({ navigation }) => {
+  const [lists, setLists] = useState([])
+
+  useEffect(() => {
+    const url = "http://localhost:3000/lists";
+
+    const fetchData = async () => {
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        setLists(json)
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Text
-        style={{
-          fontSize: 25,
-          textAlign: 'center',
-          marginBottom: 16
-        }}>
-        The lists will go here
-      </Text>
-    </SafeAreaView>
+    <>
+      {lists.map(list => {
+        return(
+          <Text key={list._id}>{list._user}</Text>
+        )
+      })}
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    backgroundColor: '#DDDDDD',
-    padding: 10,
-    width: 300,
-    marginTop: 16,
-  },
-});
 
 export default HomeScreen;
