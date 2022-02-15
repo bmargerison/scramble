@@ -1,5 +1,3 @@
-const express = require('express');
-const router = express.Router();
 const List = require('../models/list')
 
 const getAllLists = async (req, res, next) => {
@@ -32,4 +30,4 @@ const newList = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllLists, getList, newList};
+module.exports = {getAllLists, getUserLists, getList, newList};
