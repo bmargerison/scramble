@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import { Stylesheet, View, Button, StyleSheet, Text, TextInput } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack'
 import SignupScreen from './src/pages/SignupScreen'
 import LoginScreen from './src/pages/LoginScreen'
 import HomeScreen from './src/pages/HomeScreen'
+import ListScreen from './src/pages/ListScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -28,6 +29,17 @@ function AuthFlow() {
   );
 }
 
+const Stack = createStackNavigator()
+
+function HomeFlowNavigator() {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={HomeScreen}/>
+      <Stack.Screen name="ListScreen" component={ListScreen}/>
+    </Stack.Navigator>
+  )
+}
+
 const Tab = createBottomTabNavigator();
 
 function HomeFlow() {
@@ -40,10 +52,11 @@ function HomeFlow() {
     }}>
     <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeFlowNavigator}
         options={{ 
           title: "Home",
           tabBarLabel: "Home",
+          headerShown: false,
           headerRight: () => <Button title="Sign out" onPress={() => signout({})} />,
         }}
       />
@@ -51,13 +64,13 @@ function HomeFlow() {
   )
 }
 
-const Stack = createStackNavigator();
+const AppStack = createStackNavigator();
 
 function App() {
   const {state, signout} = useContext(AuthContext);
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <AppStack.Navigator>
         {console.log(state.token === null),
         state.token === null ? (
           <>
@@ -74,7 +87,7 @@ function App() {
             component={HomeFlow}
           />
         )}
-      </Stack.Navigator>
+      </AppStack.Navigator>
     </NavigationContainer>
   );
 }

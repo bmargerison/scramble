@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, StyleSheet, Text, Button, View, FlatList, TouchableOpacity } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({navigation}) => {
   const [lists, setLists] = useState([])
   const {state} = useContext(AuthContext);
 
@@ -32,7 +32,7 @@ const HomeScreen = ({ navigation }) => {
         }}
         renderItem={({item}) => {
         return (
-          <TouchableOpacity style={styles.card}>
+          <TouchableOpacity style={styles.card} onPress={()=> navigation.navigate('ListScreen', {item} )}>
             <View style={styles.cardContent}>
               <Text style={styles.name}>{item.date}</Text>
             </View>
