@@ -9,6 +9,21 @@ const getAllLists = async (req, res, next) => {
   }
 };
 
+const getUserLists = async (req, res, next) => {
+  try {
+    let lists = await List.find() || []
+    let userLists = []
+    lists.forEach(list => {
+      if (list._user == req.params.id) {
+        userLists.push(list)
+      }
+    })
+    res.json(userLists)
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+};
+
 const getList = async (req, res, next) => {
   try {
     let list = await List.findById(req.params.id)
