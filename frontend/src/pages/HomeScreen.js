@@ -7,22 +7,47 @@ const HomeScreen = ({navigation}) => {
   const {state} = useContext(AuthContext);
 
   useEffect(() => {
-    const url = `http://localhost:3000/lists/user/${state.userId}`;
-
-    const fetchData = async () => {
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        setLists(json)
-      } catch (error) {
-        console.log("error", error);
-      }
-    };
     fetchData();
   }, []);
 
+  const fetchData = async () => {
+    const url = `http://localhost:3000/lists/user/${state.userId}`;
+    
+    try {
+      const response = await fetch(url);
+      const json = await response.json();
+      setLists(json)
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const createNewList = async () => {
+    const url = `http://localhost:3000/lists`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({_user: state.userId})
+    });
+
+    const list = await response.json();
+    console.log(list);
+    fetchData()
+  };
+
   return (
     <View style={styles.container}>
+        <View style={styles.card}>
+          <View style={styles.cardContent}>
+            <TouchableOpacity style={styles.shareButton} onPress={()=> createNewList()}>
+              <Text style={styles.shareButtonText}>Create New List</Text>  
+            </TouchableOpacity>
+          </View>
+        </View>
       <FlatList 
         style={styles.contentList}
         columnWrapperStyle={styles.listContainer}
