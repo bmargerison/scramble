@@ -74,4 +74,22 @@ describe("/lists", () => {
     })
   })
 
+  describe("DELETE /:id", () => {
+    test("should respond with a 202 status code", async () => {
+      mockingoose.User.toReturn({ 
+        _id: "000a000000000000000a0000",
+        username: "username",
+        email: "email@email.com",
+        password: "Password123?" 
+      }, 'findOne');
+      const user = await User.findById({ _id: "000a000000000000000a0000" })
+      await request(server).post("/lists").send({ 
+        _user: user._id, 
+      })
+      const list = await List.find()
+      const response = await request(server).delete(`/lists/${list[0]._id}`)
+      expect(response.statusCode).toBe(202)
+    })
+  })
+
 })
