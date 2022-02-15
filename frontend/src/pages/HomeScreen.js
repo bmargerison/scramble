@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text, Button, View, FlatList, TouchableOpacity } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, Button, View, FlatList, TouchableOpacity, Pressable } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
 
 const HomeScreen = ({navigation}) => {
@@ -39,6 +39,12 @@ const HomeScreen = ({navigation}) => {
     fetchData()
   };
 
+  const deleteList = (list) => {
+    console.log(list.item._id)
+
+    const url = `http://localhost:3000/lists${list.item._id}`;
+  }
+
   return (
     <View style={styles.container}>
         <View style={styles.card}>
@@ -61,6 +67,9 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.cardContent}>
               <Text style={styles.name}>{item.date}</Text>
             </View>
+            <Pressable style={styles.button} onPress={() => deleteList({item})}>
+              <Text style={styles.text}>delete</Text>
+            </Pressable>
           </TouchableOpacity>
         )}}/>
     </View>
@@ -106,6 +115,26 @@ const styles = StyleSheet.create({
     alignSelf:'center',
     color:"#3399ff",
     fontWeight:'bold'
+  },
+
+  button: {
+    alignItems: 'right',
+    justifyContent: 'right',
+    paddingVertical: 8,
+    paddingHorizontal: 20,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: 'red',
+    position: 'absolute',
+    right: 20,
+    top: 5,
+  },
+  text: {
+    fontSize: 12,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
   },
 }); 
 
