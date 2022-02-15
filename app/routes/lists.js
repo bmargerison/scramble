@@ -15,4 +15,7 @@ router.get('/:id', listController.getList)
 /* Create list. */
 router.post('/', listController.newList)
 
+/* Delete list. */
+router.delete('/:id', listController.deleteList)
+
 module.exports = router;

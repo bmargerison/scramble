@@ -45,4 +45,14 @@ const newList = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllLists, getUserLists, getList, newList};
+const deleteList = async (req, res, next) => {
+  try {
+    let list = await List.findById(req.params.id)
+    await list.remove()
+    res.status(202).json(list)
+  } catch (err) {
+    res.status(404).json({ message: "Cannot find list" })
+  }
+};
+
+module.exports = {getAllLists, getUserLists, getList, newList, deleteList};

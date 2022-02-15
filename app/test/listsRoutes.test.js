@@ -1,5 +1,5 @@
 const request = require('supertest');
-const { db } = require('../models/list')
+const { db, deleteOne } = require('../models/list')
 const List = require('../models/list')
 const User = require('../models/user')
 process.env.NODE_ENV = 'test'
@@ -75,7 +75,7 @@ describe("/lists", () => {
   })
 
   describe("DELETE /:id", () => {
-    test("should respond with a 202 status code", async () => {
+    test("404 status code if list doesn't exist", async () => {
       mockingoose.User.toReturn({ 
         _id: "000a000000000000000a0000",
         username: "username",
@@ -83,12 +83,11 @@ describe("/lists", () => {
         password: "Password123?" 
       }, 'findOne');
       const user = await User.findById({ _id: "000a000000000000000a0000" })
-      await request(server).post("/lists").send({ 
+      const list = await request(server).post("/lists").send({ 
         _user: user._id, 
       })
-      const list = await List.find()
-      const response = await request(server).delete(`/lists/${list[0]._id}`)
-      expect(response.statusCode).toBe(202)
+      const response = await request(server).del(`/lists/gibberish`)
+      expect(response.statusCode).toBe(404)
     })
   })
 
