@@ -39,10 +39,10 @@ const HomeScreen = ({navigation}) => {
     fetchData()
   };
 
-  const deleteList = (list) => {
+  const deleteList = async (list) => {
     console.log(list.item._id)
 
-    const url = `http://localhost:3000/lists${list.item._id}`;
+    const url = `http://localhost:3000/lists/${list.item._id}`;
   }
 
   return (
