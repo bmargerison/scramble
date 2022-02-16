@@ -35,14 +35,22 @@ const HomeScreen = ({navigation}) => {
     });
 
     const list = await response.json();
-    console.log(list);
+
     fetchData()
   };
 
   const deleteList = async (list) => {
-    console.log(list.item._id)
-
     const url = `http://localhost:3000/lists/${list.item._id}`;
+
+    const response = await fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+    }).then(response => response.json());
+
+    fetchData()
   }
 
   return (
