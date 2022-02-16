@@ -37,6 +37,10 @@ const LoginScreen = ({ navigation }) => {
         onPress={() => signin()}>
         <Text style={styles.loginText}>Log in</Text>
       </TouchableOpacity>
+      <Text style={styles.loginLink}
+        onPress={() => navigation.navigate('Signup')}>
+        Don't have an account? Sign up here
+      </Text>
     </View>
   );
 }
@@ -51,12 +55,19 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: AppStyles.color.tint,
     marginTop: 50,
-    marginBottom: 20,
+    marginBottom: 50,
   },
   leftTitle: {
     alignSelf: 'stretch',
     textAlign: 'left',
     marginLeft: 20,
+  },
+  content: {
+    paddingLeft: 50,
+    paddingRight: 50,
+    textAlign: 'center',
+    fontSize: AppStyles.fontSize.content,
+    color: AppStyles.color.text,
   },
   loginContainer: {
     width: AppStyles.buttonWidth.main,
@@ -68,13 +79,9 @@ const styles = StyleSheet.create({
     color: AppStyles.color.white,
     alignSelf: "center",
   },
-  placeholder: {
-    color: 'red',
-  },
   InputContainer: {
     width: AppStyles.textInputWidth.main,
-    marginTop: 30,
-    marginBottom: 20,
+    marginBottom: 30,
     borderWidth: 1,
     borderStyle: 'solid',
     borderColor: AppStyles.color.grey,
@@ -85,6 +92,11 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     color: AppStyles.color.text,
+  },
+  loginLink: {
+    marginTop: 20,
+    marginBottom: 20,
+    color: AppStyles.color.blue,
   },
 });
 

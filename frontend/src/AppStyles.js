@@ -9,6 +9,7 @@ export const AppStyles = {
   color: {
     main: "#5ea23a",
     text: "#696969",
+    link: "#0000FF",
     title: "#00FFFF",
     subtitle: "##00FFFF",
     categoryTitle: "#161616",
