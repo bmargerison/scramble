@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, FlatList, TouchableOpacity, Pressable, TouchableHighlight } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
 import { Button } from 'galio-framework';
 import { theme, withGalio, GalioProvider } from 'galio-framework'
+import {AppStyles} from '../AppStyles';
+import Icon from 'react-native-vector-icons/Entypo';
+import { Card } from 'galio-framework';
 
 const HomeScreen = ({navigation}) => {
   const [lists, setLists] = useState([])
@@ -56,50 +59,77 @@ const HomeScreen = ({navigation}) => {
   }
 
   return (
-    <View style={styles.container}>
-        <View style={styles.card}>
-          <View style={styles.cardContent}>
-            <TouchableOpacity style={styles.shareButton} onPress={()=> createNewList()}>
-              <Text style={styles.shareButtonText}>Create New List</Text>  
-            </TouchableOpacity>
-          </View>
-        </View>
-      <FlatList 
-        style={styles.contentList}
-        columnWrapperStyle={styles.listContainer}
-        data={lists.reverse()}
-        keyExtractor= {(item) => {
-          return item._id;
-        }}
-        renderItem={({item}) => {
-        return (
-          <TouchableOpacity style={styles.card} onPress={()=> navigation.navigate('ListScreen', {item} )}>
-            <View style={styles.cardContent}>
-              <Text style={styles.name}>{item.date}</Text>
+    <View>
+      <View style={styles.container}>
+        <Text style={[styles.title, styles.leftTitle]}>Your lists</Text>
+        <TouchableOpacity style={styles.addContainer} onPress={()=> createNewList()}>
+          <Text style={styles.buttonText}>Add New List</Text>  
+        </TouchableOpacity>
+      </View>
+      <View>
+        <FlatList 
+          style={styles.tasks}
+          columnWrapperStyle={styles.listContainer}
+          data={lists.reverse()}
+          keyExtractor= {(item) => {
+            return item.id;
+          }}
+          renderItem={({item}) => {
+          return (
+            <View 
+            style={styles.card}>
+              <TouchableOpacity style={styles.cardContent} onPress={()=> navigation.navigate('ListScreen', {item} )}>
+                  <Text style={styles.description}>{item.date}</Text>
+                  <Text style={styles.date}>item 1</Text>
+                  <Text style={styles.date}>item 2</Text>
+                  <Text style={styles.date}>item 3</Text>
+              </TouchableOpacity>
+              <TouchableHighlight
+                style={styles.delete}
+                  onPress={() => deleteList({item})}
+                >
+                <Icon style={styles.image} name="circle-with-cross" size={30} color="#900" />
+              </TouchableHighlight>
             </View>
-            <Button round size="small" colour="error" onPress={() => deleteList({item})}>
-              <Text style={styles.text}>Delete</Text>
-            </Button>
-          </TouchableOpacity>
-        )}}/>
+          )}}/>
+      </View>
     </View>
-  );
+    );
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flex:1,
-    marginTop:20,
-    backgroundColor:"#ebf0f7"
-  },
-  contentList:{
-    flex:1,
+  container: {
+    flex: 1,
+    alignItems: 'center',
   },
   cardContent: {
     marginLeft:20,
-    marginTop:10
+    marginTop:10,
+    flex: 10,
   },
-
+  title: {
+    fontSize: AppStyles.fontSize.title,
+    fontWeight: 'bold',
+    color: AppStyles.color.tint,
+    marginTop: 50,
+    marginBottom: 50,
+  },
+  leftTitle: {
+    alignSelf: 'stretch',
+    textAlign: 'left',
+    marginLeft: 20,
+  },
+  addContainer: {
+    width: AppStyles.buttonWidth.main,
+    backgroundColor: AppStyles.color.tint,
+    borderRadius: AppStyles.borderRadius.main,
+    padding: 10,
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: AppStyles.color.white,
+    alignSelf: "center",
+  },
   card:{
     shadowColor: '#00000021',
     shadowOffset: {
@@ -109,43 +139,31 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     elevation: 12,
-
-    marginLeft: 20,
-    marginRight: 20,
-    marginTop:20,
+    marginVertical: 20,
+    marginHorizontal:20,
     backgroundColor:"white",
+    flexBasis: '80%',
     padding: 10,
     flexDirection:'row',
-    borderRadius:30,
+    flexWrap: 'wrap',
   },
-
-  name:{
+  description:{
+    alignSelf: "left",
     fontSize:18,
-    flex:1,
-    alignSelf:'center',
-    color:"#3399ff",
-    fontWeight:'bold'
+    color:"#008080",
+    fontWeight:'bold',
   },
-
-  button: {
-    alignItems: 'right',
-    justifyContent: 'right',
-    paddingVertical: 8,
-    paddingHorizontal: 20,
-    borderRadius: 4,
-    elevation: 3,
-    position: 'absolute',
-    right: 20,
-    top: 5,
+  date:{
+    fontSize:14,
+    color:"#696969",
+    marginTop:5
   },
-  text: {
-    fontSize: 12,
-    lineHeight: 21,
-    fontWeight: 'bold',
-    letterSpacing: 0.25,
-    color: 'white',
+  delete: {
+    flex: 1,
   },
+  delete: {
+    alignSelf: "right",
+  }
 }); 
-
 
 export default HomeScreen;

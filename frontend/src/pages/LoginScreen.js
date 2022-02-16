@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
       </View>
       <TouchableOpacity
         style={styles.loginContainer}
-        onPress={() => signin()}>
+        onPress={() => signin({email, password})}>
         <Text style={styles.loginText}>Log in</Text>
       </TouchableOpacity>
       <Text style={styles.loginLink}

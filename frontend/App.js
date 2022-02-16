@@ -34,8 +34,14 @@ const Stack = createStackNavigator()
 function HomeFlowNavigator() {
   return(
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={HomeScreen}/>
-      <Stack.Screen name="ListScreen" component={ListScreen}/>
+      <Stack.Screen 
+        name="Home" component={HomeScreen}
+        options={{headerShown: false}}
+        />
+      <Stack.Screen 
+        name="ListScreen" component={ListScreen}
+        options={{headerShown: false}}
+        />
     </Stack.Navigator>
   )
 }
