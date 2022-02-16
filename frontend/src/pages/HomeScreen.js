@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text, Button, View, FlatList, TouchableOpacity, Pressable } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, FlatList, TouchableOpacity, Pressable } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
+import { Button } from 'galio-framework';
+import { theme, withGalio, GalioProvider } from 'galio-framework'
 
 const HomeScreen = ({navigation}) => {
   const [lists, setLists] = useState([])
@@ -75,9 +77,9 @@ const HomeScreen = ({navigation}) => {
             <View style={styles.cardContent}>
               <Text style={styles.name}>{item.date}</Text>
             </View>
-            <Pressable style={styles.button} onPress={() => deleteList({item})}>
-              <Text style={styles.text}>delete</Text>
-            </Pressable>
+            <Button round size="small" colour="error" onPress={() => deleteList({item})}>
+              <Text style={styles.text}>Delete</Text>
+            </Button>
           </TouchableOpacity>
         )}}/>
     </View>
@@ -132,7 +134,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: 'red',
     position: 'absolute',
     right: 20,
     top: 5,

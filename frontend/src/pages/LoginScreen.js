@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
-import { View, Button, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
+import {AppStyles} from '../AppStyles';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -9,50 +10,82 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder='Email'
-        autoCapitalize="none"
-        placeholderTextColor='white'
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder='Password'
-        secureTextEntry={true}
-        autoCapitalize="none"
-        placeholderTextColor='white'
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <Button
-        title='Login'
-        onPress={() => signin({email, password})}
-      />
-      <Text style={{color: 'blue'}}
-          onPress={() => navigation.navigate('Signup')}>
-          Don't have an account? Sign up here
-      </Text>
-  </View>
+      <Text style={[styles.title, styles.leftTitle]}>Sign In</Text>
+      <View style={styles.InputContainer}>
+        <TextInput
+          style={styles.body}
+          placeholder="E-mail address"
+          onChangeText={setEmail}
+          value={email}
+          placeholderTextColor={AppStyles.color.grey}
+          underlineColorAndroid="transparent"
+        />
+      </View>
+      <View style={styles.InputContainer}>
+        <TextInput
+          style={styles.body}
+          secureTextEntry={true}
+          placeholder="Password"
+          onChangeText={setPassword}
+          value={password}
+          placeholderTextColor={AppStyles.color.grey}
+          underlineColorAndroid="transparent"
+        />
+      </View>
+      <TouchableOpacity
+        style={styles.loginContainer}
+        onPress={() => signin()}>
+        <Text style={styles.loginText}>Log in</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  input: {
-    width: 350,
-    height: 55,
-    backgroundColor: '#AFEEEE',
-    margin: 10,
-    padding: 8,
-    color: 'white',
-    borderRadius: 14,
-    fontSize: 18,
-    fontWeight: '500',
-  },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-})
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: AppStyles.fontSize.title,
+    fontWeight: 'bold',
+    color: AppStyles.color.tint,
+    marginTop: 50,
+    marginBottom: 20,
+  },
+  leftTitle: {
+    alignSelf: 'stretch',
+    textAlign: 'left',
+    marginLeft: 20,
+  },
+  loginContainer: {
+    width: AppStyles.buttonWidth.main,
+    backgroundColor: AppStyles.color.tint,
+    borderRadius: AppStyles.borderRadius.main,
+    padding: 10,
+  },
+  loginText: {
+    color: AppStyles.color.white,
+    alignSelf: "center",
+  },
+  placeholder: {
+    color: 'red',
+  },
+  InputContainer: {
+    width: AppStyles.textInputWidth.main,
+    marginTop: 30,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: AppStyles.color.grey,
+    borderRadius: AppStyles.borderRadius.main,
+  },
+  body: {
+    height: 42,
+    paddingLeft: 20,
+    paddingRight: 20,
+    color: AppStyles.color.text,
+  },
+});
 
 export default LoginScreen;
