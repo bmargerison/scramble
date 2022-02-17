@@ -65,18 +65,14 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View>
         <FlatList 
-          style={styles.tasks}
-          columnWrapperStyle={styles.listContainer}
           data={lists.reverse()}
-          keyExtractor= {(item) => {
-            return item.id;
-          }}
+          keyExtractor={(item, index) => item._id}
           renderItem={({item}) => {
           return (
             <View 
             style={styles.card}>
               <TouchableOpacity style={styles.cardContent} onPress={()=> navigation.navigate('ListScreen', {item} )}>
-                  <Text style={styles.description}>{item.date}</Text>
+                  <Text style={styles.description}>{item.date.slice(0,10)} {item.date.slice(11,16)}</Text>
                   <Text style={styles.date}>item 1</Text>
                   <Text style={styles.date}>item 2</Text>
                   <Text style={styles.date}>item 3</Text>

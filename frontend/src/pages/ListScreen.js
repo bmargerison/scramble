@@ -46,7 +46,7 @@ const ListScreen = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <Text style={[styles.title, styles.leftTitle]}>{list.item.date}</Text>
+      <Text style={[styles.title, styles.leftTitle]}>{list.item.date.slice(0,10)} {list.item.date.slice(11,16)}</Text>
       <TouchableOpacity style={styles.addContainer} onPress={() => setModalVisible(true)}>
         <Text style={styles.buttonText}>Add Item</Text>  
       </TouchableOpacity>
