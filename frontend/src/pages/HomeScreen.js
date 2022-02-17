@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text, View, FlatList, TouchableOpacity, Pressable, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
-import { Button } from 'galio-framework';
-import { theme, withGalio, GalioProvider } from 'galio-framework'
 import {AppStyles} from '../AppStyles';
 import Icon from 'react-native-vector-icons/Entypo';
-import { Card } from 'galio-framework';
 
 const HomeScreen = ({navigation}) => {
   const [lists, setLists] = useState([])
