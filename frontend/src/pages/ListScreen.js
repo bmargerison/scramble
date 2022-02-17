@@ -9,11 +9,11 @@ const ListScreen = ({ route, navigation }) => {
 
   useEffect(() => {
 
-    const fetchData = async () => {
-      setList(route.params)
-    };
+  const fetchData = async () => {
+    setList(route.params)
+  };
 
-    fetchData();
+  fetchData();
   }, []);
 
   return (
@@ -97,11 +97,11 @@ const styles = StyleSheet.create({
   },
   modalView: {
     margin: 20,
-    backgroundColor: "white",
     borderRadius: 20,
+    backgroundColor: AppStyles.color.white,
     padding: 35,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: '#00000021',
     shadowOffset: {
       width: 0,
       height: 2
@@ -110,23 +110,8 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5
   },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
   textStyle: {
-    color: "white",
-    textAlign: "center"
-  },
-  modalText: {
-    marginBottom: 15,
+    color: AppStyles.color.white,
     textAlign: "center"
   },
   body: {
