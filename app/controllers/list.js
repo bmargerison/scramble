@@ -55,4 +55,18 @@ const deleteList = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllLists, getUserLists, getList, newList, deleteList};
+const updateItems = async (req, res, next) => {
+  if (!req.params.id) {
+    return res.status(404).json({ message: "Cannot find list" })
+  }
+  try {
+    const list = await List.findById(req.params.id)
+    const items = await list.items.push(req.body.item)
+    await list.updateOne({ items: items })
+    res.status(204).json(list)
+  } catch (err) {
+    return res.status(400).json({ message: err.message })
+  }
+};
+
+module.exports = {getAllLists, getUserLists, getList, newList, deleteList, updateItems};

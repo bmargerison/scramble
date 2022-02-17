@@ -18,4 +18,6 @@ router.post('/', listController.newList)
 /* Delete list. */
 router.delete('/:id', listController.deleteList)
 
+router.patch('/:id', listController.updateItems)
+
 module.exports = router;

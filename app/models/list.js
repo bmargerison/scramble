@@ -13,7 +13,8 @@ const listSchema = new mongoose.Schema({
   },
   items: {
     type: Array,
-    required: false
+    required: false,
+    default: []
   }
 })
 
