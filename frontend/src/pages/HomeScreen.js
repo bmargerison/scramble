@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, FlatList, TouchableOpacity, TouchableHighlight 
 import {Context as AuthContext} from '../context/AuthContext';
 import {AppStyles} from '../AppStyles';
 import Icon from 'react-native-vector-icons/Entypo';
+import { IP_ADDRESS } from "@env";
 
 const HomeScreen = ({navigation}) => {
   const [lists, setLists] = useState([])
@@ -13,7 +14,7 @@ const HomeScreen = ({navigation}) => {
   }, []);
 
   const fetchData = async () => {
-    const url = `http://localhost:3000/lists/user/${state.userId}`;
+    const url = `http://${IP_ADDRESS}:3000/lists/user/${state.userId}`;
     
     try {
       const response = await fetch(url);
@@ -25,7 +26,7 @@ const HomeScreen = ({navigation}) => {
   };
 
   const createNewList = async () => {
-    const url = `http://localhost:3000/lists`;
+    const url = `http://${IP_ADDRESS}:3000/lists`;
 
     const response = await fetch(url, {
       method: 'POST',
@@ -42,7 +43,7 @@ const HomeScreen = ({navigation}) => {
   };
 
   const deleteList = async (list) => {
-    const url = `http://localhost:3000/lists/${list.item._id}`;
+    const url = `http://${IP_ADDRESS}:3000/lists/${list.item._id}`;
 
     const response = await fetch(url, {
       method: 'DELETE',
@@ -50,7 +51,9 @@ const HomeScreen = ({navigation}) => {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-    }).then(response => response.json());
+    }).then(response => {
+      response.json()
+    });
 
     fetchData()
   }
@@ -141,7 +144,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   description:{
-    alignSelf: "left",
+    alignSelf: "auto",
     fontSize:18,
     color:"#008080",
     fontWeight:'bold',
@@ -155,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   delete: {
-    alignSelf: "right",
+    right: 0,
   }
 }); 
 

@@ -1,5 +1,6 @@
 import createDataContext from './createDataContext';
 import axios from "axios";
+import { IP_ADDRESS } from "@env";
 
 const authReducer = (state, action) => {
   switch (action.type) {
@@ -19,7 +20,7 @@ const authReducer = (state, action) => {
 const signup = dispatch => {
   return ({username, email, password}) => {
     axios
-      .post("http://localhost:3000/users", {
+      .post(`http://${IP_ADDRESS}:3000/users`, {
         username: username,
         email: email,
         password: password
@@ -37,7 +38,7 @@ const signup = dispatch => {
         }
       })
     axios
-      .post("http://localhost:3000/users/login", {
+      .post(`http://${IP_ADDRESS}:3000/users/login`, {
         email: email,
         password: password
       })
@@ -57,7 +58,7 @@ const signup = dispatch => {
 const signin = dispatch => {
   return ({email, password}) => {
     axios
-      .post("http://localhost:3000/users/login", {
+      .post(`http://${IP_ADDRESS}:3000/users/login`, {
         email: email,
         password: password
       })
