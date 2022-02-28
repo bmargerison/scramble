@@ -23,4 +23,19 @@ const newItem = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllItems, newItem};
+const getUserItems = async (req, res, next) => {
+  try {
+    let items = await Item.find() || []
+    let userItems = []
+    items.forEach(item => {
+      if (item._user == req.params.id) {
+        userItems.push(item)
+      }
+    })
+    res.json(userItems)
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+};
+
+module.exports = {getAllItems, newItem, getUserItems};

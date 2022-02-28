@@ -9,4 +9,7 @@ router.get('/', itemController.getAllItems)
 /* Create item. */
 router.post('/', itemController.newItem)
 
+/* GET all items for given user. */
+router.get('/user/:id', itemController.getUserItems)
+
 module.exports = router;
