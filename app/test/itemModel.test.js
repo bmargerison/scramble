@@ -14,15 +14,15 @@ describe("list", function() {
 
   test("should be invalid if no user", function(done) {
     const item = new Item();
-    list.validate(function(err) {
+    item.validate(function(err) {
         expect(err.errors._user).to.exist;
         done();
     });
   });
 
-  test("should be invalid if no tyype", function(done) {
+  test("should be invalid if no type", function(done) {
     const item = new Item();
-    list.validate(function(err) {
+    item.validate(function(err) {
         expect(err.errors.type).to.exist;
         done();
     });
@@ -40,8 +40,8 @@ describe("list", function() {
       _user: user._id,
       type: "dairy"
     })
-    expect(String(list._user)).to.equal(String(user.id))
-    expect(String(list.type)).to.equal("dairy")
+    expect(String(item._user)).to.equal(String(user.id))
+    expect(String(item.type)).to.equal("dairy")
   });
 
 });
