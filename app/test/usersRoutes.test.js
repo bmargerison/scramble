@@ -19,7 +19,7 @@ describe("/users", () => {
 
   describe("POST /login", () => {
     test("should respond with a 200 status code", async () => {
-      await request(server).post("/users").send({ 
+      const user = await request(server).post("/users").send({ 
         username: "username", 
         email: "email@email.com",
         password: "Password123?" 

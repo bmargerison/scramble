@@ -43,6 +43,13 @@ describe("/lists", () => {
   })
 
   describe("DELETE /:id", () => {
+    test("202 status code", async () => {
+      const list = await request(server).post("/lists").send({ 
+        _user: "000a000000000000000a0000", 
+      })
+      const response = await request(server).del(`/lists/${list._body._id}`)
+      expect(response.statusCode).toBe(202)
+    })
     test("404 status code if list doesn't exist", async () => {
       const list = await request(server).post("/lists").send({ 
         _user: "000a000000000000000a0000", 
