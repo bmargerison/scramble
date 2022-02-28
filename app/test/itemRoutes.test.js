@@ -33,4 +33,16 @@ describe("/items", () => {
     })
   })
 
+  describe("GET /user/:id", () => {
+    test("200 status code", async () => {
+      const item = await request(server).post("/items").send({
+        name: "Margerine", 
+        _user: "000a000000000000000a0000",
+        type: "Dairy"
+      })
+      const response = await request(server).get(`/items/user/"000a000000000000000a0000"`)
+      expect(response.statusCode).toBe(200)
+    })
+  })
+
 });
