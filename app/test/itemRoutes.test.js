@@ -20,10 +20,9 @@ describe("/items", () => {
   describe("POST /", () => {
     test("should respond with a 201 status code", async () => {
       const response = await request(server).post("/items").send({ 
-        _user: "000a000000000000000a0000", 
+        _user: "000a000000000000000a0000",
         type: "Dairy"
       })
-      console.log(response)
       expect(response.statusCode).toBe(201)
     })
     test("500 status code if no user", async () => {

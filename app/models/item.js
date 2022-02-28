@@ -9,7 +9,8 @@ const itemSchema = new mongoose.Schema({
   type: {
     type: String,
     required: true,
-    enum: ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks']
+    enum: ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other'],
+    default: 'Other'
   }
 })
 

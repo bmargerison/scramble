@@ -20,14 +20,6 @@ describe("list", function() {
     });
   });
 
-  test("should be invalid if no type", function(done) {
-    const item = new Item();
-    item.validate(function(err) {
-        expect(err.errors.type).to.exist;
-        done();
-    });
-  });
-
   test("item has type, user", async function() {
     mockingoose.User.toReturn({ 
       _id: "000a000000000000000a0000",

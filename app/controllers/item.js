@@ -9,4 +9,17 @@ const getAllItems = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllItems};
+const newItem = async (req, res, next) => {
+  const item = new Item({
+    _user: req.body._user,
+    type: req.body.type
+  })
+  try {
+    const newItem = await item.save()
+    res.status(201).json(newItem)
+  } catch (err) {
+    return res.status(400).json({ message: err.message })
+  }
+};
+
+module.exports = {getAllItems, newItem};
