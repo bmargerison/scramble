@@ -1,20 +1,52 @@
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, TextInput, Pressable, StyleSheet, Text, Button, View, FlatList, TouchableOpacity, Modal } from 'react-native';
 import {AppStyles} from '../AppStyles';
+import axios from "axios";
+import { IP_ADDRESS } from "@env";
+
+let list
 
 const ListScreen = ({ route, navigation }) => {
   const [ list, setList ] = useState(route.params);
   const [ item, setItem ] = useState();
+  const [ items, setItems ] = useState(list.items)
   const [ modalVisible, setModalVisible ] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const url = `http://${IP_ADDRESS}:3000/lists/${list._id}`;
+    
+      axios
+        .get(url)
+        .then((res) => {
+          setList(res.data);
+          setItems(res.data.items)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      };
 
-  const fetchData = async () => {
-    setList(route.params)
-  };
+      fetchData();
+    }, []);
 
-  fetchData();
-  }, []);
+  const addToList = () => {
+    const url = `http://${IP_ADDRESS}:3000/lists/${list._id}`;
+    
+    axios
+      .patch(url, {
+        item: item,
+      })
+      .then((res) => {
+        items.push(item)
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    setModalVisible(!modalVisible)
+  }
 
   return (
     <View style={styles.container}>
@@ -39,7 +71,7 @@ const ListScreen = ({ route, navigation }) => {
             />
             <TouchableOpacity
               style={styles.addButton}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => addToList()}
             >
               <Text style={styles.textStyle}>Add</Text>
             </TouchableOpacity>
@@ -50,6 +82,16 @@ const ListScreen = ({ route, navigation }) => {
       <TouchableOpacity style={styles.addContainer} onPress={() => setModalVisible(true)}>
         <Text style={styles.buttonText}>Add Item</Text>  
       </TouchableOpacity>
+      <FlatList 
+          data={items}
+          keyExtractor={(item, index) => index}
+          renderItem={({item}) => {
+          return (
+            <View 
+            style={styles.card}>
+                  <Text style={styles.description}>{item}</Text>
+            </View>
+          )}}/>
     </View>
   );
 }
