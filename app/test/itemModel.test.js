@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const { db } = require('../models/list')
+const { db } = require('../models/item')
 const Item = require('../models/item')
 const User = require('../models/user')
 process.env.NODE_ENV = 'test'
