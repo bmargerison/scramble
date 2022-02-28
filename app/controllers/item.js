@@ -11,6 +11,7 @@ const getAllItems = async (req, res, next) => {
 
 const newItem = async (req, res, next) => {
   const item = new Item({
+    name: req.body.name,
     _user: req.body._user,
     type: req.body.type
   })

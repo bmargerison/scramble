@@ -13,9 +13,21 @@ describe("list", function() {
   });
 
   test("should be invalid if no user", function(done) {
-    const item = new Item();
+    const item = new Item({
+      name: "Diary",
+    });
     item.validate(function(err) {
         expect(err.errors._user).to.exist;
+        done();
+    });
+  });
+
+  test("should be invalid if no name", function(done) {
+    const item = new Item({
+      _user: "000a000000000000000a0000",
+    });
+    item.validate(function(err) {
+        expect(err.errors.name).to.exist;
         done();
     });
   });

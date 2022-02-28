@@ -1,6 +1,10 @@
 const mongoose = require('mongoose')
 
 const itemSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+  },
   _user: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'User',
@@ -10,7 +14,6 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other'],
-    default: 'Other'
   }
 })
 
