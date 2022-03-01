@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, TextInput, Pressable, StyleSheet, Text, Button, View, FlatList, TouchableOpacity, Modal } from 'react-native';
 import {AppStyles} from '../AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
+import {Context as AuthContext} from '../context/AuthContext';
 
 let list
 
@@ -10,17 +11,28 @@ const ListScreen = ({ route, navigation }) => {
   const [ list, setList ] = useState(route.params);
   const [ item, setItem ] = useState();
   const [ items, setItems ] = useState(list.items)
+  const [ allItems, setAllItems ] = useState([])
   const [ modalVisible, setModalVisible ] = useState(false);
+  const {state} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = `http://${IP_ADDRESS}:3000/lists/${list._id}`;
     
       axios
-        .get(url)
+        .get(`http://${IP_ADDRESS}:3000/lists/${list._id}`)
         .then((res) => {
           setList(res.data);
           setItems(res.data.items)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+
+      axios
+        .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
+        .then((res) => {
+          setAllItems(res.data)
+          console.log(res.data)
         })
         .catch((err) => {
           console.log(err)
@@ -32,6 +44,8 @@ const ListScreen = ({ route, navigation }) => {
 
   const addToList = () => {
     const url = `http://${IP_ADDRESS}:3000/lists/${list._id}`;
+
+    createNewItem(item)
     
     axios
       .patch(url, {
@@ -48,6 +62,24 @@ const ListScreen = ({ route, navigation }) => {
     setModalVisible(!modalVisible)
   }
 
+  const createNewItem = (item) => {
+    console.log(!allItems.includes(item))
+    if (!allItems.includes(item)) {
+      axios
+      .post(`http://${IP_ADDRESS}:3000/items`, {
+        _user: state.userId,
+        name: item,
+        type: 'Other'
+      })
+      .then((res) => {
+        setAllItems(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Modal
@@ -60,21 +92,23 @@ const ListScreen = ({ route, navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <TextInput
-            style={styles.body}
-            secureTextEntry={true}
-            placeholder="What would you like to add?"
-            onChangeText={setItem}
-            value={item}
-            placeholderTextColor={AppStyles.color.grey}
-            underlineColorAndroid="transparent"
-            />
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={() => addToList()}
-            >
-              <Text style={styles.textStyle}>Add</Text>
-            </TouchableOpacity>
+            <View style={styles.textView}>
+              <TextInput
+              style={styles.body}
+              secureTextEntry={true}
+              placeholder="What would you like to add?"
+              onChangeText={setItem}
+              value={item}
+              placeholderTextColor={AppStyles.color.grey}
+              underlineColorAndroid="transparent"
+              />
+            </View>
+              <TouchableOpacity
+                style={styles.addButton}
+                onPress={() => addToList()}
+              >
+                <Text style={styles.textStyle}>Add</Text>
+              </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -121,10 +155,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   addButton: {
-    width: AppStyles.buttonWidth.main,
+    width: 100,
     backgroundColor: AppStyles.color.tint,
     borderRadius: AppStyles.borderRadius.main,
-    padding: 10,
+    padding: 5,
     marginTop: 20,
   },
   buttonText: {
@@ -157,11 +191,17 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   body: {
+    borderRadius: 20,
     height: 42,
     paddingLeft: 20,
     paddingRight: 20,
     color: AppStyles.color.text,
+    backgroundColor: AppStyles.color.white,
   },
+  textView: {
+    borderRadius: 20,
+    borderWidth: 1,
+  }
 }); 
 
 export default ListScreen;
