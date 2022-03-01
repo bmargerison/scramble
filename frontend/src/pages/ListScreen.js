@@ -1,83 +1,91 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, TextInput, Pressable, StyleSheet, Text, Button, View, FlatList, TouchableOpacity, Modal } from 'react-native';
+import { SafeAreaView, 
+  TextInput, 
+  Pressable, 
+  StyleSheet, 
+  Text, 
+  Button, 
+  View, 
+  FlatList, 
+  TouchableOpacity, 
+  Modal } 
+from 'react-native';
 import {AppStyles} from '../AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
 import {Context as AuthContext} from '../context/AuthContext';
 
-let list
-
 const ListScreen = ({ route, navigation }) => {
   const [ list, setList ] = useState(route.params);
   const [ item, setItem ] = useState();
-  const [ items, setItems ] = useState(list.items)
   const [ allItems, setAllItems ] = useState([])
-  const [ modalVisible, setModalVisible ] = useState(false);
+  const [ addModalVisible, setAddModalVisible ] = useState(false);
+  const [ typeModalVisible, setTypeModalVisible ] = useState(false);
   const {state} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
-    
-      axios
-        .get(`http://${IP_ADDRESS}:3000/lists/${list._id}`)
-        .then((res) => {
-          setList(res.data);
-          setItems(res.data.items)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-      axios
-        .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
-        .then((res) => {
-          setAllItems(res.data)
-          console.log(res.data)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-      };
-
-      fetchData();
-    }, []);
-
-  const addToList = () => {
-    const url = `http://${IP_ADDRESS}:3000/lists/${list._id}`;
-
-    createNewItem(item)
-    
+  
     axios
-      .patch(url, {
-        item: item,
-      })
+      .get(`http://${IP_ADDRESS}:3000/lists/${list._id}`)
       .then((res) => {
-        items.push(item)
-        console.log(res)
+        setList(res.data);
       })
       .catch((err) => {
         console.log(err)
       })
 
-    setModalVisible(!modalVisible)
-  }
-
-  const createNewItem = (item) => {
-    console.log(!allItems.includes(item))
-    if (!allItems.includes(item)) {
-      axios
-      .post(`http://${IP_ADDRESS}:3000/items`, {
-        _user: state.userId,
-        name: item,
-        type: 'Other'
-      })
+    axios
+      .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
       .then((res) => {
         setAllItems(res.data)
       })
       .catch((err) => {
         console.log(err)
       })
+    };
+
+    fetchData();
+  }, []);
+
+  const mapToItem = () => {
+    if (allItems.some(saved => saved.name == item)) {
+      addToList(item)
+    } else {
+      createNewItem(item)
     }
+  } 
+
+  const addToList = (item) => {
+    axios
+      .patch(`http://${IP_ADDRESS}:3000/lists/${list._id}`, {
+        item: item,
+      })
+      .then((res) => {
+        setList(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    setAddModalVisible(!addModalVisible)
+  }
+
+  const createNewItem = (item) => {
+    axios
+    .post(`http://${IP_ADDRESS}:3000/items`, {
+      _user: state.userId,
+      name: item,
+      type: 'Other'
+    })
+    .then((res) => {
+      console.log(res.data)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+
+    addToList(item)
   };
 
   return (
@@ -85,9 +93,9 @@ const ListScreen = ({ route, navigation }) => {
       <Modal
         animationType="slide"
         transparent={true}
-        visible={modalVisible}
+        visible={typeModalVisible}
         onRequestClose={() => {
-          setModalVisible(!modalVisible);
+          setTypeModalVisible(!typeModalVisible);
         }}
       >
         <View style={styles.centeredView}>
@@ -95,7 +103,6 @@ const ListScreen = ({ route, navigation }) => {
             <View style={styles.textView}>
               <TextInput
               style={styles.body}
-              secureTextEntry={true}
               placeholder="What would you like to add?"
               onChangeText={setItem}
               value={item}
@@ -112,12 +119,41 @@ const ListScreen = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={addModalVisible}
+        onRequestClose={() => {
+          setAddModalVisible(!addModalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.textView}>
+              <TextInput
+                style={styles.body}
+                placeholder="What would you like to add?"
+                onChangeText={setItem}
+                value={item}
+                placeholderTextColor={AppStyles.color.grey}
+                underlineColorAndroid="transparent"
+              />
+            </View>
+              <TouchableOpacity
+                style={styles.addButton}
+                onPress={() => mapToItem()}
+              >
+                <Text style={styles.textStyle}>Add</Text>
+              </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
       <Text style={[styles.title, styles.leftTitle]}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
-      <TouchableOpacity style={styles.addContainer} onPress={() => setModalVisible(true)}>
+      <TouchableOpacity style={styles.addContainer} onPress={() => setAddModalVisible(true)}>
         <Text style={styles.buttonText}>Add Item</Text>  
       </TouchableOpacity>
       <FlatList 
-          data={items}
+          data={list.items}
           keyExtractor={(item, index) => index}
           renderItem={({item}) => {
           return (
