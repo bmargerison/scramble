@@ -91,6 +91,7 @@ const ListScreen = ({ route, navigation }) => {
   };
 
   return (
+    <View>
     <View style={styles.container}>
       <Modal
         animationType="slide"
@@ -155,6 +156,7 @@ const ListScreen = ({ route, navigation }) => {
       <TouchableOpacity style={styles.addContainer} onPress={() => setAddModalVisible(true)}>
         <Text style={styles.buttonText}>Add Item</Text>  
       </TouchableOpacity>
+      </View>
       <FlatList 
           data={list.items}
           keyExtractor={(item, index) => index}
@@ -162,7 +164,7 @@ const ListScreen = ({ route, navigation }) => {
           return (
             <View 
             style={styles.card}>
-                  <Text style={styles.description}>{item}</Text>
+                  <Text style={styles.items}>{item}</Text>
             </View>
           )}}/>
     </View>
@@ -171,7 +173,6 @@ const ListScreen = ({ route, navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
   },
   title: {
@@ -245,6 +246,10 @@ const styles = StyleSheet.create({
   dropdownText: {
     fontSize: 15,
     backgroundColor: AppStyles.color.white,
+  },
+  items: {
+    fontSize: AppStyles.fontSize.content,
+    color:AppStyles.color.text,
   }
 }); 
 

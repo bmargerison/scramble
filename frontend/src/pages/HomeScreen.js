@@ -76,9 +76,9 @@ const HomeScreen = ({navigation}) => {
             style={styles.card}>
               <TouchableOpacity style={styles.cardContent} onPress={()=> navigation.navigate('ListScreen', item)}>
                   <Text style={styles.description}>{item.date.slice(0,10)} {item.date.slice(11,16)}</Text>
-                  <Text style={styles.date}>item 1</Text>
-                  <Text style={styles.date}>item 2</Text>
-                  <Text style={styles.date}>item 3</Text>
+                  <Text style={styles.item}>item 1</Text>
+                  <Text style={styles.item}>item 2</Text>
+                  <Text style={styles.item}>item 3</Text>
               </TouchableOpacity>
               <TouchableHighlight
                 style={styles.delete}
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: AppStyles.color.white,
     alignSelf: "center",
+    fontSize: AppStyles.fontSize.normal,
   },
   card:{
     flex: 1,
@@ -149,9 +150,9 @@ const styles = StyleSheet.create({
     color:"#008080",
     fontWeight:'bold',
   },
-  date:{
-    fontSize:14,
-    color:"#696969",
+  item:{
+    fontSize: AppStyles.fontSize.normal,
+    color:AppStyles.color.text,
     marginTop:5
   },
   delete: {
