@@ -14,10 +14,12 @@ import {AppStyles} from '../AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
 import {Context as AuthContext} from '../context/AuthContext';
+import SelectDropdown from 'react-native-select-dropdown'
 
 const ListScreen = ({ route, navigation }) => {
   const [ list, setList ] = useState(route.params);
   const [ item, setItem ] = useState();
+  const [ type, setType ] = useState();
   const [ allItems, setAllItems ] = useState([])
   const [ addModalVisible, setAddModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
@@ -52,7 +54,7 @@ const ListScreen = ({ route, navigation }) => {
     if (allItems.some(saved => saved.name == item)) {
       addToList(item)
     } else {
-      createNewItem(item)
+      setTypeModalVisible(!typeModalVisible)
     }
   } 
 
@@ -71,12 +73,12 @@ const ListScreen = ({ route, navigation }) => {
     setAddModalVisible(!addModalVisible)
   }
 
-  const createNewItem = (item) => {
+  const createNewItem = () => {
     axios
     .post(`http://${IP_ADDRESS}:3000/items`, {
       _user: state.userId,
       name: item,
-      type: 'Other'
+      type: type
     })
     .then((res) => {
       console.log(res.data)
@@ -84,7 +86,7 @@ const ListScreen = ({ route, navigation }) => {
     .catch((err) => {
       console.log(err)
     })
-
+    setTypeModalVisible(!typeModalVisible)
     addToList(item)
   };
 
@@ -100,21 +102,22 @@ const ListScreen = ({ route, navigation }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={styles.textView}>
-              <TextInput
-              style={styles.body}
-              placeholder="What would you like to add?"
-              onChangeText={setItem}
+              <SelectDropdown
+              data={['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']}
+              buttonStyle={styles.textView}
+              buttonTextStyle={styles.dropdownText}
+              defaultButtonText="Where is it located?"
+              onChangeText={setType}
               value={item}
               placeholderTextColor={AppStyles.color.grey}
               underlineColorAndroid="transparent"
               />
-            </View>
+
               <TouchableOpacity
                 style={styles.addButton}
-                onPress={() => addToList()}
+                onPress={() => createNewItem()}
               >
-                <Text style={styles.textStyle}>Add</Text>
+                <Text style={styles.textStyle}>Create</Text>
               </TouchableOpacity>
           </View>
         </View>
@@ -237,6 +240,11 @@ const styles = StyleSheet.create({
   textView: {
     borderRadius: 20,
     borderWidth: 1,
+    backgroundColor: AppStyles.color.white,
+  },
+  dropdownText: {
+    fontSize: 15,
+    backgroundColor: AppStyles.color.white,
   }
 }); 
 

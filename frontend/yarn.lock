@@ -7962,7 +7962,7 @@
     "object.assign" "^4.1.0"
     "reflect.ownkeys" "^0.2.0"
 
-"prop-types@^15.5.10", "prop-types@^15.5.9", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.0", "prop-types@^15.7.2":
+"prop-types@^15.5.10", "prop-types@^15.6.0", "prop-types@^15.6.2", "prop-types@^15.7.0", "prop-types@^15.7.2":
   "integrity" "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg=="
   "resolved" "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   "version" "15.8.1"
@@ -8084,11 +8084,6 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   "version" "17.0.2"
 
-"react-native-autocomplete-input@^5.0.2":
-  "integrity" "sha512-CL20a5Rg/jsiuavlG6cm8MRFyH1nICXFrvtlVMrJ3IKUa6AW/Ge4QqCFa7AjZKzEus1uDeMzcHC+bOhcgSudUQ=="
-  "resolved" "https://registry.npmjs.org/react-native-autocomplete-input/-/react-native-autocomplete-input-5.0.2.tgz"
-  "version" "5.0.2"
-
 "react-native-button@^3.0.1":
   "integrity" "sha512-Tkj7PwATNEXPOX4ubE+P8WnyJMenywU6Es/Bk2r2aR15204+AxSOEB3sp7JDP44LI+tUMetjudNBRRuKQOmoPw=="
   "resolved" "https://registry.npmjs.org/react-native-button/-/react-native-button-3.0.1.tgz"
@@ -8128,45 +8123,6 @@
     "lodash" "^4.17.21"
     "prop-types" "^15.7.2"
 
-"react-native-material-buttons@^0.5.0":
-  "integrity" "sha1-qys+P8P1AMpxP1Hp11l4r/YCFSo="
-  "resolved" "https://registry.npmjs.org/react-native-material-buttons/-/react-native-material-buttons-0.5.0.tgz"
-  "version" "0.5.0"
-  dependencies:
-    "prop-types" "^15.5.9"
-    "react-native-material-ripple" "^0.7.0"
-
-"react-native-material-dropdown@^0.11.1":
-  "integrity" "sha1-wP5DSo5heUHvkQukTS8HyPN1hP4="
-  "resolved" "https://registry.npmjs.org/react-native-material-dropdown/-/react-native-material-dropdown-0.11.1.tgz"
-  "version" "0.11.1"
-  dependencies:
-    "prop-types" "^15.5.9"
-    "react-native-material-buttons" "^0.5.0"
-    "react-native-material-ripple" "^0.8.0"
-    "react-native-material-textfield" "^0.12.0"
-
-"react-native-material-ripple@^0.7.0":
-  "integrity" "sha1-4q9REGgFMvFK6jw6Q4JHvi/+9lk="
-  "resolved" "https://registry.npmjs.org/react-native-material-ripple/-/react-native-material-ripple-0.7.5.tgz"
-  "version" "0.7.5"
-  dependencies:
-    "prop-types" "^15.5.10"
-
-"react-native-material-ripple@^0.8.0":
-  "integrity" "sha1-uMJOb96iryoh6EaLH0CzVIMBni8="
-  "resolved" "https://registry.npmjs.org/react-native-material-ripple/-/react-native-material-ripple-0.8.0.tgz"
-  "version" "0.8.0"
-  dependencies:
-    "prop-types" "^15.5.10"
-
-"react-native-material-textfield@^0.12.0":
-  "integrity" "sha1-P7oZ12q4n2cFLIHgghUvwkPYKj8="
-  "resolved" "https://registry.npmjs.org/react-native-material-textfield/-/react-native-material-textfield-0.12.0.tgz"
-  "version" "0.12.0"
-  dependencies:
-    "prop-types" "^15.5.9"
-
 "react-native-reanimated@^2.3.1":
   "integrity" "sha512-nzjVqwkB8eeyPKT2KoiA9EEz17ZMFSGMoOTC17Z9b5nE2Z4ZHjHM5EKhY0TlwzXFUuJAE9PhOfxF0wIO/maZSA=="
   "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.3.1.tgz"
@@ -8192,6 +8148,11 @@
   dependencies:
     "react-freeze" "^1.0.0"
     "warn-once" "^0.1.0"
+
+"react-native-select-dropdown@^1.8.0":
+  "integrity" "sha512-Sb2ETrh/cAVPncT0Lq9S+hDmilQ3CfMDo0jgkymPQJ5yBY0TMBfvgNTbiI3/Z/W8CLX/wV81BWOEQb5x2ogJfw=="
+  "resolved" "https://registry.npmjs.org/react-native-select-dropdown/-/react-native-select-dropdown-1.8.0.tgz"
+  "version" "1.8.0"
 
 "react-native-testing-library@^6.0.0":
   "integrity" "sha512-BobXLtlef+gklN6cl6oC20/rnW9lWGj7Yxzzn+fTb+9go0LnGGgJ8DNaJtuW5oS7pOkm1Wq+u+cypALyf32FjA=="
