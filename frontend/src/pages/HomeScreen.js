@@ -95,7 +95,6 @@ const HomeScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
   },
   cardContent: {
@@ -127,6 +126,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   card:{
+    flex: 1,
     shadowColor: '#00000021',
     shadowOffset: {
       width: 0,
