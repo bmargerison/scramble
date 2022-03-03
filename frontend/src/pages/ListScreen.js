@@ -20,7 +20,8 @@ const ListScreen = ({ route, navigation }) => {
   const [ list, setList ] = useState(route.params);
   const [ item, setItem ] = useState();
   const [ type, setType ] = useState();
-  const [ allItems, setAllItems ] = useState([])
+  const [ types, setTypes ] = useState([]);
+  const [ allItems, setAllItems ] = useState({})
   const [ addModalVisible, setAddModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
   const {state} = useContext(AuthContext);
@@ -40,7 +41,23 @@ const ListScreen = ({ route, navigation }) => {
     axios
       .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
       .then((res) => {
-        setAllItems(res.data)
+        let items = {}
+        res.data.forEach((k,v) => {
+          if (!items[k.type]) {
+            items[k.type] = [k]
+          } else {
+            items[k.type].push(k);
+          }
+        }) 
+        // console.log(items['Other'][0].name)
+        setAllItems(items)
+
+        let typ = []
+        Object.keys(items).forEach((i) => {
+          typ.push({'t': i})
+        })
+        setTypes(typ)
+        console.log(types)
       })
       .catch((err) => {
         console.log(err)
@@ -81,7 +98,7 @@ const ListScreen = ({ route, navigation }) => {
       type: type
     })
     .then((res) => {
-      console.log(res.data)
+      
     })
     .catch((err) => {
       console.log(err)
@@ -158,15 +175,24 @@ const ListScreen = ({ route, navigation }) => {
       </TouchableOpacity>
       </View>
       <FlatList 
-          data={list.items}
+          data={types}
           keyExtractor={(item, index) => index}
-          renderItem={({item}) => {
-          return (
-            <View 
-            style={styles.card}>
-                  <Text style={styles.items}>{item}</Text>
-            </View>
-          )}}/>
+          renderItem={({item}) => { 
+            return (
+              <View>
+                <Text style={styles.title}>{item.t}</Text>
+                <FlatList 
+                  data={allItems[item.t]}
+                  keyExtractor={(item, index) => index}
+                  renderItem={({item}) => {
+                      return (
+                        <View
+                        style={styles.card}>
+                              <Text style={styles.items}>{item.name}</Text>
+                        </View>
+                  )}}/>
+              </View>
+        )}}/>
     </View>
   );
 }
