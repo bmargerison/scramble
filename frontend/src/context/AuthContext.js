@@ -26,9 +26,25 @@ const signup = dispatch => {
         password: password
       })
       .then((res) => {
-        console.log(res.data);
+        window.alert("Sign up successful")
+        axios
+        .post(`http://${IP_ADDRESS}:3000/users/login`, {
+          email: email,
+          password: password
+        })
+        .then(async (res) => {
+          dispatch({
+            type: 'signin',
+            payload: {
+              token: res.data.token,
+              userId: res.data.user._id
+            },
+          })
+        })
+        .catch((err) => window.alert(err.response.data.message))
       })
       .catch((err) => {
+        console.log(err);
         if (Array.isArray(err.response.data.message)) {
           err.response.data.message.forEach(message => {
             window.alert(message.msg)
@@ -37,26 +53,13 @@ const signup = dispatch => {
           window.alert(err.response.data.message)
         }
       })
-    axios
-      .post(`http://${IP_ADDRESS}:3000/users/login`, {
-        email: email,
-        password: password
-      })
-      .then(async (res) => {
-        dispatch({
-          type: 'signin',
-          payload: {
-            token: res.data.token,
-            userId: res.data.user._id
-          },
-        })
-      })
-      .catch((err) => window.alert(err.response.data.message))
   };
 };
 
 const signin = dispatch => {
   return ({email, password}) => {
+    console.log(email)
+    console.log(password)
     axios
       .post(`http://${IP_ADDRESS}:3000/users/login`, {
         email: email,
