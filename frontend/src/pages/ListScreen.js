@@ -180,7 +180,7 @@ const ListScreen = ({ route, navigation }) => {
           renderItem={({item}) => { 
             return (
               <View>
-                <Text style={styles.title}>{item.t}</Text>
+                <Text style={styles.heading}>{item.t}</Text>
                 <FlatList 
                   data={allItems[item.t]}
                   keyExtractor={(item, index) => index}
@@ -276,7 +276,20 @@ const styles = StyleSheet.create({
   items: {
     fontSize: AppStyles.fontSize.content,
     color:AppStyles.color.text,
-  }
+    marginTop: 2,
+    marginBottom: 2,
+    marginLeft: 20,
+  },
+  heading: {
+    fontSize: AppStyles.fontSize.content,
+    backgroundColor: AppStyles.color.tint,
+    color:AppStyles.color.white,
+    marginTop: 5,
+    marginBottom: 5,
+    marginLeft: 10,
+    marginRight: 10,
+    padding: 2,
+  },
 }); 
 
 export default ListScreen;

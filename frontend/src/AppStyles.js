@@ -28,7 +28,7 @@ export const AppStyles = {
   },
   fontSize: {
     title: 30,
-    content: 20,
+    content: 25,
     normal: 16
   },
   buttonWidth: {
