@@ -16,7 +16,7 @@ const SignupScreen = ({ navigation }) => {
         <TextInput
           style={styles.body}
           placeholder="Username"
-          onChange={(e) => setUsername(e.target.value)}
+          onChangeText={setUsername}
           value={username}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
@@ -26,7 +26,7 @@ const SignupScreen = ({ navigation }) => {
         <TextInput
           style={styles.body}
           placeholder="E-mail Address"
-          onChange={(e) => setEmail(e.target.value)}
+          onChangeText={setEmail}
           value={email}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
@@ -37,7 +37,7 @@ const SignupScreen = ({ navigation }) => {
           style={styles.body}
           placeholder="Password"
           secureTextEntry={true}
-          onChange={(e) => setPassword(e.target.value)}
+          onChangeText={setPassword}
           value={password}
           placeholderTextColor={AppStyles.color.grey}
           underlineColorAndroid="transparent"
