@@ -17,14 +17,19 @@ import {Context as AuthContext} from '../context/AuthContext';
 import SelectDropdown from 'react-native-select-dropdown'
 
 const ListScreen = ({ route, navigation }) => {
-  const [ list, setList ] = useState(route.params);
+  // modal forms
   const [ item, setItem ] = useState();
   const [ type, setType ] = useState();
+  const [ addModalVisible, setAddModalVisible ] = useState(false);
+  const [ typeModalVisible, setTypeModalVisible ] = useState(false);
+
+  // fetch data on each render
+  const [ list, setList ] = useState(route.params);
   const [ types, setTypes ] = useState([]);
   const [ allItems, setAllItems ] = useState({})
   const [ userItems, setUserItems ] = useState()
-  const [ addModalVisible, setAddModalVisible ] = useState(false);
-  const [ typeModalVisible, setTypeModalVisible ] = useState(false);
+
+  // state
   const {state} = useContext(AuthContext);
 
   useEffect(() => {
