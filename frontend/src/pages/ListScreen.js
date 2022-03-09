@@ -35,7 +35,6 @@ const ListScreen = ({ route, navigation }) => {
       .then((res) => {
         setUserItems(res.data)
         let items = {}
-        console.log(res.data)
         res.data.forEach((k,v) => {
           if(list.items.includes(k.name)) {
             if (!items[k.type]) {
@@ -45,7 +44,6 @@ const ListScreen = ({ route, navigation }) => {
             }
           }
         }) 
-
         setAllItems(items)
 
         let typ = []
@@ -79,7 +77,6 @@ const ListScreen = ({ route, navigation }) => {
       })
       .then((res) => {
         setList(res.data)
-        setNewList(res.data)
       })
       .catch((err) => {
         console.log(err)

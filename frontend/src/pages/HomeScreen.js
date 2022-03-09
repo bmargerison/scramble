@@ -10,20 +10,20 @@ const HomeScreen = ({navigation}) => {
   const {state} = useContext(AuthContext);
 
   useEffect(() => {
+    const fetchData = async () => {
+      const url = `http://${IP_ADDRESS}:3000/lists/user/${state.userId}`;
+      
+      try {
+        const response = await fetch(url);
+        const json = await response.json();
+        setLists(json.reverse())
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
     fetchData();
   }, [lists]);
-
-  const fetchData = async () => {
-    const url = `http://${IP_ADDRESS}:3000/lists/user/${state.userId}`;
-    
-    try {
-      const response = await fetch(url);
-      const json = await response.json();
-      setLists(json)
-    } catch (error) {
-      console.log("error", error);
-    }
-  };
 
   const createNewList = async () => {
     const url = `http://${IP_ADDRESS}:3000/lists`;
@@ -36,10 +36,6 @@ const HomeScreen = ({navigation}) => {
       },
       body: JSON.stringify({_user: state.userId})
     });
-
-    const list = await response.json();
-
-    fetchData()
   };
 
   const deleteList = async (list) => {
@@ -54,8 +50,6 @@ const HomeScreen = ({navigation}) => {
     }).then(response => {
       response.json()
     });
-
-    fetchData()
   }
 
   return (
@@ -68,7 +62,7 @@ const HomeScreen = ({navigation}) => {
       </View>
       <View>
         <FlatList 
-          data={lists.reverse()}
+          data={lists}
           keyExtractor={(list, index) => list._id}
           renderItem={({item}) => {
           return (
