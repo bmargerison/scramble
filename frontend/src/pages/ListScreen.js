@@ -22,6 +22,7 @@ const ListScreen = ({ route, navigation }) => {
   const [ type, setType ] = useState();
   const [ types, setTypes ] = useState([]);
   const [ allItems, setAllItems ] = useState({})
+  const [ userItems, setUserItems ] = useState()
   const [ addModalVisible, setAddModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
   const {state} = useContext(AuthContext);
@@ -41,15 +42,19 @@ const ListScreen = ({ route, navigation }) => {
     axios
       .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
       .then((res) => {
+        setUserItems(res.data)
         let items = {}
         res.data.forEach((k,v) => {
-          if (!items[k.type]) {
-            items[k.type] = [k]
-          } else {
-            items[k.type].push(k);
+
+          if(list.items.includes(k.name)) {
+            if (!items[k.type]) {
+              items[k.type] = [k]
+            } else {
+              items[k.type].push(k);
+            }
           }
         }) 
-        // console.log(items['Other'][0].name)
+
         setAllItems(items)
 
         let typ = []
@@ -57,18 +62,18 @@ const ListScreen = ({ route, navigation }) => {
           typ.push({'t': i})
         })
         setTypes(typ)
-        console.log(types)
       })
       .catch((err) => {
         console.log(err)
       })
+
     };
 
     fetchData();
   }, []);
 
   const mapToItem = () => {
-    if (allItems.some(saved => saved.name == item)) {
+    if (userItems.some(saved => saved.name == item)) {
       addToList(item)
     } else {
       setTypeModalVisible(!typeModalVisible)
@@ -94,6 +99,7 @@ const ListScreen = ({ route, navigation }) => {
     axios
     .post(`http://${IP_ADDRESS}:3000/items`, {
       _user: state.userId,
+      _list: list._id,
       name: item,
       type: type
     })
@@ -125,8 +131,8 @@ const ListScreen = ({ route, navigation }) => {
               buttonStyle={styles.textView}
               buttonTextStyle={styles.dropdownText}
               defaultButtonText="Where is it located?"
-              onChangeText={setType}
-              value={item}
+              onSelect={setType}
+              value={type}
               placeholderTextColor={AppStyles.color.grey}
               underlineColorAndroid="transparent"
               />
