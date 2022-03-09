@@ -11,7 +11,7 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [lists]);
 
   const fetchData = async () => {
     const url = `http://${IP_ADDRESS}:3000/lists/user/${state.userId}`;

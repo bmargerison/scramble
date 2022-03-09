@@ -29,23 +29,14 @@ const ListScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-  
-    axios
-      .get(`http://${IP_ADDRESS}:3000/lists/${list._id}`)
-      .then((res) => {
-        setList(res.data);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
 
     axios
       .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
       .then((res) => {
         setUserItems(res.data)
         let items = {}
+        console.log(res.data)
         res.data.forEach((k,v) => {
-
           if(list.items.includes(k.name)) {
             if (!items[k.type]) {
               items[k.type] = [k]
@@ -70,9 +61,10 @@ const ListScreen = ({ route, navigation }) => {
     };
 
     fetchData();
-  }, []);
+  }, [list]);
 
   const mapToItem = () => {
+    setAddModalVisible(!addModalVisible)
     if (userItems.some(saved => saved.name == item)) {
       addToList(item)
     } else {
@@ -87,12 +79,11 @@ const ListScreen = ({ route, navigation }) => {
       })
       .then((res) => {
         setList(res.data)
+        setNewList(res.data)
       })
       .catch((err) => {
         console.log(err)
       })
-
-    setAddModalVisible(!addModalVisible)
   }
 
   const createNewItem = () => {
@@ -104,7 +95,7 @@ const ListScreen = ({ route, navigation }) => {
       type: type
     })
     .then((res) => {
-      
+      console.log(res)
     })
     .catch((err) => {
       console.log(err)
