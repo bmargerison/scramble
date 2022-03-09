@@ -60,7 +60,7 @@ describe("item", function() {
     })
     expect(String(item._user)).to.equal(String(user.id))
     expect(String(item.type)).to.equal("dairy")
-    expect(String(item.list)).to.equal("000a000000000000000a0000")
+    expect(String(item._list)).to.equal("000a000000000000000a0000")
   });
 
 });

@@ -13,6 +13,7 @@ const newItem = async (req, res, next) => {
   const item = new Item({
     name: req.body.name,
     _user: req.body._user,
+    _list: req.body._list,
     type: req.body.type
   })
   try {

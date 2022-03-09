@@ -60,7 +60,7 @@ describe("/lists", () => {
   })
 
   describe("PATCH /:id", () => {
-    test("204 status code", async () => {
+    test("200 status code", async () => {
       let listId
       await request(server).post(`/lists`).send({ 
         _user: "000a000000000000000a0000", 
@@ -70,7 +70,7 @@ describe("/lists", () => {
       const response = await request(server).patch(`/lists/${listId}`).send({ 
         item: 'bread', 
       })
-      expect(response.statusCode).toBe(204)
+      expect(response.statusCode).toBe(200)
     })
   })
 

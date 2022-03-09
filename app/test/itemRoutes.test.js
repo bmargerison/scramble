@@ -22,8 +22,10 @@ describe("/items", () => {
       const response = await request(server).post("/items").send({
         name: "Margerine", 
         _user: "000a000000000000000a0000",
-        type: "Dairy"
+        _list: "010a000000000000000a0000",
+        type: "Dairy",
       })
+      console.log(response)
       expect(response.statusCode).toBe(201)
     })
     test("500 status code if no user", async () => {
@@ -38,6 +40,7 @@ describe("/items", () => {
       const item = await request(server).post("/items").send({
         name: "Margerine", 
         _user: "000a000000000000000a0000",
+        _list: "000a000000000000000a0000",
         type: "Dairy"
       })
       const response = await request(server).get(`/items/user/"000a000000000000000a0000"`)

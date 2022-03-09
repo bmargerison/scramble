@@ -10,6 +10,11 @@ const itemSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  _list: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'List',
+    required: true
+  },
   type: {
     type: String,
     required: true,
