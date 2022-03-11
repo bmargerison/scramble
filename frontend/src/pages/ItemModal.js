@@ -15,17 +15,16 @@ import axios from "axios";
 import { IP_ADDRESS } from "@env";
 import {Context as AuthContext} from '../context/AuthContext';
 import SelectDropdown from 'react-native-select-dropdown'
-import ItemModal from './ItemModal'
 
-const ListScreen = ({ route, navigation }) => {
+const ItemModal = ({show, toggle}) => {
   // modal forms
   const [ item, setItem ] = useState();
   const [ type, setType ] = useState();
-  const [ itemModalVisible, setItemModalVisible ] = useState(false);
+  const [ addModalVisible, setAddModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
 
   // fetch data on each render
-  const [ list, setList ] = useState(route.params);
+  const [ list, setList ] = useState();
   const [ types, setTypes ] = useState([]);
   const [ allItems, setAllItems ] = useState({})
   const [ userItems, setUserItems ] = useState()
@@ -33,42 +32,10 @@ const ListScreen = ({ route, navigation }) => {
   // state
   const {state} = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
 
-    axios
-      .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
-      .then((res) => {
-        setUserItems(res.data)
-        let items = {}
-        res.data.forEach((k,v) => {
-          if(list.items.includes(k.name)) {
-            if (!items[k.type]) {
-              items[k.type] = [k]
-            } else {
-              items[k.type].push(k);
-            }
-          }
-        }) 
-        setAllItems(items)
-
-        let typ = []
-        Object.keys(items).forEach((i) => {
-          typ.push({'t': i})
-        })
-        setTypes(typ)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-
-    };
-
-    fetchData();
-  }, [list]);
 
   const mapToItem = () => {
-    setItemModalVisible(!itemModalVisible)
+    setAddModalVisible(!addModalVisible)
     if (userItems.some(saved => saved.name == item)) {
       addToList(item)
     } else {
@@ -107,50 +74,14 @@ const ListScreen = ({ route, navigation }) => {
     addToList(item)
   };
 
-  const toggleItemModal = () => {
-    setItemModalVisible(!itemModalVisible)
-  }
-
   return (
     <View>
-    <View style={styles.container}>
       <Modal
         animationType="slide"
         transparent={true}
-        visible={typeModalVisible}
+        visible={show}
         onRequestClose={() => {
-          setTypeModalVisible(!typeModalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-              <SelectDropdown
-              data={['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']}
-              buttonStyle={styles.textView}
-              buttonTextStyle={styles.dropdownText}
-              defaultButtonText="Where is it located?"
-              onSelect={setType}
-              value={type}
-              placeholderTextColor={AppStyles.color.grey}
-              underlineColorAndroid="transparent"
-              />
-
-              <TouchableOpacity
-                style={styles.addButton}
-                onPress={() => createNewItem()}
-              >
-                <Text style={styles.textStyle}>Create</Text>
-              </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
-      <ItemModal show={itemModalVisible} toggle={toggleItemModal}/>
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={addModalVisible}
-        onRequestClose={() => {
-          setAddModalVisible(!addModalVisible);
+          toggle();
         }}
       >
         <View style={styles.centeredView}>
@@ -173,31 +104,7 @@ const ListScreen = ({ route, navigation }) => {
               </TouchableOpacity>
           </View>
         </View>
-      </Modal> */}
-      <Text style={[styles.title, styles.leftTitle]}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
-      <TouchableOpacity style={styles.addContainer} onPress={() => toggleItemModal()}>
-        <Text style={styles.buttonText}>Add Item</Text>  
-      </TouchableOpacity>
-      </View>
-      <FlatList 
-          data={types}
-          keyExtractor={(item, index) => index}
-          renderItem={({item}) => { 
-            return (
-              <View>
-                <Text style={styles.heading}>{item.t}</Text>
-                <FlatList 
-                  data={allItems[item.t]}
-                  keyExtractor={(item, index) => index}
-                  renderItem={({item}) => {
-                      return (
-                        <View
-                        style={styles.card}>
-                              <Text style={styles.items}>{item.name}</Text>
-                        </View>
-                  )}}/>
-              </View>
-        )}}/>
+      </Modal>
     </View>
   );
 }
@@ -297,4 +204,4 @@ const styles = StyleSheet.create({
   },
 }); 
 
-export default ListScreen;
+export default ItemModal;
