@@ -1,21 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, 
-  TextInput, 
-  Pressable, 
+import { 
   StyleSheet, 
   Text, 
-  Button, 
   View, 
   FlatList, 
-  TouchableOpacity, 
-  Modal } 
+  TouchableOpacity
+} 
 from 'react-native';
 import {AppStyles} from '../AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
 import {Context as AuthContext} from '../context/AuthContext';
-import SelectDropdown from 'react-native-select-dropdown'
 import ItemModal from './ItemModal'
+import TypeModal from './TypeModal'
 
 const ListScreen = ({ route, navigation }) => {
   // modal forms
@@ -89,7 +86,7 @@ const ListScreen = ({ route, navigation }) => {
       })
   }
 
-  const createNewItem = () => {
+  const createNewItem = (type) => {
     axios
     .post(`http://${IP_ADDRESS}:3000/items`, {
       _user: state.userId,
@@ -116,39 +113,20 @@ const ListScreen = ({ route, navigation }) => {
     mapToItem(item);
   }
 
+  const toggleTypeModal = () => {
+    setTypeModalVisible(!typeModalVisible)
+  }
+
+  const setModalType = (type) => {
+    setType(type);
+    createNewItem(type);
+  }
+
+
   return (
     <View>
     <View style={styles.container}>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={typeModalVisible}
-        onRequestClose={() => {
-          setTypeModalVisible(!typeModalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-              <SelectDropdown
-              data={['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']}
-              buttonStyle={styles.textView}
-              buttonTextStyle={styles.dropdownText}
-              defaultButtonText="Where is it located?"
-              onSelect={setType}
-              value={type}
-              placeholderTextColor={AppStyles.color.grey}
-              underlineColorAndroid="transparent"
-              />
-
-              <TouchableOpacity
-                style={styles.addButton}
-                onPress={() => createNewItem()}
-              >
-                <Text style={styles.textStyle}>Create</Text>
-              </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <TypeModal show={typeModalVisible} toggle={toggleTypeModal} setModalType={setModalType}/>
       <ItemModal show={itemModalVisible} toggle={toggleItemModal} setModalItem={setModalItem}/>
       <Text style={[styles.title, styles.leftTitle]}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
       <TouchableOpacity style={styles.addContainer} onPress={() => toggleItemModal()}>
