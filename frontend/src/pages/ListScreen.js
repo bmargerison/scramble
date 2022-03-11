@@ -4,7 +4,9 @@ import {
   Text, 
   View, 
   FlatList, 
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
+  SafeAreaView
 } 
 from 'react-native';
 import {AppStyles} from '../AppStyles';
@@ -129,33 +131,30 @@ const ListScreen = ({ route, navigation }) => {
 
   return (
     <View>
-    <View style={styles.container}>
-      <TypeModal show={typeModalVisible} toggle={toggleTypeModal} setModalType={setModalType}/>
-      <ItemModal show={itemModalVisible} toggle={toggleItemModal} setModalItem={setModalItem}/>
-      <Text style={[styles.title, styles.leftTitle]}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
-      <TouchableOpacity style={styles.addContainer} onPress={() => toggleItemModal()}>
-        <Text style={styles.buttonText}>Add Item</Text>  
-      </TouchableOpacity>
-      </View>
-      <FlatList 
+      <View style={styles.container}>
+        <TypeModal show={typeModalVisible} toggle={toggleTypeModal} setModalType={setModalType}/>
+        <ItemModal show={itemModalVisible} toggle={toggleItemModal} setModalItem={setModalItem}/>
+        <Text style={[styles.title, styles.leftTitle]}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
+        <TouchableOpacity style={styles.addContainer} onPress={() => toggleItemModal()}>
+          <Text style={styles.buttonText}>Add Item</Text>  
+        </TouchableOpacity>
+        </View>
+        <FlatList 
           data={types}
           keyExtractor={(item, index) => index}
           renderItem={({item}) => { 
             return (
-              <View>
+              <View style={styles.scrollMargin}>
                 <Text style={styles.heading}>{item.t}</Text>
                 <FlatList 
                   data={allItems[item.t]}
                   keyExtractor={(item, index) => index}
                   renderItem={({item}) => {
                       return (
-                        <View
-                        style={styles.card}>
-                              <Text style={styles.items}>{item.name}</Text>
-                        </View>
+                        <Text style={styles.items}>{item.name}</Text>
                   )}}/>
               </View>
-        )}}/>
+          )}}/>
     </View>
   );
 }
@@ -169,7 +168,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: AppStyles.color.tint,
     marginTop: 50,
-    marginBottom: 50,
+    marginBottom: 30,
+  },
+  scrollMargin: {
+    marginBottom: 20,
   },
   leftTitle: {
     alignSelf: 'stretch',
@@ -185,6 +187,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: AppStyles.color.white,
+    fontSize: AppStyles.fontSize.content,
     alignSelf: "center",
   },
   textStyle: {

@@ -27,7 +27,7 @@ export const AppStyles = {
     blue: "#3293fe"
   },
   fontSize: {
-    title: 30,
+    title: 35,
     content: 25,
     normal: 16
   },
