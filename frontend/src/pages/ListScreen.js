@@ -17,7 +17,6 @@ import TypeModal from './TypeModal'
 const ListScreen = ({ route, navigation }) => {
   // modal forms
   const [ item, setItem ] = useState();
-  const [ type, setType ] = useState();
   const [ itemModalVisible, setItemModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
 
@@ -37,6 +36,8 @@ const ListScreen = ({ route, navigation }) => {
       .get(`http://${IP_ADDRESS}:3000/items/user/${state.userId}`)
       .then((res) => {
         setUserItems(res.data)
+
+        // set items array categorised by type
         let items = {}
         res.data.forEach((k,v) => {
           if(list.items.includes(k.name)) {
@@ -49,20 +50,22 @@ const ListScreen = ({ route, navigation }) => {
         }) 
         setAllItems(items)
 
-        let typ = []
+        // set types for display by category
+        let types = []
         Object.keys(items).forEach((i) => {
-          typ.push({'t': i})
+          types.push({'t': i})
         })
-        setTypes(typ)
+        setTypes(types)
       })
       .catch((err) => {
         console.log(err)
       })
-
     };
-
     fetchData();
   }, [list]);
+
+  // if user has already set up item, add to list
+  // otherwise, create item with type for the user, then add to list
 
   const mapToItem = () => {
     setItemModalVisible(!itemModalVisible)
@@ -104,6 +107,8 @@ const ListScreen = ({ route, navigation }) => {
     addToList(item)
   };
 
+  // modals interface
+
   const toggleItemModal = () => {
     setItemModalVisible(!itemModalVisible)
   }
@@ -118,7 +123,6 @@ const ListScreen = ({ route, navigation }) => {
   }
 
   const setModalType = (type) => {
-    setType(type);
     createNewItem(type);
   }
 
@@ -179,58 +183,13 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
   },
-  addButton: {
-    width: 100,
-    backgroundColor: AppStyles.color.tint,
-    borderRadius: AppStyles.borderRadius.main,
-    padding: 5,
-    marginTop: 20,
-  },
   buttonText: {
     color: AppStyles.color.white,
     alignSelf: "center",
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    borderRadius: 20,
-    backgroundColor: AppStyles.color.white,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: '#00000021',
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
   textStyle: {
     color: AppStyles.color.white,
     textAlign: "center"
-  },
-  body: {
-    borderRadius: 20,
-    height: 42,
-    paddingLeft: 20,
-    paddingRight: 20,
-    color: AppStyles.color.text,
-    backgroundColor: AppStyles.color.white,
-  },
-  textView: {
-    borderRadius: 20,
-    borderWidth: 1,
-    backgroundColor: AppStyles.color.white,
-  },
-  dropdownText: {
-    fontSize: 15,
-    backgroundColor: AppStyles.color.white,
   },
   items: {
     fontSize: AppStyles.fontSize.content,
