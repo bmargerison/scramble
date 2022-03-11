@@ -16,7 +16,7 @@ import { IP_ADDRESS } from "@env";
 import {Context as AuthContext} from '../context/AuthContext';
 import SelectDropdown from 'react-native-select-dropdown'
 
-const ItemModal = ({show, toggle}) => {
+const ItemModal = ({show, toggle, setModalItem}) => {
   // modal forms
   const [ item, setItem ] = useState();
   const [ type, setType ] = useState();
@@ -98,7 +98,7 @@ const ItemModal = ({show, toggle}) => {
             </View>
               <TouchableOpacity
                 style={styles.addButton}
-                onPress={() => mapToItem()}
+                onPress={() => setModalItem(item)}
               >
                 <Text style={styles.textStyle}>Add</Text>
               </TouchableOpacity>

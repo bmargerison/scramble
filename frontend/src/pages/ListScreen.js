@@ -111,6 +111,11 @@ const ListScreen = ({ route, navigation }) => {
     setItemModalVisible(!itemModalVisible)
   }
 
+  const setModalItem = (item) => {
+    setItem(item);
+    mapToItem(item);
+  }
+
   return (
     <View>
     <View style={styles.container}>
@@ -144,36 +149,7 @@ const ListScreen = ({ route, navigation }) => {
           </View>
         </View>
       </Modal>
-      <ItemModal show={itemModalVisible} toggle={toggleItemModal}/>
-      {/* <Modal
-        animationType="slide"
-        transparent={true}
-        visible={addModalVisible}
-        onRequestClose={() => {
-          setAddModalVisible(!addModalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <View style={styles.textView}>
-              <TextInput
-                style={styles.body}
-                placeholder="What would you like to add?"
-                onChangeText={setItem}
-                value={item}
-                placeholderTextColor={AppStyles.color.grey}
-                underlineColorAndroid="transparent"
-              />
-            </View>
-              <TouchableOpacity
-                style={styles.addButton}
-                onPress={() => mapToItem()}
-              >
-                <Text style={styles.textStyle}>Add</Text>
-              </TouchableOpacity>
-          </View>
-        </View>
-      </Modal> */}
+      <ItemModal show={itemModalVisible} toggle={toggleItemModal} setModalItem={setModalItem}/>
       <Text style={[styles.title, styles.leftTitle]}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
       <TouchableOpacity style={styles.addContainer} onPress={() => toggleItemModal()}>
         <Text style={styles.buttonText}>Add Item</Text>  
