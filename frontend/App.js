@@ -9,6 +9,8 @@ import ListScreen from './src/pages/ListScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
+import Icon from 'react-native-vector-icons/Entypo';
+import {AppStyles} from './src/AppStyles';
 
 const AuthStack = createStackNavigator();
 
@@ -56,14 +58,26 @@ function HomeFlow() {
     tabBarOptions={{
       activeTintColor: '#42f44b',
     }}>
-    <Tab.Screen
+      <Tab.Screen
         name="Home"
         component={HomeFlowNavigator}
         options={{ 
-          title: "Home",
-          tabBarLabel: "Home",
           headerShown: false,
-          headerRight: () => <Button title="Sign out" onPress={() => signout({})} />,
+          tabBarLabel:() => {return null},
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={AppStyles.color.tint} size={size}/>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Recipes"
+        component={HomeFlowNavigator}
+        options={{ 
+          headerShown: false,
+          tabBarLabel:() => {return null},
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="book" color={AppStyles.color.tint} size={size}/>
+          ),
         }}
       />
     </Tab.Navigator>
