@@ -4,26 +4,25 @@ import {Context as AuthContext} from '../context/AuthContext';
 import {AppStyles} from '../AppStyles';
 import Icon from 'react-native-vector-icons/Entypo';
 import { IP_ADDRESS } from "@env";
+import axios from "axios";
 
 const HomeScreen = ({navigation}) => {
   const [lists, setLists] = useState([])
+  const [list, setList] = useState({})
   const {state} = useContext(AuthContext);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const url = `http://${IP_ADDRESS}:3000/lists/user/${state.userId}`;
-      
-      try {
-        const response = await fetch(url);
-        const json = await response.json();
-        setLists(json.reverse())
-      } catch (error) {
-        console.log("error", error);
-      }
+    const fetchData = () => {
+
+      axios
+      .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
+      .then((res) => {
+        setLists(res.data.reverse())
+      })
     };
 
     fetchData();
-  }, [lists]);
+  }, [list]);
 
   const createNewList = async () => {
     const url = `http://${IP_ADDRESS}:3000/lists`;
@@ -36,6 +35,8 @@ const HomeScreen = ({navigation}) => {
       },
       body: JSON.stringify({_user: state.userId})
     });
+
+    setList(response.json())
   };
 
   const deleteList = async (list) => {
@@ -48,7 +49,7 @@ const HomeScreen = ({navigation}) => {
         'Content-Type': 'application/json'
       },
     }).then(response => {
-      response.json()
+      setList(response.json())
     });
   }
 
@@ -75,7 +76,6 @@ const HomeScreen = ({navigation}) => {
                   <Text style={styles.item}>item 3</Text>
               </TouchableOpacity>
               <TouchableHighlight
-                style={styles.delete}
                   onPress={() => deleteList({item})}
                 >
                 <Icon name="circle-with-cross" size={30} color="#900" />

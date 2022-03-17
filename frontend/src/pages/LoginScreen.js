@@ -4,8 +4,8 @@ import {Context as AuthContext} from '../context/AuthContext';
 import {AppStyles} from '../AppStyles';
 
 const LoginScreen = ({ navigation }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const {state, signin} = useContext(AuthContext);
 
   return (
