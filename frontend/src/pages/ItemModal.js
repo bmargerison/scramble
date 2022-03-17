@@ -78,7 +78,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: AppStyles.color.white,
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: AppStyles.fontSize.content,
   },
   body: {
     borderRadius: 20,
@@ -87,6 +88,7 @@ const styles = StyleSheet.create({
     paddingRight: 20,
     color: AppStyles.color.text,
     backgroundColor: AppStyles.color.white,
+    fontSize: AppStyles.fontSize.content,
   },
   textView: {
     borderRadius: 20,

@@ -28,7 +28,7 @@ const TypeModal = ({show, toggle, setModalType}) => {
               data={['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']}
               buttonStyle={styles.textView}
               buttonTextStyle={styles.dropdownText}
-              defaultButtonText="Where is it located?"
+              defaultButtonText="Select location"
               onSelect={setType}
               value={type}
               placeholderTextColor={AppStyles.color.grey}
@@ -56,10 +56,6 @@ const styles = StyleSheet.create({
     padding: 5,
     marginTop: 20,
   },
-  buttonText: {
-    color: AppStyles.color.white,
-    alignSelf: "center",
-  },
   centeredView: {
     flex: 1,
     justifyContent: "center",
@@ -83,7 +79,8 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     color: AppStyles.color.white,
-    textAlign: "center"
+    textAlign: "center",
+    fontSize: AppStyles.fontSize.content,
   },
   textView: {
     borderRadius: 20,
@@ -91,8 +88,8 @@ const styles = StyleSheet.create({
     backgroundColor: AppStyles.color.white,
   },
   dropdownText: {
-    fontSize: 15,
     backgroundColor: AppStyles.color.white,
+    opacity: 0.5
   },
 }); 
 

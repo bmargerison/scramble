@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: AppStyles.color.tint,
     marginTop: 50,
-    marginBottom: 30,
+    marginBottom: 15,
   },
   scrollMargin: {
     marginBottom: 20,

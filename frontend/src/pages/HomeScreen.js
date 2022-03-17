@@ -61,7 +61,7 @@ const HomeScreen = ({navigation}) => {
           <Text style={styles.buttonText}>Add New List</Text>  
         </TouchableOpacity>
       </View>
-      <View>
+      <View style={styles.margin}>
         <FlatList 
           data={lists}
           keyExtractor={(list, index) => list._id}
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: AppStyles.color.tint,
     marginTop: 50,
-    marginBottom: 50,
+    marginBottom: 15,
   },
   leftTitle: {
     alignSelf: 'stretch',
@@ -148,6 +148,9 @@ const styles = StyleSheet.create({
     color:AppStyles.color.text,
     marginTop:5
   },
+  margin: {
+    marginBottom: 50
+  }
 }); 
 
 export default HomeScreen;
