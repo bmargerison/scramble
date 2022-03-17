@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, TouchableHighlight, SafeAreaView } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
 import {AppStyles} from '../AppStyles';
 import Icon from 'react-native-vector-icons/Entypo';
@@ -53,7 +53,7 @@ const HomeScreen = ({navigation}) => {
   }
 
   return (
-    <View>
+    <SafeAreaView>
       <View style={styles.container}>
         <Text style={[styles.title, styles.leftTitle]}>Your lists</Text>
         <TouchableOpacity style={styles.addContainer} onPress={()=> createNewList()}>
@@ -78,12 +78,12 @@ const HomeScreen = ({navigation}) => {
                 style={styles.delete}
                   onPress={() => deleteList({item})}
                 >
-                <Icon style={styles.image} name="circle-with-cross" size={30} color="#900" />
+                <Icon name="circle-with-cross" size={30} color="#900" />
               </TouchableHighlight>
             </View>
           )}}/>
       </View>
-    </View>
+    </SafeAreaView>
     );
 }
 
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   buttonText: {
     color: AppStyles.color.white,
     alignSelf: "center",
-    fontSize: AppStyles.fontSize.normal,
+    fontSize: AppStyles.fontSize.content,
   },
   card:{
     flex: 1,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.37,
     shadowRadius: 7.49,
     elevation: 12,
-    marginVertical: 20,
+    marginVertical: 10,
     marginHorizontal:20,
     backgroundColor:"white",
     flexBasis: '80%',
@@ -143,18 +143,13 @@ const styles = StyleSheet.create({
     fontSize:18,
     color:"#008080",
     fontWeight:'bold',
+    fontSize: AppStyles.fontSize.content,
   },
   item:{
-    fontSize: AppStyles.fontSize.normal,
+    fontSize: AppStyles.fontSize.sub,
     color:AppStyles.color.text,
     marginTop:5
   },
-  delete: {
-    flex: 1,
-  },
-  delete: {
-    right: 0,
-  }
 }); 
 
 export default HomeScreen;
