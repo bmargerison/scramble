@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
   loginText: {
     color: AppStyles.color.white,
     alignSelf: "center",
-    fontSize: AppStyles.fontSize.normal,
+    fontSize: AppStyles.fontSize.content,
   },
   InputContainer: {
     width: AppStyles.textInputWidth.main,
@@ -93,12 +93,13 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     color: AppStyles.color.text,
-    fontSize: AppStyles.fontSize.normal,
+    fontSize: AppStyles.fontSize.content,
   },
   loginLink: {
     marginTop: 20,
     marginBottom: 20,
     color: AppStyles.color.blue,
+    fontSize: AppStyles.fontSize.sub,
   },
 });
 
