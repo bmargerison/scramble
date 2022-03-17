@@ -71,9 +71,7 @@ const HomeScreen = ({navigation}) => {
             style={styles.card}>
               <TouchableOpacity style={styles.cardContent} onPress={()=> navigation.navigate('ListScreen', item)}>
                   <Text style={styles.description}>{item.date.slice(0,10)} {item.date.slice(11,16)}</Text>
-                  <Text style={styles.item}>item 1</Text>
-                  <Text style={styles.item}>item 2</Text>
-                  <Text style={styles.item}>item 3</Text>
+                  <Text style={styles.item}>{item.items.length} items</Text>
               </TouchableOpacity>
               <TouchableHighlight
                   onPress={() => deleteList({item})}
