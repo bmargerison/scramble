@@ -6,9 +6,10 @@ import {
   FlatList, 
   TouchableOpacity,
   ScrollView,
-  SafeAreaView
+  SafeAreaView,
 } 
 from 'react-native';
+import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {AppStyles} from '../AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
@@ -17,6 +18,7 @@ import ItemModal from './ItemModal'
 import TypeModal from './TypeModal'
 
 const ListScreen = ({ route, navigation }) => {
+
   // modal forms
   const [ item, setItem ] = useState();
   const [ itemModalVisible, setItemModalVisible ] = useState(false);
@@ -151,7 +153,15 @@ const ListScreen = ({ route, navigation }) => {
                   keyExtractor={(item, index) => index}
                   renderItem={({item}) => {
                       return (
-                        <Text style={styles.items}>{item.name}</Text>
+                        <BouncyCheckbox
+                        size={20}
+                        text={item.name}
+                        fillColor={AppStyles.color.tint}
+                        iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
+                        textStyle={styles.items}
+                        style={styles.checkboxStyle}
+                        onPress={(isChecked) => {!isChecked}}
+                      />
                   )}}/>
               </View>
           )}}/>
@@ -194,12 +204,16 @@ const styles = StyleSheet.create({
     color: AppStyles.color.white,
     textAlign: "center"
   },
+  checkboxStyle: {
+    color: AppStyles.color.white,
+    textAlign: "center",
+    marginLeft: 20,
+  },
   items: {
     fontSize: AppStyles.fontSize.content,
     color:AppStyles.color.text,
     marginTop: 2,
     marginBottom: 2,
-    marginLeft: 20,
   },
   heading: {
     fontSize: AppStyles.fontSize.content,
