@@ -59,7 +59,7 @@ function HomeFlow() {
       activeTintColor: '#42f44b',
     }}>
       <Tab.Screen
-        name="Home"
+        name="HomeTab"
         component={HomeFlowNavigator}
         options={{ 
           headerShown: false,
@@ -103,7 +103,7 @@ function App() {
         ) : (
           <Stack.Screen
             options={{headerShown: false}}
-            name="Home"
+            name="HomeFlow"
             component={HomeFlow}
           />
         )}

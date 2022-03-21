@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { IP_ADDRESS } from "@env";
 import axios from "axios";
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({ navigation, route }) => {
   const [lists, setLists] = useState([])
   const [list, setList] = useState({})
   const {state} = useContext(AuthContext);
@@ -22,7 +22,7 @@ const HomeScreen = ({navigation}) => {
     };
 
     fetchData();
-  }, [list]);
+  }, [route.params?.list, list]);
 
   const createNewList = async () => {
     const url = `http://${IP_ADDRESS}:3000/lists`;
@@ -56,7 +56,9 @@ const HomeScreen = ({navigation}) => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <Text style={[styles.title, styles.leftTitle]}>Your lists</Text>
+        <View style={styles.titleContainer}>
+          <Text style={[styles.title, styles.leftTitle]}>Your lists</Text>
+        </View>
         <TouchableOpacity style={styles.addContainer} onPress={()=> createNewList()}>
           <Text style={styles.buttonText}>Add New List</Text>  
         </TouchableOpacity>
@@ -98,13 +100,10 @@ const styles = StyleSheet.create({
     fontSize: AppStyles.fontSize.title,
     fontWeight: 'bold',
     color: AppStyles.color.tint,
-    marginTop: 50,
-    marginBottom: 15,
   },
   leftTitle: {
-    alignSelf: 'stretch',
-    textAlign: 'left',
     marginLeft: 20,
+    flex: 15,
   },
   addContainer: {
     width: AppStyles.buttonWidth.main,
@@ -112,6 +111,7 @@ const styles = StyleSheet.create({
     borderRadius: AppStyles.borderRadius.main,
     padding: 10,
     marginBottom: 20,
+    marginTop: 50,
   },
   buttonText: {
     color: AppStyles.color.white,
@@ -150,6 +150,12 @@ const styles = StyleSheet.create({
   },
   margin: {
     marginBottom: 50
+  },
+  titleContainer: {
+    marginTop: 50,
+    flex: 1,
+    flexDirection:'row',
+    flexWrap: 'wrap',
   }
 }); 
 
