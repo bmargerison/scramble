@@ -9,7 +9,7 @@ import ListScreen from './src/pages/ListScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppStyles} from './src/AppStyles';
 
 const AuthStack = createStackNavigator();
@@ -70,13 +70,35 @@ function HomeFlow() {
         }}
       />
       <Tab.Screen
-        name="Recipes"
+        name="Search"
         component={HomeFlowNavigator}
         options={{ 
           headerShown: false,
           tabBarLabel:() => {return null},
           tabBarIcon: ({ color, size }) => (
-            <Icon name="book" color={AppStyles.color.tint} size={size}/>
+            <Icon name="table-search" color={AppStyles.color.tint} size={size}/>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MyRecipes"
+        component={HomeFlowNavigator}
+        options={{ 
+          headerShown: false,
+          tabBarLabel:() => {return null},
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="notebook" color={AppStyles.color.tint} size={size}/>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Account"
+        component={HomeFlowNavigator}
+        options={{ 
+          headerShown: false,
+          tabBarLabel:() => {return null},
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="account" color={AppStyles.color.tint} size={size}/>
           ),
         }}
       />
