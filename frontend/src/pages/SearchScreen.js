@@ -2,13 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {AppStyles} from '../AppStyles';
+import { APP_ID, APP_KEY } from "@env";
+import axios from "axios";
 
 const SearchScreen = () => {
-  const [search, setSearch] = useState('')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [recipes, setRecipes] = useState([])
 
-  useEffect(() => {
+  const searchDatabase = async () => {
+    const url = `https://api.edamam.com/api/recipes/v2?type=public&q=${searchTerm}&app_id=${APP_ID}&app_key=${APP_KEY}`
 
-  }, []);
+    axios
+    .get(url)
+    .then((res) => {
+      setRecipes(res.data)
+      console.log(res.data.hits[3].recipe.label)
+    })
+  }
 
   return (
     <SafeAreaView>
@@ -24,11 +34,10 @@ const SearchScreen = () => {
             containerStyle={{backgroundColor: AppStyles.color.background, borderBottomColor: 'transparent',
             borderTopColor: 'transparent'}}
             searchIcon={{ size: 24 }}
-            onChangeText={setSearch}
-            onClear={(text) => searchFilterFunction('')}
-            onSubmitEditing={()=>console.log(`User typed ${search}`)}
+            onChangeText={setSearchTerm}
+            onSubmitEditing={searchDatabase}
             placeholder="Type Here..."
-            value={search}
+            value={searchTerm}
           />
       </View>
     </SafeAreaView>
