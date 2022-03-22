@@ -6,6 +6,7 @@ import SignupScreen from './src/pages/SignupScreen'
 import LoginScreen from './src/pages/LoginScreen'
 import HomeScreen from './src/pages/HomeScreen'
 import ListScreen from './src/pages/ListScreen'
+import SearchScreen from './src/pages/SearchScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -31,20 +32,33 @@ function AuthFlow() {
   );
 }
 
-const Stack = createStackNavigator()
+const HomeStack = createStackNavigator()
 
 function HomeFlowNavigator() {
   return(
-    <Stack.Navigator>
-      <Stack.Screen 
+    <HomeStack.Navigator>
+      <HomeStack.Screen 
         name="Home" component={HomeScreen}
         options={{headerShown: false}}
         />
-      <Stack.Screen 
+      <HomeStack.Screen 
         name="ListScreen" component={ListScreen}
         options={{headerShown: false}}
         />
-    </Stack.Navigator>
+    </HomeStack.Navigator>
+  )
+}
+
+const SearchStack = createStackNavigator()
+
+function SearchFlowNavigator() {
+  return(
+    <SearchStack.Navigator>
+      <SearchStack.Screen 
+        name="SearchRecipes" component={SearchScreen}
+        options={{headerShown: false}}
+        />
+    </SearchStack.Navigator>
   )
 }
 
@@ -71,7 +85,7 @@ function HomeFlow() {
       />
       <Tab.Screen
         name="Search"
-        component={HomeFlowNavigator}
+        component={SearchFlowNavigator}
         options={{ 
           headerShown: false,
           tabBarLabel:() => {return null},
@@ -116,14 +130,14 @@ function App() {
         {console.log(state.token === null),
         state.token === null ? (
           <>
-            <Stack.Screen
+            <AppStack.Screen
               options={{headerShown: false}}
               name="Auth"
               component={AuthFlow}
             />
           </>
         ) : (
-          <Stack.Screen
+          <AppStack.Screen
             options={{headerShown: false}}
             name="HomeFlow"
             component={HomeFlow}
