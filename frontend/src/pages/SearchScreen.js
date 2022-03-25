@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {AppStyles} from '../AppStyles';
 import { APP_ID, APP_KEY } from "@env";
@@ -16,7 +16,7 @@ const SearchScreen = () => {
     .get(url)
     .then((res) => {
       setRecipes(res.data.hits)
-      console.log(res.data.hits[3].recipe.label)
+      console.log(res.data.hits[3].recipe.image)
     })
   }
 
@@ -45,7 +45,13 @@ const SearchScreen = () => {
           keyExtractor={(list, index) => list._id}
           renderItem={({item}) => {
           return (
-            <View>
+            <View style={styles.card}>
+              <Image
+                source={{
+                  uri: `${item.recipe.image}`,
+                }}
+                style = {{ width: 200, height: 200 }}
+              />
               <Text>{item.recipe.label}</Text>
             </View>
           )}}/>
@@ -78,7 +84,25 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection:'row',
     flexWrap: 'wrap',
-  }
+  },
+  card:{
+    flex: 1,
+    shadowColor: '#00000021',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.37,
+    shadowRadius: 7.49,
+    elevation: 12,
+    marginVertical: 10,
+    marginHorizontal:20,
+    backgroundColor:"white",
+    flexBasis: '80%',
+    padding: 10,
+    flexDirection:'row',
+    flexWrap: 'wrap',
+  },
 }); 
 
 export default SearchScreen;
