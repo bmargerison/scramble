@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, FlatList } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {AppStyles} from '../AppStyles';
 import { APP_ID, APP_KEY } from "@env";
@@ -15,7 +15,7 @@ const SearchScreen = () => {
     axios
     .get(url)
     .then((res) => {
-      setRecipes(res.data)
+      setRecipes(res.data.hits)
       console.log(res.data.hits[3].recipe.label)
     })
   }
@@ -40,6 +40,15 @@ const SearchScreen = () => {
             value={searchTerm}
           />
       </View>
+      <FlatList 
+          data={recipes}
+          keyExtractor={(list, index) => list._id}
+          renderItem={({item}) => {
+          return (
+            <View>
+              <Text>{item.recipe.label}</Text>
+            </View>
+          )}}/>
     </SafeAreaView>
     );
 }
