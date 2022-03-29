@@ -151,14 +151,14 @@ const ListScreen = ({ navigation, route }) => {
                   renderItem={({item}) => {
                       return (
                         <BouncyCheckbox
-                        size={20}
-                        text={item.name}
-                        fillColor={AppStyles.color.tint}
-                        iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
-                        textStyle={styles.listItems}
-                        style={styles.checkboxStyle}
-                        onPress={(isChecked) => {!isChecked}}
-                      />
+                          size={20}
+                          text={item.name}
+                          fillColor={AppStyles.color.tint}
+                          iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
+                          textStyle={styles.listItems}
+                          style={styles.checkboxStyle}
+                          onPress={(isChecked) => {!isChecked}}
+                          />
                   )}}/>
               </View>
           )}}/>

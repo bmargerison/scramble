@@ -6,7 +6,7 @@ import { APP_ID, APP_KEY } from "@env";
 import axios from "axios";
 import styles from '../styles/styleSheet'
 
-const SearchScreen = () => {
+const SearchScreen = ({ navigation, route }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [recipes, setRecipes] = useState([])
 
@@ -46,14 +46,14 @@ const SearchScreen = () => {
           keyExtractor={(list, index) => list.title}
           renderItem={({item}) => {
           return (
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity style={styles.card} onPress={()=> navigation.navigate('RecipeScreen', item)}>
               <Image
                 source={{
                   uri: `${item.recipe.image}`,
                 }}
                 style = {{ width: 100, height: 100 }}
               />
-              <View style={{     flexDirection:'column', flexWrap: 'wrap',}}>
+              <View style={{ flexDirection:'column', flexWrap: 'wrap' }}>
                 <Text style={newStyles.label}>{item.recipe.label}</Text>
                 <Text style={newStyles.source}> - {item.recipe.healthLabels[0]}</Text>
                 <Text style={newStyles.source}> - {item.recipe.healthLabels[1]}</Text>

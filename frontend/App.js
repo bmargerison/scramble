@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Stylesheet, View, Button, StyleSheet, Text, TextInput } from 'react-native';
+import React, { useContext } from "react";
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
 import SignupScreen from './src/pages/SignupScreen'
@@ -8,6 +8,7 @@ import HomeScreen from './src/pages/HomeScreen'
 import ListScreen from './src/pages/ListScreen'
 import SearchScreen from './src/pages/SearchScreen'
 import AccountScreen from './src/pages/AccountScreen'
+import RecipeScreen from './src/pages/RecipeScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -57,6 +58,10 @@ function SearchFlowNavigator() {
     <SearchStack.Navigator>
       <SearchStack.Screen 
         name="SearchRecipes" component={SearchScreen}
+        options={{headerShown: false}}
+        />
+      <SearchStack.Screen 
+        name="RecipeScreen" component={RecipeScreen}
         options={{headerShown: false}}
         />
     </SearchStack.Navigator>
