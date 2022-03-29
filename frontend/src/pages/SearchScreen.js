@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, FlatList, Image } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
 import {AppStyles} from '../AppStyles';
 import { APP_ID, APP_KEY } from "@env";
@@ -16,7 +16,7 @@ const SearchScreen = () => {
     .get(url)
     .then((res) => {
       setRecipes(res.data.hits)
-      console.log(res.data.hits[3].recipe.image)
+      console.log(res.data.hits[0].recipe.source)
     })
   }
 
@@ -41,19 +41,26 @@ const SearchScreen = () => {
           />
       </View>
       <FlatList 
+          style={styles.margin}
           data={recipes}
-          keyExtractor={(list, index) => list._id}
+          keyExtractor={(list, index) => list.title}
           renderItem={({item}) => {
           return (
-            <View style={styles.card}>
+            <TouchableOpacity style={styles.card}>
               <Image
                 source={{
                   uri: `${item.recipe.image}`,
                 }}
-                style = {{ width: 200, height: 200 }}
+                style = {{ width: 100, height: 100 }}
               />
-              <Text>{item.recipe.label}</Text>
-            </View>
+              <View style={styles.recipe}>
+                <Text style={styles.label}>{item.recipe.label}</Text>
+                <Text style={styles.source}> - {item.recipe.healthLabels[0]}</Text>
+                <Text style={styles.source}> - {item.recipe.healthLabels[1]}</Text>
+                <Text style={styles.source}> - {item.recipe.healthLabels[2]}</Text>
+                <Text style={styles.source}>{item.recipe.source}</Text>
+              </View>
+            </TouchableOpacity>
           )}}/>
     </SafeAreaView>
     );
@@ -75,7 +82,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     width: "90%",
     padding: 10,
-    marginBottom: 20,
+    marginBottom: 10,
     marginTop: 50,
     alignSelf: "center",
   },
@@ -102,6 +109,28 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection:'row',
     flexWrap: 'wrap',
+  },
+  recipe: {
+    flexDirection:'column',
+    flexWrap: 'wrap',
+  },
+  label: {
+    flex: 1,
+    color:"#008080",
+    fontWeight:'bold',
+    flexWrap: 'wrap',
+    fontSize: AppStyles.fontSize.content,
+    marginLeft: 10,
+  },
+  source: {
+    flex: 1,
+    marginLeft: 10,
+    fontSize: AppStyles.fontSize.sub,
+    color:AppStyles.color.text,
+    fontStyle: 'italic',
+  },
+  margin: {
+    marginBottom: 200
   },
 }); 
 
