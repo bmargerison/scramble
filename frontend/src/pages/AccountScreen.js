@@ -9,9 +9,9 @@ const AccountScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        <Text style={[styles.title, styles.leftTitle]}>Your account</Text>
+        <Text style={styles.title}>Your account</Text>
       </View>
-      <TouchableOpacity style={styles.addContainer} onPress={() => signout()}>
+      <TouchableOpacity style={styles.addItemContainer} onPress={() => signout()}>
         <Text style={styles.buttonText}>Sign Out</Text>  
       </TouchableOpacity>
     </View>
