@@ -145,6 +145,51 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginLeft: 20,
   },
+  inputContainer: {
+    width: AppStyles.textInputWidth.main,
+    marginBottom: 30,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: AppStyles.color.grey,
+    borderRadius: AppStyles.borderRadius.main,
+  },
+  link: {
+    marginTop: 20,
+    marginBottom: 20,
+    color: AppStyles.color.blue,
+    fontSize: AppStyles.fontSize.sub,
+  },
+  input: {
+    height: 42,
+    paddingLeft: 20,
+    paddingRight: 20,
+    color: AppStyles.color.text,
+    fontSize: AppStyles.fontSize.content,
+  },
+  authTitle: {
+    fontSize: AppStyles.fontSize.title,
+    fontWeight: 'bold',
+    color: AppStyles.color.tint,
+    marginTop: 50,
+    marginBottom: 50,
+    alignSelf: 'stretch',
+    textAlign: 'left',
+    marginLeft: 20,
+  },
+  button: {
+    width: AppStyles.buttonWidth.main,
+    backgroundColor: AppStyles.color.tint,
+    borderRadius: AppStyles.borderRadius.main,
+    padding: 10,
+  },
+  inputContainer: {
+    width: AppStyles.textInputWidth.main,
+    marginBottom: 30,
+    borderWidth: 1,
+    borderStyle: 'solid',
+    borderColor: AppStyles.color.grey,
+    borderRadius: AppStyles.borderRadius.main,
+  },
 }); 
 
 export default styles;

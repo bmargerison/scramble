@@ -1,7 +1,8 @@
 import React, { useState, useContext } from "react";
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
 import {AppStyles} from '../styles/AppStyles';
+import styles from '../styles/styleSheet'
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -10,10 +11,10 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.title, styles.leftTitle]}>Sign In</Text>
-      <View style={styles.InputContainer}>
+      <Text style={styles.authTitle}>Sign In</Text>
+      <View style={styles.inputContainer}>
         <TextInput
-          style={styles.body}
+          style={styles.input}
           placeholder="E-mail address"
           onChangeText={setEmail}
           value={email}
@@ -21,9 +22,9 @@ const LoginScreen = ({ navigation }) => {
           underlineColorAndroid="transparent"
         />
       </View>
-      <View style={styles.InputContainer}>
+      <View style={styles.inputContainer}>
         <TextInput
-          style={styles.body}
+          style={styles.input}
           secureTextEntry={true}
           placeholder="Password"
           onChangeText={setPassword}
@@ -33,74 +34,16 @@ const LoginScreen = ({ navigation }) => {
         />
       </View>
       <TouchableOpacity
-        style={styles.loginContainer}
+        style={styles.button}
         onPress={() => signin({email, password})}>
-        <Text style={styles.loginText}>Log in</Text>
+        <Text style={styles.buttonText}>Log in</Text>
       </TouchableOpacity>
-      <Text style={styles.loginLink}
+      <Text style={styles.link}
         onPress={() => navigation.navigate('Signup')}>
         Don't have an account? Sign up here
       </Text>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: AppStyles.fontSize.title,
-    fontWeight: 'bold',
-    color: AppStyles.color.tint,
-    marginTop: 50,
-    marginBottom: 50,
-  },
-  leftTitle: {
-    alignSelf: 'stretch',
-    textAlign: 'left',
-    marginLeft: 20,
-  },
-  content: {
-    paddingLeft: 50,
-    paddingRight: 50,
-    textAlign: 'center',
-    fontSize: AppStyles.fontSize.content,
-    color: AppStyles.color.text,
-  },
-  loginContainer: {
-    width: AppStyles.buttonWidth.main,
-    backgroundColor: AppStyles.color.tint,
-    borderRadius: AppStyles.borderRadius.main,
-    padding: 10,
-  },
-  loginText: {
-    color: AppStyles.color.white,
-    alignSelf: "center",
-    fontSize: AppStyles.fontSize.content,
-  },
-  InputContainer: {
-    width: AppStyles.textInputWidth.main,
-    marginBottom: 30,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: AppStyles.color.grey,
-    borderRadius: AppStyles.borderRadius.main,
-  },
-  body: {
-    height: 42,
-    paddingLeft: 20,
-    paddingRight: 20,
-    color: AppStyles.color.text,
-    fontSize: AppStyles.fontSize.content,
-  },
-  loginLink: {
-    marginTop: 20,
-    marginBottom: 20,
-    color: AppStyles.color.blue,
-    fontSize: AppStyles.fontSize.sub,
-  },
-});
 
 export default LoginScreen;
