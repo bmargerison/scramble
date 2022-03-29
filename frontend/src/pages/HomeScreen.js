@@ -50,7 +50,7 @@ const HomeScreen = ({ navigation, route }) => {
           <Text style={styles.buttonText}>Add New List</Text>  
         </TouchableOpacity>
       </View>
-      <View style={styles.scrollMarginFudge}>
+      <View style={{ marginBottom: 50 }}>
         <FlatList 
           data={lists}
           keyExtractor={(list, index) => list._id}

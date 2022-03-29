@@ -143,7 +143,7 @@ const ListScreen = ({ navigation, route }) => {
           keyExtractor={(item, index) => index}
           renderItem={({item}) => { 
             return (
-              <View style={styles.scrollMarginFudge2}>
+              <View style={{ marginBottom: 20 }}>
                 <Text style={styles.heading}>{item.t}</Text>
                 <FlatList 
                   data={allItems[item.t]}

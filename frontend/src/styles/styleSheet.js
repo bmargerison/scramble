@@ -66,12 +66,6 @@ const styles = StyleSheet.create({
     color:AppStyles.color.text,
     marginTop:5
   },
-  scrollMarginFudge: {
-    marginBottom: 50
-  },
-  scrollMarginFudge2: {
-    marginBottom: 20
-  },
   titleContainer: {
     marginTop: 50,
     flex: 1,
@@ -190,6 +184,16 @@ const styles = StyleSheet.create({
     borderColor: AppStyles.color.grey,
     borderRadius: AppStyles.borderRadius.main,
   },
+  searchContainer: {
+    width: "90%",
+    padding: 10,
+    marginTop: 30,
+    alignSelf: "center",
+  },
+  searchBar: {
+    backgroundColor: AppStyles.color.background,
+    borderBottomColor: 'transparent',
+    borderTopColor: 'transparent'}
 }); 
 
 export default styles;
