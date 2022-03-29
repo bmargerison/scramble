@@ -7,6 +7,7 @@ import LoginScreen from './src/pages/LoginScreen'
 import HomeScreen from './src/pages/HomeScreen'
 import ListScreen from './src/pages/ListScreen'
 import SearchScreen from './src/pages/SearchScreen'
+import AccountScreen from './src/pages/AccountScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -62,6 +63,19 @@ function SearchFlowNavigator() {
   )
 }
 
+const AccountStack = createStackNavigator()
+
+function AccountFlowNavigator() {
+  return(
+    <AccountStack.Navigator>
+      <AccountStack.Screen 
+        name="MyAccount" component={AccountScreen}
+        options={{headerShown: false}}
+        />
+    </AccountStack.Navigator>
+  )
+}
+
 const Tab = createBottomTabNavigator();
 
 function HomeFlow() {
@@ -107,7 +121,7 @@ function HomeFlow() {
       />
       <Tab.Screen
         name="Account"
-        component={HomeFlowNavigator}
+        component={AccountFlowNavigator}
         options={{ 
           headerShown: false,
           tabBarLabel:() => {return null},
@@ -127,8 +141,7 @@ function App() {
   return (
     <NavigationContainer>
       <AppStack.Navigator>
-        {console.log(state.token === null),
-        state.token === null ? (
+        {state.token === null ? (
           <>
             <AppStack.Screen
               options={{headerShown: false}}
