@@ -1,26 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { 
-  StyleSheet, 
-  Text, 
-  View, 
-  FlatList, 
-  TouchableOpacity
-} 
+import { Text, View, FlatList, TouchableOpacity } 
 from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import {AppStyles} from '../styles/AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
-import {Context as AuthContext} from '../context/AuthContext';
+import { Context as AuthContext } from '../context/AuthContext';
 import ItemModal from './modals/ItemModal'
 import TypeModal from './modals/TypeModal'
 import Icon from 'react-native-vector-icons/AntDesign';
+import styles from '../styles/styleSheet'
 
 const ListScreen = ({ navigation, route }) => {
 
   // modal forms
   const [ item, setItem ] = useState('');
-  const [ type, setType ] = useState('');
   const [ itemModalVisible, setItemModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
 
@@ -71,7 +65,6 @@ const ListScreen = ({ navigation, route }) => {
 
   // if user has already set up item, add to list
   // otherwise, create item with type for the user, then add to list
-
   const mapToItem = () => {
     setItemModalVisible(!itemModalVisible)
     if (userItems.some(saved => saved.name == item)) {
@@ -136,12 +129,12 @@ const ListScreen = ({ navigation, route }) => {
         <TypeModal show={typeModalVisible} toggle={toggleTypeModal} setModalType={setModalType}/>
         <ItemModal show={itemModalVisible} toggle={toggleItemModal} setModalItem={setModalItem}/>
         <View style={styles.titleContainer}>
-          <Text style={[styles.title, styles.leftTitle]}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
+          <Text style={styles.title}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home', { list: list })}>
             <Icon name="leftcircle" size={30} style={styles.backButton} />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.addContainer} onPress={() => toggleItemModal()}>
+        <TouchableOpacity style={styles.addItemContainer} onPress={() => toggleItemModal()}>
           <Text style={styles.buttonText}>Add Item</Text>  
         </TouchableOpacity>
         </View>
@@ -150,7 +143,7 @@ const ListScreen = ({ navigation, route }) => {
           keyExtractor={(item, index) => index}
           renderItem={({item}) => { 
             return (
-              <View style={styles.scrollMargin}>
+              <View style={styles.scrollMarginFudge2}>
                 <Text style={styles.heading}>{item.t}</Text>
                 <FlatList 
                   data={allItems[item.t]}
@@ -162,7 +155,7 @@ const ListScreen = ({ navigation, route }) => {
                         text={item.name}
                         fillColor={AppStyles.color.tint}
                         iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
-                        textStyle={styles.items}
+                        textStyle={styles.listItems}
                         style={styles.checkboxStyle}
                         onPress={(isChecked) => {!isChecked}}
                       />
@@ -172,71 +165,5 @@ const ListScreen = ({ navigation, route }) => {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-  title: {
-    fontSize: AppStyles.fontSize.title,
-    fontWeight: 'bold',
-    color: AppStyles.color.tint,
-  },
-  scrollMargin: {
-    marginBottom: 20,
-  },
-  leftTitle: {
-    marginLeft: 20,
-    flex: 15,
-  },
-  addContainer: {
-    width: AppStyles.buttonWidth.main,
-    backgroundColor: AppStyles.color.tint,
-    borderRadius: AppStyles.borderRadius.main,
-    padding: 10,
-    marginBottom: 20,
-    marginTop: 50,
-  },
-  buttonText: {
-    color: AppStyles.color.white,
-    fontSize: AppStyles.fontSize.content,
-    alignSelf: "center",
-  },
-  textStyle: {
-    color: AppStyles.color.white,
-    textAlign: "center"
-  },
-  checkboxStyle: {
-    color: AppStyles.color.white,
-    textAlign: "center",
-    marginLeft: 20,
-  },
-  items: {
-    fontSize: AppStyles.fontSize.content,
-    color:AppStyles.color.text,
-    marginTop: 2,
-    marginBottom: 2,
-  },
-  heading: {
-    fontSize: AppStyles.fontSize.content,
-    backgroundColor: AppStyles.color.tint,
-    color:AppStyles.color.white,
-    marginTop: 5,
-    marginBottom: 5,
-    marginLeft: 10,
-    marginRight: 10,
-    padding: 2,
-  },
-  backButton: {
-    color: AppStyles.color.tint,
-    flex: 2,
-  },
-  titleContainer: {
-    marginTop: 50,
-    flex: 1,
-    flexDirection:'row',
-    flexWrap: 'wrap',
-  }
-}); 
 
 export default ListScreen;
