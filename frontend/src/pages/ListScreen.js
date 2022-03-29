@@ -12,8 +12,8 @@ import {AppStyles} from '../styles/AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
 import {Context as AuthContext} from '../context/AuthContext';
-import ItemModal from './ItemModal'
-import TypeModal from './TypeModal'
+import ItemModal from './modals/ItemModal'
+import TypeModal from './modals/TypeModal'
 import Icon from 'react-native-vector-icons/AntDesign';
 
 const ListScreen = ({ navigation, route }) => {
