@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {AppStyles} from './src/AppStyles';
+import {AppStyles} from './src/styles/AppStyles';
 
 const AuthStack = createStackNavigator();
 

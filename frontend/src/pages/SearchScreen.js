@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import {AppStyles} from '../AppStyles';
+import {AppStyles} from '../styles/AppStyles';
 import { APP_ID, APP_KEY } from "@env";
 import axios from "axios";
 

@@ -8,7 +8,7 @@ import {
 } 
 from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox";
-import {AppStyles} from '../AppStyles';
+import {AppStyles} from '../styles/AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
 import {Context as AuthContext} from '../context/AuthContext';

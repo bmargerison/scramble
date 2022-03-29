@@ -7,7 +7,7 @@ import {
   TouchableOpacity, 
   Modal } 
 from 'react-native';
-import {AppStyles} from '../AppStyles';
+import {AppStyles} from '../styles/AppStyles';
 
 const ItemModal = ({show, toggle, setModalItem}) => {
   const [ item, setItem ] = useState();

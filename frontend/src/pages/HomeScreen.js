@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity, TouchableHighlight, SafeAreaView } from 'react-native';
 import {Context as AuthContext} from '../context/AuthContext';
-import {AppStyles} from '../AppStyles';
+import {AppStyles} from '../styles/AppStyles';
 import Icon from 'react-native-vector-icons/Entypo';
 import { IP_ADDRESS } from "@env";
 import axios from "axios";

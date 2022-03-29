@@ -6,7 +6,7 @@ import {
   TouchableOpacity, 
   Modal } 
 from 'react-native';
-import {AppStyles} from '../AppStyles';
+import {AppStyles} from '../styles/AppStyles';
 import SelectDropdown from 'react-native-select-dropdown'
 
 const TypeModal = ({show, toggle, setModalType}) => {
