@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, Text, TouchableOpacity, Image, Linking, ScrollView } from 'react-native';
 import styles from '../styles/styleSheet'
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,10 +10,26 @@ import { Context as AuthContext } from '../context/AuthContext';
 
 const RecipeScreen = ({ navigation, route }) => {
   const [ recipe, setRecipe ] = useState(route.params.recipe);
+  const [ savedRecipe, setSavedRecipe ] = useState({});
+  const [ recipes, setRecipes ] = useState([]);
+  const [ favourited, setFavourited] = useState(false)
   const {state} = useContext(AuthContext);
 
+  useEffect(() => {
+    const fetchData = () => {
+      axios
+      .get(`http://${IP_ADDRESS}:3000/recipes`)
+      .then((res) => {
+        setRecipes(res.data)
+      })
+
+      recipes.some(r => r.name == recipe.label) ? setFavourited(true) : setFavourited(false)
+    };
+
+    fetchData();
+  }, []);
+
   const favouriteRecipe = () => {
-    console.log(recipe.ingredientLines)
     axios
       .post(`http://${IP_ADDRESS}:3000/recipes`, {
         _user: `${state.userId}`,
@@ -22,7 +38,19 @@ const RecipeScreen = ({ navigation, route }) => {
         ingredients: recipe.ingredientLines,
       })
       .then((res) => {
-        console.log(res)
+        setFavourited(true)
+        setSavedRecipe(res.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  const unfavouriteRecipe = () => {
+    axios
+      .delete(`http://${IP_ADDRESS}:3000/recipes/${savedRecipe._id}`)
+      .then((res) => {
+        setFavourited(false)
       })
       .catch((err) => {
         console.log(err)
@@ -51,9 +79,15 @@ const RecipeScreen = ({ navigation, route }) => {
           <TouchableOpacity>
             <Icon name="list" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => favouriteRecipe()}>
-            <Icon name="star-o" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
-          </TouchableOpacity>
+          {favourited ?
+              <TouchableOpacity onPress={() => unfavouriteRecipe()}>
+                <Icon name="star" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
+              </TouchableOpacity>
+            :
+              <TouchableOpacity onPress={() => favouriteRecipe()}>
+                <Icon name="star-o" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
+              </TouchableOpacity>
+            }
         </View>
         <Text style={[styles.cardTitle, {padding: 5}]}>Ingredients</Text>
         <View style={{ alignSelf: 'flex-start' }}>

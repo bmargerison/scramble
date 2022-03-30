@@ -9,6 +9,7 @@ import ListScreen from './src/pages/ListScreen'
 import SearchScreen from './src/pages/SearchScreen'
 import AccountScreen from './src/pages/AccountScreen'
 import RecipeScreen from './src/pages/RecipeScreen'
+import FavouritesScreen from './src/pages/FavouritesScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -81,6 +82,19 @@ function AccountFlowNavigator() {
   )
 }
 
+const FavouritesStack = createStackNavigator()
+
+function FavouritesFlowNavigator() {
+  return(
+    <FavouritesStack.Navigator>
+      <FavouritesStack.Screen 
+        name="Favourites" component={FavouritesScreen}
+        options={{headerShown: false}}
+        />
+    </FavouritesStack.Navigator>
+  )
+}
+
 const Tab = createBottomTabNavigator();
 
 function HomeFlow() {
@@ -114,8 +128,8 @@ function HomeFlow() {
         }}
       />
       <Tab.Screen
-        name="MyRecipes"
-        component={HomeFlowNavigator}
+        name="MyFavourites"
+        component={FavouritesFlowNavigator}
         options={{ 
           headerShown: false,
           tabBarLabel:() => {return null},
