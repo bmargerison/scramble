@@ -25,7 +25,6 @@ describe("/items", () => {
         _list: "010a000000000000000a0000",
         type: "Dairy",
       })
-      console.log(response)
       expect(response.statusCode).toBe(201)
     })
     test("500 status code if no user", async () => {
