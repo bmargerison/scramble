@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, Image, Linking, ScrollView } from 'react-native';
 import styles from '../styles/styleSheet'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import {AppStyles} from '../styles/AppStyles';
+import axios from "axios";
+import { IP_ADDRESS } from "@env";
+import { Context as AuthContext } from '../context/AuthContext';
 
 const RecipeScreen = ({ navigation, route }) => {
-  const [ recipe, setItem ] = useState(route.params.recipe);
+  const [ recipe, setRecipe ] = useState(route.params.recipe);
+  const {state} = useContext(AuthContext);
+
+  const favouriteRecipe = () => {
+    console.log(recipe.ingredientLines)
+    axios
+      .post(`http://${IP_ADDRESS}:3000/recipes`, {
+        _user: `${state.userId}`,
+        url: recipe.url,
+        name: recipe.label,
+        ingredients: recipe.ingredientLines,
+      })
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
 
   return (
     <View style={styles.container}>
@@ -30,7 +51,7 @@ const RecipeScreen = ({ navigation, route }) => {
           <TouchableOpacity>
             <Icon name="list" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => favouriteRecipe()}>
             <Icon name="star-o" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
           </TouchableOpacity>
         </View>

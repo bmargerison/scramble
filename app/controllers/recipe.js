@@ -20,6 +20,7 @@ const newRecipe = async (req, res, next) => {
     const newRecipe = await recipe.save()
     res.status(201).json(newRecipe)
   } catch (err) {
+    console.log(err.message)
     return res.status(400).json({ message: err.message })
   }
 };
