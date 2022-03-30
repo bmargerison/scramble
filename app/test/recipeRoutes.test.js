@@ -4,7 +4,6 @@ const Recipe = require('../models/recipe')
 process.env.NODE_ENV = 'test'
 server = require('../bin/www');
 
-
 describe("/recipes", () => {
   
   afterEach(async () => {
@@ -43,7 +42,7 @@ describe("/recipes", () => {
         name: "recipe",
         ingredients: ['1', '2', '3'],
       })
-      const response = await request(server).del(`/lists/${recipe._body._id}`)
+      const response = await request(server).del(`/recipes/${recipe._body._id}`)
       expect(response.statusCode).toBe(202)
     })
     test("404 status code if recipe doesn't exist", async () => {
@@ -53,8 +52,9 @@ describe("/recipes", () => {
         name: "recipe",
         ingredients: ['1', '2', '3'],
       })
-      const response = await request(server).del(`/lists/gibberish`)
+      const response = await request(server).del(`/recipes/gibberish`)
       expect(response.statusCode).toBe(404)
     })
   })
+  
 })

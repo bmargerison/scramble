@@ -24,4 +24,14 @@ const newRecipe = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllRecipes, newRecipe};
+const deleteRecipe = async (req, res, next) => {
+  try {
+    let recipe = await Recipe.findById(req.params.id)
+    await recipe.remove()
+    res.status(202).json(recipe)
+  } catch (err) {
+    res.status(404).json({ message: "Cannot find list" })
+  }
+};
+
+module.exports = {getAllRecipes, newRecipe, deleteRecipe};
