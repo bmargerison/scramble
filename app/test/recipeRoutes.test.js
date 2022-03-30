@@ -18,4 +18,21 @@ describe("/recipes", () => {
     })
   })
 
+  describe("POST /", () => {
+    test("should respond with a 200 status code", async () => {
+      const response = await request(server).post("/recipes").send({ 
+        _user: "000a000000000000000a0000",
+        url: "www.recipe.com",
+        name: "recipe",
+        ingredients: ['1', '2', '3'],
+      })
+      expect(response.statusCode).toBe(201)
+    })
+    test("500 status code if no user", async () => {
+      const response = await request(server).post("/recipes").send({ 
+      })
+      expect(response.statusCode).toBe(400)
+    })
+  })
+  
 })
