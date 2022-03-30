@@ -34,5 +34,27 @@ describe("/recipes", () => {
       expect(response.statusCode).toBe(400)
     })
   })
-  
+
+  describe("DELETE /:id", () => {
+    test("202 status code", async () => {
+      const recipe = await request(server).post("/recipes").send({ 
+        _user: "000a000000000000000a0000",
+        url: "www.recipe.com",
+        name: "recipe",
+        ingredients: ['1', '2', '3'],
+      })
+      const response = await request(server).del(`/lists/${recipe._body._id}`)
+      expect(response.statusCode).toBe(202)
+    })
+    test("404 status code if recipe doesn't exist", async () => {
+      const recipe = await request(server).post("/recipes").send({ 
+        _user: "000a000000000000000a0000",
+        url: "www.recipe.com",
+        name: "recipe",
+        ingredients: ['1', '2', '3'],
+      })
+      const response = await request(server).del(`/lists/gibberish`)
+      expect(response.statusCode).toBe(404)
+    })
+  })
 })
