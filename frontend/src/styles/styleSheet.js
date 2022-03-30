@@ -193,7 +193,12 @@ const styles = StyleSheet.create({
   searchBar: {
     backgroundColor: AppStyles.color.background,
     borderBottomColor: 'transparent',
-    borderTopColor: 'transparent'}
+    borderTopColor: 'transparent'},
+  recipeItems: {
+    fontSize: AppStyles.fontSize.content,
+    color:AppStyles.color.text,
+    padding: 5,
+  },
 }); 
 
 export default styles;
