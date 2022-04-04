@@ -91,7 +91,7 @@ describe("recipe", function() {
       image: "url"
     });
     recipe.validate(function(err) {
-        expect(err.errors.image).to.exist;
+        expect(err.errors.source).to.exist;
         done();
     });
   });

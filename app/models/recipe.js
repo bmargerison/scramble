@@ -22,6 +22,10 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  source: {
+    type: String,
+    required: true
+  },
 })
 
 module.exports = mongoose.model('Recipe', recipeSchema)
