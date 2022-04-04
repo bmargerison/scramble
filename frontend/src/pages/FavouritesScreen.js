@@ -42,6 +42,9 @@ const FavouritesScreen = () => {
               />
               <View style={{ flexDirection:'column', flexWrap: 'wrap' }}>
                 <Text style={newStyles.label}>{item.name}</Text>
+                <Text style={newStyles.source}> - {item.healthLabels[0]}</Text>
+                <Text style={newStyles.source}> - {item.healthLabels[1]}</Text>
+                <Text style={newStyles.source}> - {item.healthLabels[2]}</Text>
                 <Text style={newStyles.source}>{item.source}</Text>
               </View>
             </TouchableOpacity>
