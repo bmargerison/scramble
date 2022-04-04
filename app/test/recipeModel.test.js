@@ -17,6 +17,7 @@ describe("recipe", function() {
       name: "recipe",
       url: "www.recipe.com",
       ingredients: ['1', '2', '3'],
+      image: "url"
     });
     recipe.validate(function(err) {
         expect(err.errors._user).to.exist;
@@ -29,6 +30,7 @@ describe("recipe", function() {
       _user: "000a000000000000000a0000",
       url: "www.recipe.com",
       ingredients: ['1', '2', '3'],
+      image: "url"
     });
     recipe.validate(function(err) {
         expect(err.errors.name).to.exist;
@@ -41,6 +43,7 @@ describe("recipe", function() {
       _user: "000a000000000000000a0000",
       name: "recipe",
       ingredients: ['1', '2', '3'],
+      image: "url"
     });
     recipe.validate(function(err) {
         expect(err.errors.url).to.exist;
@@ -53,6 +56,7 @@ describe("recipe", function() {
       _user: "000a000000000000000a0000",
       url: "www.recipe.com",
       name: "recipe",
+      image: "url"
     });
     recipe.validate(function(err) {
         expect(err.errors.ingredients).to.exist;
@@ -60,12 +64,26 @@ describe("recipe", function() {
     });
   });
 
-  test("recipe has name, user, ingredients, url", async function() {
+  test("should be invalid if no image", function(done) {
+    const recipe = new Recipe({
+      _user: "000a000000000000000a0000",
+      url: "www.recipe.com",
+      name: "recipe",
+      ingredients: ['1', '2', '3']
+    });
+    recipe.validate(function(err) {
+        expect(err.errors.ingredients).to.exist;
+        done();
+    });
+  });
+
+  test("recipe has name, user, ingredients, url, image", async function() {
     mockingoose.User.toReturn({ 
       _id: "000a000000000000000a0000",
       username: "username",
       email: "email@email.com",
-      password: "Password123?" 
+      password: "Password123?",
+      image: "url"
     }, 'findOne');
     const user = await User.findById({ _id: "000a000000000000000a0000" })
     const recipe = new Recipe({
