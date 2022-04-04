@@ -17,7 +17,6 @@ const SearchScreen = ({ navigation, route }) => {
     .get(url)
     .then((res) => {
       setRecipes(res.data.hits)
-      console.log(res.data.hits[0].recipe.source)
     })
   }
 

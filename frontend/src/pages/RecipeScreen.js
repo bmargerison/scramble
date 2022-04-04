@@ -21,9 +21,8 @@ const RecipeScreen = ({ navigation, route }) => {
       .get(`http://${IP_ADDRESS}:3000/recipes`)
       .then((res) => {
         setRecipes(res.data)
+        res.data.some(r => {return r.name == recipe.label}) ? setFavourited(true) : setFavourited(false)
       })
-
-      recipes.some(r => r.name == recipe.label) ? setFavourited(true) : setFavourited(false)
     };
 
     fetchData();
@@ -50,14 +49,18 @@ const RecipeScreen = ({ navigation, route }) => {
   }
 
   const unfavouriteRecipe = () => {
-    axios
-      .delete(`http://${IP_ADDRESS}:3000/recipes/${savedRecipe._id}`)
-      .then((res) => {
-        setFavourited(false)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    recipes.forEach((r) => {
+      if (r.name == recipe.label) {
+        axios
+        .delete(`http://${IP_ADDRESS}:3000/recipes/${r._id}`)
+        .then((res) => {
+          setFavourited(false)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+    })
   }
 
   return (
