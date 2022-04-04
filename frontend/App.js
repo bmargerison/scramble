@@ -10,6 +10,7 @@ import SearchScreen from './src/pages/SearchScreen'
 import AccountScreen from './src/pages/AccountScreen'
 import RecipeScreen from './src/pages/RecipeScreen'
 import FavouritesScreen from './src/pages/FavouritesScreen'
+import MyFavouriteScreen from './src/pages/MyFavouriteScreen'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
@@ -89,6 +90,10 @@ function FavouritesFlowNavigator() {
     <FavouritesStack.Navigator>
       <FavouritesStack.Screen 
         name="Favourites" component={FavouritesScreen}
+        options={{headerShown: false}}
+        />
+      <FavouritesStack.Screen 
+        name="MyFavourite" component={MyFavouriteScreen}
         options={{headerShown: false}}
         />
     </FavouritesStack.Navigator>

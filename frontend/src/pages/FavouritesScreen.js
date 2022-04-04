@@ -5,7 +5,7 @@ import axios from "axios";
 import styles from '../styles/styleSheet'
 import { IP_ADDRESS } from "@env";
 
-const FavouritesScreen = () => {
+const FavouritesScreen = ({ navigation, route }) => {
   const [recipes, setRecipes] = useState([])
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const FavouritesScreen = () => {
           keyExtractor={(list, index) => list.title}
           renderItem={({item}) => {
           return (
-            <TouchableOpacity style={styles.card}>
+            <TouchableOpacity style={styles.card} onPress={()=> navigation.navigate('MyFavourite', item)}>
               <Image
                 source={{
                   uri: `${item.image}`,
