@@ -26,6 +26,10 @@ const recipeSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  healthLabels: {
+    type: [String],
+    validate: v => Array.isArray(v) && v.length > 0,
+  },
 })
 
 module.exports = mongoose.model('Recipe', recipeSchema)

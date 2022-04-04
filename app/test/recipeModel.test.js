@@ -32,7 +32,6 @@ describe("recipe", function() {
       username: "username",
       email: "email@email.com",
       password: "Password123?",
-      image: "url"
     }, 'findOne');
     const user = await User.findById({ _id: "000a000000000000000a0000" })
     const recipe = new Recipe({
@@ -40,6 +39,9 @@ describe("recipe", function() {
       url: "www.recipe.com",
       name: "recipe",
       ingredients: ['1', '2', '3'],
+      image: "url",
+      source: "food",
+      healthLabels: ['1', '2', '3'],
     });
     expect(String(recipe._user)).to.equal(String(user.id))
     expect(String(recipe.url)).to.equal("www.recipe.com")
