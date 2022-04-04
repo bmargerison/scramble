@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import {AppStyles} from '../styles/AppStyles';
 import axios from "axios";
 import styles from '../styles/styleSheet'
@@ -13,7 +13,7 @@ const FavouritesScreen = () => {
       axios
       .get(`http://${IP_ADDRESS}:3000/recipes`)
       .then((res) => {
-        setRecipes(res.data)
+        setRecipes(res.data.reverse())
       })
     };
 
@@ -34,6 +34,12 @@ const FavouritesScreen = () => {
           renderItem={({item}) => {
           return (
             <TouchableOpacity style={styles.card}>
+              <Image
+                source={{
+                  uri: `${item.image}`,
+                }}
+                style = {{ width: 100, height: 100 }}
+              />
               <View style={{ flexDirection:'column', flexWrap: 'wrap' }}>
                 <Text style={newStyles.label}>{item.name}</Text>
               </View>
