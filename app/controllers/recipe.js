@@ -14,7 +14,8 @@ const newRecipe = async (req, res, next) => {
     _user: req.body._user,
     url: req.body.url,
     name: req.body.name,
-    ingredients: req.body.ingredients
+    ingredients: req.body.ingredients,
+    image: req.body.image
   })
   try {
     const newRecipe = await recipe.save()

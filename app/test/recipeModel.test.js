@@ -72,7 +72,7 @@ describe("recipe", function() {
       ingredients: ['1', '2', '3']
     });
     recipe.validate(function(err) {
-        expect(err.errors.ingredients).to.exist;
+        expect(err.errors.image).to.exist;
         done();
     });
   });

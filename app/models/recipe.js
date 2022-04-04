@@ -17,7 +17,11 @@ const recipeSchema = new mongoose.Schema({
   ingredients: {
     type: [String],
     validate: v => Array.isArray(v) && v.length > 0,
-  }
+  },
+  image: {
+    type: String,
+    required: true
+  },
 })
 
 module.exports = mongoose.model('Recipe', recipeSchema)
