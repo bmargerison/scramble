@@ -17,7 +17,8 @@ describe("recipe", function() {
       name: "recipe",
       url: "www.recipe.com",
       ingredients: ['1', '2', '3'],
-      image: "url"
+      image: "url",
+      source: "food"
     });
     recipe.validate(function(err) {
         expect(err.errors._user).to.exist;
@@ -30,7 +31,8 @@ describe("recipe", function() {
       _user: "000a000000000000000a0000",
       url: "www.recipe.com",
       ingredients: ['1', '2', '3'],
-      image: "url"
+      image: "url",
+      source: "food"
     });
     recipe.validate(function(err) {
         expect(err.errors.name).to.exist;
@@ -43,7 +45,8 @@ describe("recipe", function() {
       _user: "000a000000000000000a0000",
       name: "recipe",
       ingredients: ['1', '2', '3'],
-      image: "url"
+      image: "url",
+      source: "food"
     });
     recipe.validate(function(err) {
         expect(err.errors.url).to.exist;
@@ -56,7 +59,8 @@ describe("recipe", function() {
       _user: "000a000000000000000a0000",
       url: "www.recipe.com",
       name: "recipe",
-      image: "url"
+      image: "url",
+      source: "food"
     });
     recipe.validate(function(err) {
         expect(err.errors.ingredients).to.exist;
@@ -69,7 +73,22 @@ describe("recipe", function() {
       _user: "000a000000000000000a0000",
       url: "www.recipe.com",
       name: "recipe",
-      ingredients: ['1', '2', '3']
+      ingredients: ['1', '2', '3'],
+      source: "food"
+    });
+    recipe.validate(function(err) {
+        expect(err.errors.image).to.exist;
+        done();
+    });
+  });
+
+  test("should be invalid if no source", function(done) {
+    const recipe = new Recipe({
+      _user: "000a000000000000000a0000",
+      url: "www.recipe.com",
+      name: "recipe",
+      ingredients: ['1', '2', '3'],
+      image: "url"
     });
     recipe.validate(function(err) {
         expect(err.errors.image).to.exist;
