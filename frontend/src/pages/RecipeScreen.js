@@ -36,7 +36,8 @@ const RecipeScreen = ({ navigation, route }) => {
         url: recipe.url,
         name: recipe.label,
         ingredients: recipe.ingredientLines,
-        image: recipe.image
+        image: recipe.image,
+        source: recipe.source
       })
       .then((res) => {
         setFavourited(true)
