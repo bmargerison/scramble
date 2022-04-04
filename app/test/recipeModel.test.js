@@ -12,91 +12,21 @@ describe("recipe", function() {
     await db.dropDatabase()
   });
 
-  test("should be invalid if no user", function(done) {
-    const recipe = new Recipe({
-      name: "recipe",
-      url: "www.recipe.com",
-      ingredients: ['1', '2', '3'],
-      image: "url",
-      source: "food"
-    });
+  test("errors for omitted variables", function(done) {
+    const recipe = new Recipe({});
     recipe.validate(function(err) {
         expect(err.errors._user).to.exist;
-        done();
-    });
-  });
-
-  test("should be invalid if no name", function(done) {
-    const recipe = new Recipe({
-      _user: "000a000000000000000a0000",
-      url: "www.recipe.com",
-      ingredients: ['1', '2', '3'],
-      image: "url",
-      source: "food"
-    });
-    recipe.validate(function(err) {
         expect(err.errors.name).to.exist;
-        done();
-    });
-  });
-
-  test("should be invalid if no url", function(done) {
-    const recipe = new Recipe({
-      _user: "000a000000000000000a0000",
-      name: "recipe",
-      ingredients: ['1', '2', '3'],
-      image: "url",
-      source: "food"
-    });
-    recipe.validate(function(err) {
         expect(err.errors.url).to.exist;
-        done();
-    });
-  });
-
-  test("should be invalid if no ingredients", function(done) {
-    const recipe = new Recipe({
-      _user: "000a000000000000000a0000",
-      url: "www.recipe.com",
-      name: "recipe",
-      image: "url",
-      source: "food"
-    });
-    recipe.validate(function(err) {
         expect(err.errors.ingredients).to.exist;
-        done();
-    });
-  });
-
-  test("should be invalid if no image", function(done) {
-    const recipe = new Recipe({
-      _user: "000a000000000000000a0000",
-      url: "www.recipe.com",
-      name: "recipe",
-      ingredients: ['1', '2', '3'],
-      source: "food"
-    });
-    recipe.validate(function(err) {
         expect(err.errors.image).to.exist;
-        done();
-    });
-  });
-
-  test("should be invalid if no source", function(done) {
-    const recipe = new Recipe({
-      _user: "000a000000000000000a0000",
-      url: "www.recipe.com",
-      name: "recipe",
-      ingredients: ['1', '2', '3'],
-      image: "url"
-    });
-    recipe.validate(function(err) {
         expect(err.errors.source).to.exist;
+        expect(err.errors.healthLabels).to.exist;
         done();
     });
   });
 
-  test("recipe has name, user, ingredients, url, image", async function() {
+  test("recipe has name, user, ingredients, url, image, source, healthLabels", async function() {
     mockingoose.User.toReturn({ 
       _id: "000a000000000000000a0000",
       username: "username",

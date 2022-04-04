@@ -25,7 +25,8 @@ describe("/recipes", () => {
         name: "recipe",
         ingredients: ['1', '2', '3'],
         image: "url",
-        source: "food"
+        source: "food",
+        heatlhLabels: ['1', '2', '3'],
       })
       expect(response.statusCode).toBe(201)
     })
@@ -44,7 +45,8 @@ describe("/recipes", () => {
         name: "recipe",
         ingredients: ['1', '2', '3'],
         image: "url",
-        source: "food"
+        source: "food",
+        heatlhLabels: ['1', '2', '3'],
       })
       const response = await request(server).del(`/recipes/${recipe._body._id}`)
       expect(response.statusCode).toBe(202)
@@ -56,7 +58,8 @@ describe("/recipes", () => {
         name: "recipe",
         ingredients: ['1', '2', '3'],
         image: "url",
-        source: "food"
+        source: "food",
+        heatlhLabels: ['1', '2', '3'],
       })
       const response = await request(server).del(`/recipes/gibberish`)
       expect(response.statusCode).toBe(404)
