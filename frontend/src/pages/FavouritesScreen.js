@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import axios from "axios";
 import styles from '../styles/styleSheet'
 import { IP_ADDRESS } from "@env";
 import { Context as AuthContext } from '../context/AuthContext';
+import { RecipesContext } from '../context/RecipesContext';
 
 const FavouritesScreen = ({ navigation, route }) => {
-  const [recipes, setRecipes] = useState([])
-  const {state} = useContext(AuthContext);
+  const { recipes, setRecipes } = useContext(RecipesContext)
+  const { state } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = () => {

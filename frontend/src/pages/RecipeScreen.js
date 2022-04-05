@@ -7,26 +7,26 @@ import {AppStyles} from '../styles/AppStyles';
 import axios from "axios";
 import { IP_ADDRESS } from "@env";
 import { Context as AuthContext } from '../context/AuthContext';
+import { RecipesContext } from '../context/RecipesContext';
 
 const RecipeScreen = ({ navigation, route }) => {
   const [ recipe, setRecipe ] = useState(route.params.recipe);
-  const [ savedRecipe, setSavedRecipe ] = useState({});
-  const [ recipes, setRecipes ] = useState([]);
-  const [ favourited, setFavourited] = useState(false)
-  const {state} = useContext(AuthContext);
+  const { recipes, setRecipes } = useContext(RecipesContext)
+  const [ favourited, setFavourited ] = useState(false)
+  const { state } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = () => {
       axios
       .get(`http://${IP_ADDRESS}:3000/recipes`)
       .then((res) => {
-        setRecipes(res.data)
+        setRecipes(res.data.reverse())
         res.data.some(r => {return r.name == recipe.label}) ? setFavourited(true) : setFavourited(false)
       })
     };
 
     fetchData();
-  }, []);
+  }, [favourited]);
 
   const favouriteRecipe = () => {
     axios
@@ -41,7 +41,6 @@ const RecipeScreen = ({ navigation, route }) => {
       })
       .then((res) => {
         setFavourited(true)
-        setSavedRecipe(res.data)
       })
       .catch((err) => {
         console.log(err)

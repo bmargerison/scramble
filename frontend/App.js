@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack'
@@ -16,6 +16,7 @@ import {Provider as AuthProvider} from './src/context/AuthContext.js';
 import {Context as AuthContext} from './src/context/AuthContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppStyles} from './src/styles/AppStyles';
+import { RecipesContext } from "./src/context/RecipesContext";
 
 const AuthStack = createStackNavigator();
 
@@ -104,57 +105,60 @@ const Tab = createBottomTabNavigator();
 
 function HomeFlow() {
   const {state, signout} = useContext(AuthContext);
+  const [ recipes, setRecipes ] = useState(null)
   return (
-    <Tab.Navigator
-    initialRouteName="Feed"
-    tabBarOptions={{
-      activeTintColor: '#42f44b',
-    }}>
-      <Tab.Screen
-        name="HomeTab"
-        component={HomeFlowNavigator}
-        options={{ 
-          headerShown: false,
-          tabBarLabel:() => {return null},
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="home" color={AppStyles.color.tint} size={size}/>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={SearchFlowNavigator}
-        options={{ 
-          headerShown: false,
-          tabBarLabel:() => {return null},
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="table-search" color={AppStyles.color.tint} size={size}/>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="MyFavourites"
-        component={FavouritesFlowNavigator}
-        options={{ 
-          headerShown: false,
-          tabBarLabel:() => {return null},
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="notebook" color={AppStyles.color.tint} size={size}/>
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Account"
-        component={AccountFlowNavigator}
-        options={{ 
-          headerShown: false,
-          tabBarLabel:() => {return null},
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="account" color={AppStyles.color.tint} size={size}/>
-          ),
-        }}
-      />
-    </Tab.Navigator>
+    <RecipesContext.Provider value={{ recipes, setRecipes }}>
+      <Tab.Navigator
+      initialRouteName="Feed"
+      tabBarOptions={{
+        activeTintColor: '#42f44b',
+      }}>
+        <Tab.Screen
+          name="HomeTab"
+          component={HomeFlowNavigator}
+          options={{ 
+            headerShown: false,
+            tabBarLabel:() => {return null},
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="home" color={AppStyles.color.tint} size={size}/>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Search"
+          component={SearchFlowNavigator}
+          options={{ 
+            headerShown: false,
+            tabBarLabel:() => {return null},
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="table-search" color={AppStyles.color.tint} size={size}/>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="MyFavourites"
+          component={FavouritesFlowNavigator}
+          options={{ 
+            headerShown: false,
+            tabBarLabel:() => {return null},
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="notebook" color={AppStyles.color.tint} size={size}/>
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Account"
+          component={AccountFlowNavigator}
+          options={{ 
+            headerShown: false,
+            tabBarLabel:() => {return null},
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="account" color={AppStyles.color.tint} size={size}/>
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </RecipesContext.Provider>
   )
 }
 
@@ -174,11 +178,11 @@ function App() {
             />
           </>
         ) : (
-          <AppStack.Screen
-            options={{headerShown: false}}
-            name="HomeFlow"
-            component={HomeFlow}
-          />
+            <AppStack.Screen
+              options={{headerShown: false}}
+              name="HomeFlow"
+              component={HomeFlow}
+            />
         )}
       </AppStack.Navigator>
     </NavigationContainer>
