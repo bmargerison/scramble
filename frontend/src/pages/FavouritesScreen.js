@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
-import {AppStyles} from '../styles/AppStyles';
+import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import axios from "axios";
 import styles from '../styles/styleSheet'
 import { IP_ADDRESS } from "@env";
@@ -41,34 +40,16 @@ const FavouritesScreen = ({ navigation, route }) => {
                 style = {{ width: 100, height: 100 }}
               />
               <View style={{ flexDirection:'column', flexWrap: 'wrap' }}>
-                <Text style={newStyles.label}>{item.name}</Text>
-                <Text style={newStyles.source}> - {item.healthLabels[0]}</Text>
-                <Text style={newStyles.source}> - {item.healthLabels[1]}</Text>
-                <Text style={newStyles.source}> - {item.healthLabels[2]}</Text>
-                <Text style={newStyles.source}>{item.source}</Text>
+                <Text style={styles.label}>{item.name}</Text>
+                <Text style={styles.source}> - {item.healthLabels[0]}</Text>
+                <Text style={styles.source}> - {item.healthLabels[1]}</Text>
+                <Text style={styles.source}> - {item.healthLabels[2]}</Text>
+                <Text style={styles.source}>{item.source}</Text>
               </View>
             </TouchableOpacity>
           )}}/>
     </SafeAreaView>
   );
 }
-
-const newStyles = StyleSheet.create({
-  label: {
-    flex: 1,
-    color:"#008080",
-    fontWeight:'bold',
-    flexWrap: 'wrap',
-    fontSize: AppStyles.fontSize.content,
-    marginLeft: 10,
-  },
-  source: {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: AppStyles.fontSize.sub,
-    color:AppStyles.color.text,
-    fontStyle: 'italic',
-  }
-}); 
 
 export default FavouritesScreen;

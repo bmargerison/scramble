@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { SafeAreaView, View, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 import { SearchBar } from 'react-native-elements';
-import {AppStyles} from '../styles/AppStyles';
 import { APP_ID, APP_KEY } from "@env";
 import axios from "axios";
 import styles from '../styles/styleSheet'
@@ -53,34 +52,16 @@ const SearchScreen = ({ navigation, route }) => {
                 style = {{ width: 100, height: 100 }}
               />
               <View style={{ flexDirection:'column', flexWrap: 'wrap' }}>
-                <Text style={newStyles.label}>{item.recipe.label}</Text>
-                <Text style={newStyles.source}> - {item.recipe.healthLabels[0]}</Text>
-                <Text style={newStyles.source}> - {item.recipe.healthLabels[1]}</Text>
-                <Text style={newStyles.source}> - {item.recipe.healthLabels[2]}</Text>
-                <Text style={newStyles.source}>{item.recipe.source}</Text>
+                <Text style={styles.label}>{item.recipe.label}</Text>
+                <Text style={styles.source}> - {item.recipe.healthLabels[0]}</Text>
+                <Text style={styles.source}> - {item.recipe.healthLabels[1]}</Text>
+                <Text style={styles.source}> - {item.recipe.healthLabels[2]}</Text>
+                <Text style={styles.source}>{item.recipe.source}</Text>
               </View>
             </TouchableOpacity>
           )}}/>
     </SafeAreaView>
     );
 }
-
-const newStyles = StyleSheet.create({
-  label: {
-    flex: 1,
-    color:"#008080",
-    fontWeight:'bold',
-    flexWrap: 'wrap',
-    fontSize: AppStyles.fontSize.content,
-    marginLeft: 10,
-  },
-  source: {
-    flex: 1,
-    marginLeft: 10,
-    fontSize: AppStyles.fontSize.sub,
-    color:AppStyles.color.text,
-    fontStyle: 'italic',
-  }
-}); 
 
 export default SearchScreen;

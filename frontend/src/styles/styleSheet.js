@@ -199,6 +199,21 @@ const styles = StyleSheet.create({
     color:AppStyles.color.text,
     padding: 5,
   },
+  label: {
+    flex: 1,
+    color:"#008080",
+    fontWeight:'bold',
+    flexWrap: 'wrap',
+    fontSize: AppStyles.fontSize.content,
+    marginLeft: 10,
+  },
+  source: {
+    flex: 1,
+    marginLeft: 10,
+    fontSize: AppStyles.fontSize.sub,
+    color:AppStyles.color.text,
+    fontStyle: 'italic',
+  }
 }); 
 
 export default styles;
