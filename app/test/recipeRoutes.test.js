@@ -66,7 +66,6 @@ describe("/recipes", () => {
     })
   })
   
-
   describe("GET /user/:id", () => {
     test("200 status code", async () => {
       const recipe = await request(server).post("/recipes").send({ 
@@ -78,7 +77,7 @@ describe("/recipes", () => {
         source: "food",
         healthLabels: ['1', '2', '3'],
       })
-      const response = await request(server).get(`/items/user/"000a000000000000000a0000"`)
+      const response = await request(server).get(`/recipes/user/"000a000000000000000a0000"`)
       expect(response.statusCode).toBe(200)
     })
   })

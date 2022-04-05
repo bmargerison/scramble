@@ -9,6 +9,21 @@ const getAllRecipes = async (req, res, next) => {
   }
 };
 
+const getUserRecipes = async (req, res, next) => {
+  try {
+    let recipes = await Recipe.find() || []
+    let userRecipes = []
+    recipes.forEach(recipe => {
+      if (recipe._user == req.params.id) {
+        userRecipes.push(recipe)
+      }
+    })
+    res.json(userRecipes)
+  } catch (err) {
+    res.status(500).json({message: err.message})
+  }
+};
+
 const newRecipe = async (req, res, next) => {
   const recipe = new Recipe({
     _user: req.body._user,
@@ -38,4 +53,4 @@ const deleteRecipe = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllRecipes, newRecipe, deleteRecipe};
+module.exports = {getAllRecipes, newRecipe, deleteRecipe, getUserRecipes};
