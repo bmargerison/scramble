@@ -5,10 +5,11 @@ import styles from '../styles/styleSheet'
 import Icon from 'react-native-vector-icons/Entypo';
 import { IP_ADDRESS } from "@env";
 import axios from "axios";
+import { ListsContext } from '../context/ListsContext';
 
 const HomeScreen = ({ navigation, route }) => {
-  const [lists, setLists] = useState([])
   const [list, setList] = useState({})
+  const {lists, setLists} = useContext(ListsContext)
   const {state} = useContext(AuthContext);
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const HomeScreen = ({ navigation, route }) => {
     };
 
     fetchData();
-  }, [route.params?.list, list]);
+  }, [list]);
 
   const createNewList = async () => {
     axios

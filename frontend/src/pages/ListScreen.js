@@ -10,6 +10,7 @@ import ItemModal from './modals/ItemModal'
 import TypeModal from './modals/TypeModal'
 import Icon from 'react-native-vector-icons/AntDesign';
 import styles from '../styles/styleSheet'
+import { ListsContext } from '../context/ListsContext';
 
 const ListScreen = ({ navigation, route }) => {
 
@@ -25,7 +26,8 @@ const ListScreen = ({ navigation, route }) => {
   const [ userItems, setUserItems ] = useState()
 
   // state
-  const {state} = useContext(AuthContext);
+  const { lists, setLists } = useContext(ListsContext)
+  const { state } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +63,7 @@ const ListScreen = ({ navigation, route }) => {
       })
     };
     fetchData();
-  }, [list]);
+  }, [lists]);
 
   // if user has already set up item, add to list
   // otherwise, create item with type for the user, then add to list
@@ -85,6 +87,13 @@ const ListScreen = ({ navigation, route }) => {
       .catch((err) => {
         console.log(err)
       })
+
+    // update state
+    axios
+      .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
+      .then((res) => {
+        setLists(res.data.reverse())
+    })
   }
 
   const createNewItem = (type) => {

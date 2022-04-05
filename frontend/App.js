@@ -17,6 +17,7 @@ import {Context as AuthContext} from './src/context/AuthContext';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {AppStyles} from './src/styles/AppStyles';
 import { RecipesContext } from "./src/context/RecipesContext";
+import { ListsContext } from "./src/context/ListsContext";
 
 const AuthStack = createStackNavigator();
 
@@ -105,9 +106,11 @@ const Tab = createBottomTabNavigator();
 
 function HomeFlow() {
   const {state, signout} = useContext(AuthContext);
-  const [ recipes, setRecipes ] = useState(null)
+  const [ recipes, setRecipes ] = useState([])
+  const [ lists, setLists ] = useState([])
   return (
     <RecipesContext.Provider value={{ recipes, setRecipes }}>
+    <ListsContext.Provider value={{ lists, setLists }}>
       <Tab.Navigator
       initialRouteName="Feed"
       tabBarOptions={{
@@ -158,6 +161,7 @@ function HomeFlow() {
           }}
         />
       </Tab.Navigator>
+      </ListsContext.Provider>
     </RecipesContext.Provider>
   )
 }
