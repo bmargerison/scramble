@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { SafeAreaView, View, Text, FlatList, TouchableOpacity, Image } from 'react-native';
 import axios from "axios";
 import styles from '../styles/styleSheet'
 import { IP_ADDRESS } from "@env";
+import { Context as AuthContext } from '../context/AuthContext';
 
 const FavouritesScreen = ({ navigation, route }) => {
   const [recipes, setRecipes] = useState([])
+  const {state} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = () => {
       axios
-      .get(`http://${IP_ADDRESS}:3000/recipes`)
+      .get(`http://${IP_ADDRESS}:3000/recipes/user/${state.userId}`)
       .then((res) => {
         setRecipes(res.data.reverse())
       })
