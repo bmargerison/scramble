@@ -35,7 +35,8 @@ const getList = async (req, res, next) => {
 
 const newList = async (req, res, next) => {
   const list = new List({
-    _user: req.body._user
+    _user: req.body._user,
+    name: req.body.name
   })
   try {
     const newList = await list.save()

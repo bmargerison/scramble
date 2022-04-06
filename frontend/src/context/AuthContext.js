@@ -57,7 +57,6 @@ const signup = dispatch => {
 };
 
 const signin = dispatch => {
-  console.log(IP_ADDRESS)
   return ({email, password}) => {
     axios
       .post(`http://${IP_ADDRESS}:3000/users/login`, {

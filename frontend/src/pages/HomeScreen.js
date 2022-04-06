@@ -6,15 +6,16 @@ import Icon from 'react-native-vector-icons/Entypo';
 import { IP_ADDRESS } from "@env";
 import axios from "axios";
 import { ListsContext } from '../context/ListsContext';
+import ListNameModal from './modals/ListNameModal'
 
 const HomeScreen = ({ navigation, route }) => {
+  const [ listNameModalVisible, setListNameModalVisible ] = useState(false);
   const [list, setList] = useState({})
   const {lists, setLists} = useContext(ListsContext)
   const {state} = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = () => {
-      console.log(IP_ADDRESS)
       axios
       .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
       .then((res) => {
@@ -25,10 +26,12 @@ const HomeScreen = ({ navigation, route }) => {
     fetchData();
   }, [list]);
 
-  const createNewList = async () => {
+  const createNewList = async (name) => {
+    console.log(name)
     axios
       .post(`http://${IP_ADDRESS}:3000/lists`, {
-        _user: state.userId
+        _user: state.userId,
+        name: name
       }).then(res => {
         setList(res.data)
       });
@@ -42,13 +45,24 @@ const HomeScreen = ({ navigation, route }) => {
     });
   }
 
+  // modal interface
+  const toggleListNameModal = () => {
+    setListNameModalVisible(!listNameModalVisible)
+  }
+
+  const setModalName = (name) => {
+    setListNameModalVisible(!listNameModalVisible)
+    createNewList(name)
+  }
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Your lists</Text>
         </View>
-        <TouchableOpacity style={styles.addItemContainer} onPress={()=> createNewList()}>
+        <ListNameModal show={listNameModalVisible} toggle={toggleListNameModal} setModalName={setModalName}/>
+        <TouchableOpacity style={styles.addItemContainer} onPress={()=> toggleListNameModal()}>
           <Text style={styles.buttonText}>Add New List</Text>  
         </TouchableOpacity>
       </View>
@@ -61,7 +75,7 @@ const HomeScreen = ({ navigation, route }) => {
             <View 
             style={styles.card}>
               <TouchableOpacity style={styles.cardContent} onPress={()=> navigation.navigate('ListScreen', item)}>
-                  <Text style={styles.cardTitle}>{item.date.slice(0,10)} {item.date.slice(11,16)}</Text>
+                  <Text style={styles.cardTitle}>{item.name}</Text>
                   <Text style={styles.cardItems}>{item.items.length} items</Text>
               </TouchableOpacity>
               <TouchableHighlight
