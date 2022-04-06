@@ -6,6 +6,11 @@ const listSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  name: {
+    type: String,
+    default: "Grocery List",
+    required: false
+  },
   date: {
     type: Date,
     default: () => new Date(+new Date()),
