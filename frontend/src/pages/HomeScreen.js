@@ -14,6 +14,7 @@ const HomeScreen = ({ navigation, route }) => {
 
   useEffect(() => {
     const fetchData = () => {
+      console.log(IP_ADDRESS)
       axios
       .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
       .then((res) => {

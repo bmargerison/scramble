@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity, Image, Linking, ScrollView } from 'react-native';
 import styles from '../styles/styleSheet'
+import { IP_ADDRESS } from "@env";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/AntDesign';
+import Icon3 from 'react-native-vector-icons/Entypo';
 import {AppStyles} from '../styles/AppStyles';
+import { RecipesContext } from '../context/RecipesContext';
+import axios from "axios";
 
 const MyFavouriteScreen = ({ navigation, route }) => {
   const [ recipe, setRecipe ] = useState(route.params);
+  const { recipes, setRecipes } = useContext(RecipesContext)
+
+  const removeFavourite = () => {
+    console.log(IP_ADDRESS)
+    axios
+      .delete(`http://${IP_ADDRESS}:3000/recipes/${recipe._id}`)
+      .then((res) => {
+        console.log(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    axios
+      .get(`http://${IP_ADDRESS}:3000/recipes`)
+      .then((res) => {
+        setRecipes(res.data.reverse())
+      })
+    navigation.navigate('Favourites')
+  }
 
   return (
     <View style={styles.container}>
@@ -30,9 +53,9 @@ const MyFavouriteScreen = ({ navigation, route }) => {
           <TouchableOpacity>
             <Icon name="list" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
           </TouchableOpacity>
-            <TouchableOpacity>
-              <Icon name="star" size={30} style={{ color: AppStyles.color.tint, padding: 20, marginLeft: 10}} />
-            </TouchableOpacity>
+          <TouchableOpacity onPress={() => removeFavourite()}>
+            <Icon3 name="circle-with-cross" size={30} style={{ color: '#900', padding: 20, marginLeft: 10}} />
+          </TouchableOpacity>
         </View>
         <Text style={[styles.cardTitle, {padding: 5}]}>Ingredients</Text>
         <View style={{ alignSelf: 'flex-start' }}>
