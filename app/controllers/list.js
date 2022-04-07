@@ -63,7 +63,7 @@ const updateItems = async (req, res, next) => {
   try {
     const list = await List.findById(req.params.id)
     const items = await list.items
-    list.items.push({item: req.body.item, obtained: false})
+    list.items.push(req.body.item)
     await list.updateOne({ items: items })
     res.status(200).json(list)
   } catch (err) {

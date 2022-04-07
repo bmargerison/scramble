@@ -20,6 +20,11 @@ const listSchema = new mongoose.Schema({
     type: Array,
     required: false,
     default: []
+  },
+  obtained: {
+    type: Array,
+    required: false,
+    default: []
   }
 })
 
