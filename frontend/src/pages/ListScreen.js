@@ -36,7 +36,8 @@ const ListScreen = ({ navigation, route }) => {
       .then((res) => {
         setUserItems(res.data)
 
-        const types = ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']
+        const types = ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 
+        'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']
 
         let categorisedItems = []
         types.forEach((type, index) => {
@@ -49,7 +50,7 @@ const ListScreen = ({ navigation, route }) => {
           })
         })
         setCategorisedItems(categorisedItems)
-
+        console.log(list._id)
       })
       .catch((err) => {
         console.log(err)
@@ -62,8 +63,6 @@ const ListScreen = ({ navigation, route }) => {
   // otherwise, create item with type for the user, then add to list
   const mapToItem = (item) => {
     setItemModalVisible(!itemModalVisible)
-    userItems.some(saved => {console.log(saved.name) 
-      console.log(item)})
     if (userItems.some(saved => saved.name == item)) {
       addToList(item)
     } else {
@@ -85,12 +84,7 @@ const ListScreen = ({ navigation, route }) => {
         console.log(err)
       })
 
-    // update state
-    axios
-      .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
-      .then((res) => {
-        setLists(res.data.reverse())
-    })
+      updateState()
   }
 
   const createNewItem = (type) => {
@@ -110,6 +104,34 @@ const ListScreen = ({ navigation, route }) => {
     setTypeModalVisible(!typeModalVisible)
     addToList(item, type)
   };
+
+  const toggleCheckBox = (item) => {
+    list.items.forEach((i, index) => {
+      if (item.name == i.name) {
+        axios
+        .patch(`http://${IP_ADDRESS}:3000/lists/checkbox/${list._id}`, {
+          name: item.name,
+          type: item.type,
+          index: index
+        })
+        .then((res) => {
+          setList(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+    })
+    updateState()
+  }
+
+  const updateState = () => {
+    axios
+      .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
+      .then((res) => {
+        setLists(res.data.reverse())
+      })
+  }
 
   // modals interface
   const toggleItemModal = () => {
@@ -163,7 +185,8 @@ const ListScreen = ({ navigation, route }) => {
                           iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
                           textStyle={styles.listItems}
                           style={styles.checkboxStyle}
-                          onPress={(isChecked) => {!isChecked}}
+                          isChecked={item.obtained}
+                          onPress={()=>toggleCheckBox(item)}
                           />
                   )}}/>
               </View>

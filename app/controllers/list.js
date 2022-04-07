@@ -71,4 +71,20 @@ const updateItems = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllLists, getUserLists, getList, newList, deleteList, updateItems};
+const toggleCheckBox = async (req, res, next) => {
+  if (!req.params.id) {
+    return res.status(404).json({ message: "Cannot find list" })
+  }
+  try {
+    const list = await List.findById(req.params.id)
+    let newItems = await list.items
+    let obtained = newItems[req.body.index].obtained
+    newItems[req.body.index] = {name: req.body.name, type: req.body.type, obtained: !obtained}
+    await list.updateOne({ items: newItems })
+    res.status(200).json(list)
+  } catch (err) {
+    return res.status(400).json({ message: err.message })
+  }
+}
+
+module.exports = {getAllLists, getUserLists, getList, newList, deleteList, updateItems, toggleCheckBox};

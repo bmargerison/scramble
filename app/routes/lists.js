@@ -20,4 +20,6 @@ router.delete('/:id', listController.deleteList)
 
 router.patch('/:id', listController.updateItems)
 
+router.patch('/checkbox/:id', listController.toggleCheckBox)
+
 module.exports = router;
