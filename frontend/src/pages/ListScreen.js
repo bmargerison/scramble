@@ -21,8 +21,7 @@ const ListScreen = ({ navigation, route }) => {
 
   // fetch data on each render
   const [ list, setList ] = useState(route.params);
-  const [ types, setTypes ] = useState([]);
-  const [ allItems, setAllItems ] = useState({})
+  const [ categorisedItems, setCategorisedItems ] = useState([])
   const [ userItems, setUserItems ] = useState()
 
   // state
@@ -37,25 +36,19 @@ const ListScreen = ({ navigation, route }) => {
       .then((res) => {
         setUserItems(res.data)
 
-        // set items array categorised by type
-        let items = {}
-        res.data.forEach((k,v) => {
-          if(list.items.includes(k.name)) {
-            if (!items[k.type]) {
-              items[k.type] = [k]
-            } else {
-              items[k.type].push(k);
-            }
-          }
-        }) 
-        setAllItems(items)
+        const types = ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']
 
-        // set types for display by category
-        let types = []
-        Object.keys(items).forEach((i) => {
-          types.push({'t': i})
+        let categorisedItems = []
+        types.forEach((type, index) => {
+          let category = {'type': type, 'items': []}
+          categorisedItems.push(category)
+          list.items.forEach((item) => {
+            if (item.type == type) {
+              categorisedItems[index].items.push(item)
+            }
+          })
         })
-        setTypes(types)
+        setCategorisedItems(categorisedItems)
 
       })
       .catch((err) => {
@@ -78,10 +71,12 @@ const ListScreen = ({ navigation, route }) => {
     }
   } 
 
-  const addToList = (item) => {
+  const addToList = (item, type) => {
     axios
       .patch(`http://${IP_ADDRESS}:3000/lists/${list._id}`, {
-        item: item,
+        name: item,
+        type: type,
+        obtained: false
       })
       .then((res) => {
         setList(res.data)
@@ -113,7 +108,7 @@ const ListScreen = ({ navigation, route }) => {
       console.log(err)
     })
     setTypeModalVisible(!typeModalVisible)
-    addToList(item)
+    addToList(item, type)
   };
 
   // modals interface
@@ -150,14 +145,14 @@ const ListScreen = ({ navigation, route }) => {
         </TouchableOpacity>
         </View>
         <FlatList 
-          data={types}
+          data={categorisedItems}
           keyExtractor={(item, index) => index}
           renderItem={({item}) => { 
             return (
               <View style={{ marginBottom: 20 }}>
-                <Text style={styles.heading}>{item.t}</Text>
+                <Text style={styles.heading}>{item.type}</Text>
                 <FlatList 
-                  data={allItems[item.t]}
+                  data={item.items}
                   keyExtractor={(item, index) => index}
                   renderItem={({item}) => {
                       return (
