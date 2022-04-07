@@ -67,8 +67,10 @@ const ListScreen = ({ navigation, route }) => {
 
   // if user has already set up item, add to list
   // otherwise, create item with type for the user, then add to list
-  const mapToItem = () => {
+  const mapToItem = (item) => {
     setItemModalVisible(!itemModalVisible)
+    userItems.some(saved => {console.log(saved.name) 
+      console.log(item)})
     if (userItems.some(saved => saved.name == item)) {
       addToList(item)
     } else {

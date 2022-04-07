@@ -35,6 +35,7 @@ describe("list", function() {
     })
     expect(String(list._user)).to.equal(String(user.id))
     expect(list.items.length).to.equal(0)
+    expect(list.obtained.length).to.equal(0)
     expect(list.name).to.equal("Grocery List")
     expect(String(list.date)).to.equal(String(new Date(+new Date())))
     jest.useRealTimers();

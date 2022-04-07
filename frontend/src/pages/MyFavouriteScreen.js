@@ -14,7 +14,6 @@ const MyFavouriteScreen = ({ navigation, route }) => {
   const { recipes, setRecipes } = useContext(RecipesContext)
 
   const removeFavourite = () => {
-    console.log(IP_ADDRESS)
     axios
       .delete(`http://${IP_ADDRESS}:3000/recipes/${recipe._id}`)
       .then((res) => {
