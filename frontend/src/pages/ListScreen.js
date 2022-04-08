@@ -170,9 +170,7 @@ const ListScreen = ({ navigation, route }) => {
         </TouchableOpacity>
       </View> 
       <FlatList 
-      contentContainerStyle={{
-        flexGrow: 1,
-        }}
+        style={{  marginBottom: 160 }}
         data={categorisedItems}
         keyExtractor={(item, index) => index}
         renderItem={({item}) => { 
@@ -180,6 +178,7 @@ const ListScreen = ({ navigation, route }) => {
             <View >
               <Text style={styles.heading}>{item.type}</Text>
               <FlatList 
+                style={{ marginBottom: 10 }}
                 data={item.items}
                 keyExtractor={(item, index) => index}
                 renderItem={({item}) => {
