@@ -14,12 +14,12 @@ import { ListsContext } from '../context/ListsContext';
 
 const ListScreen = ({ navigation, route }) => {
 
-  // modal forms
+  // for modal forms
   const [ item, setItem ] = useState('');
   const [ itemModalVisible, setItemModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
 
-  // fetch data on each render
+  // fetch and create data on each render
   const [ list, setList ] = useState(route.params);
   const [ categorisedItems, setCategorisedItems ] = useState([])
   const [ userItems, setUserItems ] = useState()
@@ -39,6 +39,7 @@ const ListScreen = ({ navigation, route }) => {
         const types = ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 
         'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']
 
+        // create list of items categorised by type
         let categorisedItems = []
         types.forEach((type, index) => {
           let category = {'type': type, 'items': []}
@@ -49,18 +50,19 @@ const ListScreen = ({ navigation, route }) => {
             }
           })
         })
-        setCategorisedItems(categorisedItems)
-        console.log(list._id)
+        setCategorisedItems(
+          categorisedItems
+        )
       })
       .catch((err) => {
         console.log(err)
       })
     };
     fetchData();
-  }, [lists]);
+  }, [list]);
 
-  // if user has already set up item, add to list
-  // otherwise, create item with type for the user, then add to list
+  // if user has already set up item, add the item to the list
+  // otherwise, create the item with type for the specific user, then add to list
   const mapToItem = (item) => {
     setItemModalVisible(!itemModalVisible)
     if (userItems.some(saved => saved.name == item)) {
@@ -83,8 +85,7 @@ const ListScreen = ({ navigation, route }) => {
       .catch((err) => {
         console.log(err)
       })
-
-      updateState()
+    updateLists()
   }
 
   const createNewItem = (type) => {
@@ -105,6 +106,7 @@ const ListScreen = ({ navigation, route }) => {
     addToList(item, type)
   };
 
+  // save toggle status
   const toggleCheckBox = (item) => {
     list.items.forEach((i, index) => {
       if (item.name == i.name) {
@@ -121,11 +123,12 @@ const ListScreen = ({ navigation, route }) => {
           console.log(err)
         })
       }
+      updateLists()
     })
-    updateState()
   }
 
-  const updateState = () => {
+  // update parent component
+  const updateLists = () => {
     axios
       .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
       .then((res) => {
@@ -165,32 +168,35 @@ const ListScreen = ({ navigation, route }) => {
         <TouchableOpacity style={styles.addItemContainer} onPress={() => toggleItemModal()}>
           <Text style={styles.buttonText}>Add Item</Text>  
         </TouchableOpacity>
-        </View>
-        <FlatList 
-          data={categorisedItems}
-          keyExtractor={(item, index) => index}
-          renderItem={({item}) => { 
-            return (
-              <View style={{ marginBottom: 20 }}>
-                <Text style={styles.heading}>{item.type}</Text>
-                <FlatList 
-                  data={item.items}
-                  keyExtractor={(item, index) => index}
-                  renderItem={({item}) => {
-                      return (
-                        <BouncyCheckbox
-                          size={20}
-                          text={item.name}
-                          fillColor={AppStyles.color.tint}
-                          iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
-                          textStyle={styles.listItems}
-                          style={styles.checkboxStyle}
-                          isChecked={item.obtained}
-                          onPress={()=>toggleCheckBox(item)}
-                          />
-                  )}}/>
-              </View>
-          )}}/>
+      </View> 
+      <FlatList 
+      contentContainerStyle={{
+        flexGrow: 1,
+        }}
+        data={categorisedItems}
+        keyExtractor={(item, index) => index}
+        renderItem={({item}) => { 
+          return (
+            <View >
+              <Text style={styles.heading}>{item.type}</Text>
+              <FlatList 
+                data={item.items}
+                keyExtractor={(item, index) => index}
+                renderItem={({item}) => {
+                    return (
+                      <BouncyCheckbox
+                        size={20}
+                        text={item.name}
+                        fillColor={AppStyles.color.tint}
+                        iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
+                        textStyle={styles.listItems}
+                        style={styles.checkboxStyle}
+                        isChecked={item.obtained}
+                        onPress={()=>toggleCheckBox(item)}
+                        />
+                )}}/>
+            </View>
+        )}}/>
     </View>
   );
 }
