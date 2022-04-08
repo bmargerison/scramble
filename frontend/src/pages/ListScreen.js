@@ -51,7 +51,9 @@ const ListScreen = ({ navigation, route }) => {
           })
         })
         setCategorisedItems(
-          categorisedItems
+          categorisedItems.filter((item, index) => {
+            return item.items.length != 0
+          })
         )
       })
       .catch((err) => {
@@ -160,7 +162,7 @@ const ListScreen = ({ navigation, route }) => {
         <TypeModal show={typeModalVisible} toggle={toggleTypeModal} setModalType={setModalType}/>
         <ItemModal show={itemModalVisible} toggle={toggleItemModal} setModalItem={setModalItem}/>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
+          <Text style={styles.title}>{list.name}</Text>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home', { list: list })}>
             <Icon name="leftcircle" size={30} style={styles.backButton} />
           </TouchableOpacity>

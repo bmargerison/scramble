@@ -8,10 +8,12 @@ import Icon3 from 'react-native-vector-icons/Entypo';
 import {AppStyles} from '../styles/AppStyles';
 import { RecipesContext } from '../context/RecipesContext';
 import axios from "axios";
+import { Context as AuthContext } from '../context/AuthContext';
 
 const MyFavouriteScreen = ({ navigation, route }) => {
   const [ recipe, setRecipe ] = useState(route.params);
   const { recipes, setRecipes } = useContext(RecipesContext)
+  const { state } = useContext(AuthContext);
 
   const removeFavourite = () => {
     axios
@@ -23,10 +25,10 @@ const MyFavouriteScreen = ({ navigation, route }) => {
         console.log(err)
       })
     axios
-      .get(`http://${IP_ADDRESS}:3000/recipes`)
-      .then((res) => {
-        setRecipes(res.data.reverse())
-      })
+    .get(`http://${IP_ADDRESS}:3000/recipes/user/${state.userId}`)
+    .then((res) => {
+      setRecipes(res.data.reverse())
+    })
     navigation.navigate('Favourites')
   }
 
