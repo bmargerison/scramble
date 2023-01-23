@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user')
-const bycrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken')
 const saltRounds = 10;
 const { body, validationResult } = require('express-validator');
@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
     user = user.shift()
     if (!user) {
       return res.status(404).json({ message: "Cannot find user" })
-    } else if (!bycrypt.compareSync(req.body.password, user.password)) {
+    } else if (!bcrypt.compareSync(req.body.password, user.password)) {
       return res.status(403).json({ message: "Incorrect password" })
     }
     const id = user.id
@@ -53,7 +53,7 @@ router.post('/', [
       return res.status(400).json({ message: errors.array() })
     }
     if (req.body.password) {
-      hashedPassword = await bycrypt.hash(req.body.password, saltRounds)
+      hashedPassword = await bcrypt.hash(req.body.password, saltRounds)
     }
     const user = new User({
       username: req.body.username,
