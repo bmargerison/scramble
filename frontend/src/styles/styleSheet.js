@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
   },
   cardTitle:{
     alignSelf: "auto",
-    fontSize:18,
     color:"#008080",
     fontWeight:'bold',
     fontSize: AppStyles.fontSize.content,
@@ -64,7 +63,8 @@ const styles = StyleSheet.create({
   cardItems:{
     fontSize: AppStyles.fontSize.sub,
     color:AppStyles.color.text,
-    marginTop:5
+    marginTop: 5,
+    marginBottom: 10
   },
   titleContainer: {
     marginTop: 50,

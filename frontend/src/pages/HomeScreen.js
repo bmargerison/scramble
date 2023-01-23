@@ -8,11 +8,11 @@ import axios from "axios";
 import { ListsContext } from '../context/ListsContext';
 import ListNameModal from './modals/ListNameModal'
 
-const HomeScreen = ({ navigation, route }) => {
+const HomeScreen = ({ navigation }) => {
   const [ listNameModalVisible, setListNameModalVisible ] = useState(false);
-  const [list, setList] = useState({})
-  const {lists, setLists} = useContext(ListsContext)
-  const {state} = useContext(AuthContext);
+  const [ list, setList ] = useState({})
+  const { lists, setLists } = useContext(ListsContext)
+  const { state } = useContext(AuthContext);
 
   useEffect(() => {
     const fetchData = () => {

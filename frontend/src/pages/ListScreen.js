@@ -14,15 +14,14 @@ import { ListsContext } from '../context/ListsContext';
 
 const ListScreen = ({ navigation, route }) => {
 
-  // modal forms
+  // for modal forms
   const [ item, setItem ] = useState('');
   const [ itemModalVisible, setItemModalVisible ] = useState(false);
   const [ typeModalVisible, setTypeModalVisible ] = useState(false);
 
-  // fetch data on each render
+  // fetch and create data on each render
   const [ list, setList ] = useState(route.params);
-  const [ types, setTypes ] = useState([]);
-  const [ allItems, setAllItems ] = useState({})
+  const [ categorisedItems, setCategorisedItems ] = useState([])
   const [ userItems, setUserItems ] = useState()
 
   // state
@@ -37,40 +36,37 @@ const ListScreen = ({ navigation, route }) => {
       .then((res) => {
         setUserItems(res.data)
 
-        // set items array categorised by type
-        let items = {}
-        res.data.forEach((k,v) => {
-          if(list.items.includes(k.name)) {
-            if (!items[k.type]) {
-              items[k.type] = [k]
-            } else {
-              items[k.type].push(k);
+        const types = ['Fruit & Vegetables', 'Health & Beauty', 'Dairy', 'Meat and Fish', 
+        'Other Cold Foods', 'Frozen', 'Pantry', 'Bakery', 'Drinks', 'Other']
+
+        // create list of items categorised by type
+        let categorisedItems = []
+        types.forEach((type, index) => {
+          let category = {'type': type, 'items': []}
+          categorisedItems.push(category)
+          list.items.forEach((item) => {
+            if (item.type == type) {
+              categorisedItems[index].items.push(item)
             }
-          }
-        }) 
-        setAllItems(items)
-
-        // set types for display by category
-        let types = []
-        Object.keys(items).forEach((i) => {
-          types.push({'t': i})
+          })
         })
-        setTypes(types)
-
+        setCategorisedItems(
+          categorisedItems.filter((item, index) => {
+            return item.items.length != 0
+          })
+        )
       })
       .catch((err) => {
         console.log(err)
       })
     };
     fetchData();
-  }, [lists]);
+  }, [list]);
 
-  // if user has already set up item, add to list
-  // otherwise, create item with type for the user, then add to list
+  // if user has already set up item, add the item to the list
+  // otherwise, create the item with type for the specific user, then add to list
   const mapToItem = (item) => {
     setItemModalVisible(!itemModalVisible)
-    userItems.some(saved => {console.log(saved.name) 
-      console.log(item)})
     if (userItems.some(saved => saved.name == item)) {
       addToList(item)
     } else {
@@ -78,10 +74,12 @@ const ListScreen = ({ navigation, route }) => {
     }
   } 
 
-  const addToList = (item) => {
+  const addToList = (item, type) => {
     axios
       .patch(`http://${IP_ADDRESS}:3000/lists/${list._id}`, {
-        item: item,
+        name: item,
+        type: type,
+        obtained: false
       })
       .then((res) => {
         setList(res.data)
@@ -89,13 +87,7 @@ const ListScreen = ({ navigation, route }) => {
       .catch((err) => {
         console.log(err)
       })
-
-    // update state
-    axios
-      .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
-      .then((res) => {
-        setLists(res.data.reverse())
-    })
+    updateLists()
   }
 
   const createNewItem = (type) => {
@@ -113,8 +105,38 @@ const ListScreen = ({ navigation, route }) => {
       console.log(err)
     })
     setTypeModalVisible(!typeModalVisible)
-    addToList(item)
+    addToList(item, type)
   };
+
+  // save toggle status
+  const toggleCheckBox = (item) => {
+    list.items.forEach((i, index) => {
+      if (item.name == i.name) {
+        axios
+        .patch(`http://${IP_ADDRESS}:3000/lists/checkbox/${list._id}`, {
+          name: item.name,
+          type: item.type,
+          index: index
+        })
+        .then((res) => {
+          setList(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }
+      updateLists()
+    })
+  }
+
+  // update parent component
+  const updateLists = () => {
+    axios
+      .get(`http://${IP_ADDRESS}:3000/lists/user/${state.userId}`)
+      .then((res) => {
+        setLists(res.data.reverse())
+      })
+  }
 
   // modals interface
   const toggleItemModal = () => {
@@ -140,7 +162,7 @@ const ListScreen = ({ navigation, route }) => {
         <TypeModal show={typeModalVisible} toggle={toggleTypeModal} setModalType={setModalType}/>
         <ItemModal show={itemModalVisible} toggle={toggleItemModal} setModalItem={setModalItem}/>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>{list.date.slice(0,10)} {list.date.slice(11,16)}</Text>
+          <Text style={styles.title}>{list.name}</Text>
           <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Home', { list: list })}>
             <Icon name="leftcircle" size={30} style={styles.backButton} />
           </TouchableOpacity>
@@ -148,31 +170,34 @@ const ListScreen = ({ navigation, route }) => {
         <TouchableOpacity style={styles.addItemContainer} onPress={() => toggleItemModal()}>
           <Text style={styles.buttonText}>Add Item</Text>  
         </TouchableOpacity>
-        </View>
-        <FlatList 
-          data={types}
-          keyExtractor={(item, index) => index}
-          renderItem={({item}) => { 
-            return (
-              <View style={{ marginBottom: 20 }}>
-                <Text style={styles.heading}>{item.t}</Text>
-                <FlatList 
-                  data={allItems[item.t]}
-                  keyExtractor={(item, index) => index}
-                  renderItem={({item}) => {
-                      return (
-                        <BouncyCheckbox
-                          size={20}
-                          text={item.name}
-                          fillColor={AppStyles.color.tint}
-                          iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
-                          textStyle={styles.listItems}
-                          style={styles.checkboxStyle}
-                          onPress={(isChecked) => {!isChecked}}
-                          />
-                  )}}/>
-              </View>
-          )}}/>
+      </View> 
+      <FlatList 
+        style={{  marginBottom: 160 }}
+        data={categorisedItems}
+        keyExtractor={(item, index) => index}
+        renderItem={({item}) => { 
+          return (
+            <View >
+              <Text style={styles.heading}>{item.type}</Text>
+              <FlatList 
+                style={{ marginBottom: 10 }}
+                data={item.items}
+                keyExtractor={(item, index) => index}
+                renderItem={({item}) => {
+                    return (
+                      <BouncyCheckbox
+                        size={20}
+                        text={item.name}
+                        fillColor={AppStyles.color.tint}
+                        iconStyle={{ borderRadius: 0, borderColor: AppStyles.color.tint }}
+                        textStyle={styles.listItems}
+                        style={styles.checkboxStyle}
+                        isChecked={item.obtained}
+                        onPress={()=>toggleCheckBox(item)}
+                        />
+                )}}/>
+            </View>
+        )}}/>
     </View>
   );
 }

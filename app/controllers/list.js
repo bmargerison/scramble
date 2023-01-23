@@ -63,7 +63,7 @@ const updateItems = async (req, res, next) => {
   try {
     const list = await List.findById(req.params.id)
     const items = await list.items
-    list.items.push(req.body.item)
+    list.items.push({name: req.body.name, type: req.body.type, obtained: req.body.obtained})
     await list.updateOne({ items: items })
     res.status(200).json(list)
   } catch (err) {
@@ -71,4 +71,20 @@ const updateItems = async (req, res, next) => {
   }
 };
 
-module.exports = {getAllLists, getUserLists, getList, newList, deleteList, updateItems};
+const toggleCheckBox = async (req, res, next) => {
+  if (!req.params.id) {
+    return res.status(404).json({ message: "Cannot find list" })
+  }
+  try {
+    const list = await List.findById(req.params.id)
+    let newItems = await list.items
+    let obtained = newItems[req.body.index].obtained
+    newItems[req.body.index] = {name: req.body.name, type: req.body.type, obtained: !obtained}
+    await list.updateOne({ items: newItems })
+    res.status(200).json(list)
+  } catch (err) {
+    return res.status(400).json({ message: err.message })
+  }
+}
+
+module.exports = {getAllLists, getUserLists, getList, newList, deleteList, updateItems, toggleCheckBox};

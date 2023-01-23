@@ -18,7 +18,7 @@ const RecipeScreen = ({ navigation, route }) => {
   useEffect(() => {
     const fetchData = () => {
       axios
-      .get(`http://${IP_ADDRESS}:3000/recipes`)
+      .get(`http://${IP_ADDRESS}:3000/recipes/user/${state.userId}`)
       .then((res) => {
         setRecipes(res.data.reverse())
         res.data.some(r => {return r.name == recipe.label}) ? setFavourited(true) : setFavourited(false)
