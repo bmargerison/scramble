@@ -27,7 +27,12 @@ npm start
 <img src="https://user-images.githubusercontent.com/84973171/214307939-48e761db-7161-433b-a7a7-6db890b8f6e6.gif" width="15%" height="15%"/>
 </p>
 
-#### Aproach
+#### Tech
+
+React Native frontend, utilising many core concepts of the tech, including global state management.
+Express backend and MongoDB cloud Atlas for database storage.
+
+#### Planning
 
 ![](images/scramble_crc_diagram.png)
 ![](images/user_journey.png)
