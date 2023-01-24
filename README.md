@@ -2,10 +2,6 @@
 
 This mobile app allows searching and saving of recipes, as well as creation of a shopping lists. This is inspired by covid and my onw desire to cook new and more varied vegan recipes more easily.
 
-#### Functionality
-
-
-
 #### Try
 First install expo-cli: ``npm install --global expo-cli``
 
@@ -27,6 +23,10 @@ cd app
 npm i
 npm start
 ```
+<p align="center">
+<img src="https://user-images.githubusercontent.com/84973171/214307939-48e761db-7161-433b-a7a7-6db890b8f6e6.gif" width="15%" height="15%"/>
+</p>
+
 #### Aproach
 
 ![](images/scramble_crc_diagram.png)
